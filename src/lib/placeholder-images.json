@@ -62,9 +62,9 @@
     },
     {
       "id": "why-choose-us-1",
-      "description": "Smiling customer service representative with a headset on in an office.",
-      "imageUrl": "https://images.unsplash.com/photo-1558021211-6514f395939a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8Y3VzdG9tZXIlMjBzZXJ2aWNlfGVufDB8fHx8MTc3MTY5NTgxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "customer service"
+      "description": "A unipole billboard at a junction.",
+      "imageUrl": "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/gh_wrpkun.jpg",
+      "imageHint": "billboard junction"
     }
   ]
 }
