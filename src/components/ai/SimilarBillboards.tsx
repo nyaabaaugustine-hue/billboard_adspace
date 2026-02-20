@@ -1,10 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { aiSimilarBillboardRecommender, type SimilarBillboardRecommenderOutput } from '@/ai/flows/ai-similar-billboard-recommender-flow';
-import { BillboardCard } from '@/components/BillboardCard';
 import type { Billboard, BillboardType } from '@/lib/types';
 import { Skeleton } from '../ui/skeleton';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { SimilarBillboardCard } from './SimilarBillboardCard';
 
 interface SimilarBillboardsProps {
   currentBillboard: Billboard;
@@ -15,6 +23,10 @@ type RecommendedBillboard = SimilarBillboardRecommenderOutput['recommendations']
 export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) {
   const [recommendations, setRecommendations] = useState<RecommendedBillboard[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
 
   useEffect(() => {
     async function getRecommendations() {
@@ -33,9 +45,11 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
             longitude: currentBillboard.longitude,
           },
         });
-        // The AI can sometimes hallucinate and not return an array.
         if (result && Array.isArray(result.recommendations)) {
           setRecommendations(result.recommendations);
+        } else {
+            // Handle cases where AI returns non-array or empty recommendations
+            setRecommendations([]);
         }
       } catch (error) {
         console.error('Error fetching similar billboards:', error);
@@ -48,6 +62,9 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
   }, [currentBillboard]);
   
   const toBillboardType = (rec: RecommendedBillboard): Billboard => {
+    // Assign a vendorId from existing vendors for placeholder data
+    const randomVendorId = 'ven-00' + (Math.floor(Math.random() * 4) + 1);
+
     return {
         id: rec.id,
         title: rec.title,
@@ -68,15 +85,16 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
         visibilityScore: Math.floor(Math.random() * 3) + 7, // random dummy data between 7-9
         createdAt: new Date().toISOString(),
         imageUrl: `https://picsum.photos/seed/${rec.id}/600/400`,
+        vendorId: randomVendorId,
     }
   }
 
-  return (
-    <div className="mt-16">
-      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
-        Similar Billboards
-      </h2>
-      {loading ? (
+  if (loading) {
+    return (
+      <div className="mt-16">
+        <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+          Similar Billboards
+        </h2>
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="space-y-4">
@@ -89,19 +107,52 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
             </div>
           ))}
         </div>
-      ) : recommendations.length > 0 ? (
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {recommendations.map((rec) => (
-            <BillboardCard key={rec.id} billboard={toBillboardType(rec)} />
-          ))}
-        </div>
-      ) : (
-        <div className="flex h-48 items-center justify-center rounded-2xl border bg-card">
-          <p className="text-muted-foreground">
-            No similar billboards found at the moment.
-          </p>
-        </div>
-      )}
+      </div>
+    );
+  }
+
+  if (recommendations.length === 0) {
+    return (
+        <div className="mt-16">
+            <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+                Similar Billboards
+            </h2>
+            <div className="flex h-48 items-center justify-center rounded-2xl border bg-card">
+                <p className="text-muted-foreground">
+                    No similar billboards found at the moment.
+                </p>
+            </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-16">
+      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+        Similar Billboards
+      </h2>
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent className="-ml-4">
+            {recommendations.map((rec) => (
+              <CarouselItem key={rec.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                 <div className="p-1 h-full">
+                    <SimilarBillboardCard billboard={toBillboardType(rec)} />
+                 </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex" />
+          <CarouselNext className="hidden sm:flex" />
+        </Carousel>
     </div>
   );
 }
