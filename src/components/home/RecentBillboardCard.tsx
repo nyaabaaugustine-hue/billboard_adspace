@@ -23,8 +23,8 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
 
   return (
     <Link href={`/billboards/${billboard.id}`} className="block group">
-      <div className="flex flex-col md:flex-row gap-6 rounded-2xl border bg-card p-4 text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
-        <div className="relative aspect-[4/3] w-full md:w-1/3 lg:w-1/4 overflow-hidden rounded-xl bg-card">
+      <div className="flex flex-col sm:flex-row gap-6 rounded-2xl border bg-card p-4 text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
+        <div className="relative aspect-[4/3] w-full sm:w-1/3 lg:w-1/4 overflow-hidden rounded-xl bg-card">
           <Image
             src={billboard.imageUrl}
             alt={billboard.title}
@@ -36,17 +36,17 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
         <div className="flex flex-col justify-between flex-1 relative">
             {getStatusBadge()}
           <div>
-            <div className="flex items-baseline gap-1 pt-10">
-                <span className="text-2xl font-bold text-price">
+            <div className="flex items-baseline gap-1 pt-10 sm:pt-0">
+                <span className="text-xl md:text-2xl font-bold text-price">
                     GH₵ {billboard.pricePerMonth.toLocaleString()}
                 </span>
-                <span className="text-sm text-muted-foreground">/ Monthly</span>
+                <span className="text-xs md:text-sm text-muted-foreground">/ Monthly</span>
             </div>
-            <h3 className="text-2xl font-semibold text-foreground group-hover:underline mt-1">
+            <h3 className="text-xl md:text-2xl font-semibold text-foreground group-hover:underline mt-1">
               {billboard.title}
             </h3>
-            <p className="text-base text-muted-foreground mt-1">{billboard.address}, {billboard.city}</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 mt-4 text-base">
+            <p className="text-sm md:text-base text-muted-foreground mt-1">{billboard.address}, {billboard.city}</p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm">
               <div>
                 <span className="font-semibold text-muted-foreground">Length:</span> {width}
               </div>

@@ -109,7 +109,7 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="rounded-md p-2 text-lg font-medium hover:bg-muted"
+                      className="rounded-md p-2 text-base font-medium hover:bg-muted"
                     >
                       {link.label}
                     </Link>
@@ -118,7 +118,7 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="rounded-md p-2 text-lg font-medium hover:bg-muted"
+                      className="rounded-md p-2 text-base font-medium hover:bg-muted"
                     >
                       {link.label}
                     </Link>
@@ -126,15 +126,15 @@ export function Header() {
                   <Button variant="ghost" asChild>
                       <Link
                           href="#"
-                          className="rounded-md p-2 text-lg font-medium hover:bg-muted justify-start"
+                          className="rounded-md p-2 text-base font-medium hover:bg-muted justify-start"
                       >
                           List a billboard
                       </Link>
                   </Button>
-                  <Button asChild className="mt-4 w-full text-lg h-12">
+                  <Button asChild className="mt-4 w-full text-base h-12">
                     <Link href="/login">Login</Link>
                   </Button>
-                  <Button asChild variant="secondary" className="mt-2 w-full text-lg h-12">
+                  <Button asChild variant="secondary" className="mt-2 w-full text-base h-12">
                     <Link href="/signup">Sign Up</Link>
                   </Button>
                 </div>

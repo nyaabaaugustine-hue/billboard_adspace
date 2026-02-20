@@ -27,14 +27,14 @@ interface InteractiveMapProps {
 }
 
 export default function InteractiveMap({ billboards }: InteractiveMapProps) {
-  const position: L.LatLngExpression = [5.6037, -0.187]; // Accra, Ghana
+  const position: L.LatLngExpression = [7.9465, -1.0232]; // Center of Ghana
 
   return (
     <MapContainer
       center={position}
-      zoom={10}
+      zoom={7}
       scrollWheelZoom={true}
-      className="h-[calc(100vh-80px)] w-full"
+      className="h-full w-full"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

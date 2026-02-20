@@ -40,7 +40,7 @@ export default function BillboardDetailPage({
   const descriptionContent =
     billboard.id === "bb-acc-011" ? (
       <div className="prose dark:prose-invert max-w-none text-muted-foreground">
-        <p className="text-lg">
+        <p className="text-base md:text-lg">
           Reach thousands daily with a 25-sec ad on our digital screen at one of
           Legon’s busiest entrances.
         </p>
@@ -59,7 +59,7 @@ export default function BillboardDetailPage({
             on booked slots
           </li>
         </ul>
-        <p className="mt-4 text-lg font-semibold">
+        <p className="mt-4 text-base md:text-lg font-semibold">
           High traffic. Youth focus. Maximum impact.
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function BillboardDetailPage({
       <div className="container mx-auto px-4 py-8">
         <div className="mb-4">
           <Button variant="ghost" asChild>
-            <Link href="/billboards" className="flex items-center text-base">
+            <Link href="/billboards" className="flex items-center text-sm md:text-base">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Billboards
             </Link>
@@ -116,13 +116,13 @@ export default function BillboardDetailPage({
             </Card>
 
             <div className="mt-8">
-              <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start">
                   <div>
-                    <Badge variant="secondary" className="text-sm">{billboard.type}</Badge>
-                    <h1 className="text-3xl lg:text-4xl font-extrabold mt-2">{billboard.title}</h1>
-                    <p className="text-lg text-muted-foreground mt-1">{billboard.address}, {billboard.city}, {regionName}</p>
+                    <Badge variant="secondary" className="text-xs md:text-sm">{billboard.type}</Badge>
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mt-2">{billboard.title}</h1>
+                    <p className="text-base md:text-lg text-muted-foreground mt-1">{billboard.address}, {billboard.city}, {regionName}</p>
                   </div>
-                  <div className="flex gap-2 mb-4 md:mb-0">
+                  <div className="flex gap-2 mt-4 md:mt-0">
                     <Button variant="outline" size="icon"><Share2 /></Button>
                     <BookingDialog billboard={billboard} />
                 </div>
@@ -133,18 +133,18 @@ export default function BillboardDetailPage({
 
             <div className="space-y-8">
                 <div>
-                    <h2 className="text-2xl font-bold">Description</h2>
+                    <h2 className="text-xl md:text-2xl font-bold">Description</h2>
                     <div className="mt-4">{descriptionContent}</div>
                 </div>
                 {vendor && (
                     <div>
-                        <h2 className="text-2xl font-bold">Vendor Information</h2>
+                        <h2 className="text-xl md:text-2xl font-bold">Vendor Information</h2>
                         <Card className="mt-4">
                             <CardHeader className="flex flex-row items-center gap-4">
                                 <Image src={vendor.imageUrl} alt={vendor.name} width={64} height={64} className="rounded-md" data-ai-hint="company logo" />
                                 <div>
-                                    <CardTitle>{vendor.name}</CardTitle>
-                                    <CardDescription>{vendor.serviceType}</CardDescription>
+                                    <CardTitle className="text-base md:text-xl">{vendor.name}</CardTitle>
+                                    <CardDescription className="text-sm md:text-base">{vendor.serviceType}</CardDescription>
                                 </div>
                             </CardHeader>
                         </Card>
@@ -158,20 +158,20 @@ export default function BillboardDetailPage({
             <Card className="sticky top-24 shadow-lg">
               <CardHeader>
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Price</h3>
+                  <h3 className="text-base md:text-lg font-semibold">Price</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-price">
+                    <span className="text-3xl md:text-4xl font-bold text-price">
                       GH₵{billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                     </span>
-                    <span className="text-base font-medium text-muted-foreground">/month</span>
+                    <span className="text-sm md:text-base font-medium text-muted-foreground">/month</span>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <BookingDialog billboard={billboard} />
                 <Separator className="my-6" />
-                <h3 className="font-semibold mb-4">Billboard Details</h3>
-                <div className="space-y-5 text-base">
+                <h3 className="font-semibold mb-4 text-base md:text-lg">Billboard Details</h3>
+                <div className="space-y-5 text-sm md:text-base">
                    <div className="flex items-start">
                     <CheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
@@ -219,8 +219,8 @@ export default function BillboardDetailPage({
                      <>
                      <Separator className="my-6" />
                       <div className="space-y-2">
-                        <h3 className="font-semibold">Digital Screen Info</h3>
-                        <div className="text-base text-muted-foreground">
+                        <h3 className="font-semibold text-base md:text-lg">Digital Screen Info</h3>
+                        <div className="text-sm md:text-base text-muted-foreground">
                             <p>Slots Available: 10 of 10</p>
                             <p>Ad Duration: 25 seconds</p>
                         </div>
