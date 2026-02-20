@@ -14,6 +14,8 @@ import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
+  { href: "#", label: "For Advertisers" },
+  { href: "#", label: "For Vendors" },
   { href: "/dashboard", label: "Dashboard" },
 ];
 
@@ -21,19 +23,28 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
       <nav className="container flex h-20 items-center justify-between gap-4">
-        <div className="hidden md:flex">
-          <Link href="/" className="flex items-center">
+        <div className="flex items-center gap-6">
+          <Link href="/" className="items-center hidden md:flex">
             <OwareLogo />
           </Link>
+          <div className="hidden md:flex items-center gap-2">
+             {navLinks.slice(0,3).map((link) => (
+                <Button key={link.href} variant="ghost" asChild>
+                    <Link href={link.href} className="font-semibold text-base">
+                        {link.label}
+                    </Link>
+                </Button>
+              ))}
+          </div>
         </div>
         
         <div className="hidden items-center gap-2 md:flex">
           <Button variant="ghost" asChild>
               <Link
-                href="#"
+                href="/dashboard"
                 className="font-semibold text-base"
               >
-                List a billboard
+                Dashboard
               </Link>
             </Button>
           <Button variant="ghost" asChild>

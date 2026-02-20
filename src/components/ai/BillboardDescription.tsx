@@ -62,5 +62,5 @@ export function BillboardDescription({ billboard }: BillboardDescriptionProps) {
     );
   }
 
-  return <p className="max-w-prose text-base">{description}</p>;
+  return <div className="max-w-prose text-base"><p>{description}</p></div>;
 }
