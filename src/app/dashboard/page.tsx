@@ -1,4 +1,6 @@
 import { StatCards } from "@/components/dashboard/StatCards";
+import { RevenueChart } from "@/components/dashboard/RevenueChart";
+import { RecentBookingsTable } from "@/components/dashboard/RecentBookingsTable";
 
 export default function DashboardPage() {
   return (
@@ -14,19 +16,12 @@ export default function DashboardPage() {
 
       <StatCards />
 
-      {/* Placeholder for future charts and tables */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="h-96 rounded-lg border bg-card p-4">
-          <h3 className="font-semibold">Revenue Over Time</h3>
-          <div className="flex h-full items-center justify-center text-muted-foreground">
-            Chart coming soon
-          </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        <div className="lg:col-span-3">
+            <RevenueChart />
         </div>
-        <div className="h-96 rounded-lg border bg-card p-4">
-          <h3 className="font-semibold">Recent Bookings</h3>
-          <div className="flex h-full items-center justify-center text-muted-foreground">
-            Table coming soon
-          </div>
+        <div className="lg:col-span-2">
+            <RecentBookingsTable />
         </div>
       </div>
     </div>

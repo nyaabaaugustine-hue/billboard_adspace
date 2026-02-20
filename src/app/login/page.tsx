@@ -14,6 +14,14 @@ import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { OwareLogo } from "@/components/icons/OwareLogo";
+
+const GoogleIcon = () => (
+    <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+      <path fill="currentColor" d="M488 261.8C488 403.3 381.5 512 244 512 109.8 512 0 402.2 0 261.8 0 122.4 109.8 11.8 244 11.8c70.3 0 129.8 27.8 174.3 71.9l-64.8 64.8C322.8 113.2 286.1 97.4 244 97.4c-85.2 0-154.2 68.8-154.2 153.4s69 153.4 154.2 153.4c97.9 0 134.8-66.2 140.2-101.4H244v-79.2h244c2.8 13.9 4.1 28.5 4.1 44.1z"></path>
+    </svg>
+);
+
 
 export default function LoginPage() {
   const bgImage = PlaceHolderImages.find((img) => img.id === "hero-1");
@@ -31,30 +39,47 @@ export default function LoginPage() {
             data-ai-hint={bgImage.imageHint}
           />
         )}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 flex h-full items-center justify-center p-4">
-          <Card className="w-full max-w-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">Login</CardTitle>
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-4">
+                <OwareLogo />
+              </div>
+              <CardTitle className="text-2xl">Welcome Back</CardTitle>
               <CardDescription>
-                Enter your email below to login to your account.
+                Sign in to access your dashboard and manage your campaigns.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
+               <div className="grid grid-cols-1 gap-4">
+                  <Button variant="outline"><GoogleIcon /> Login with Google</Button>
+               </div>
+               <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                  </div>
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" required />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    <Link href="#" className="ml-auto inline-block text-sm underline">Forgot your password?</Link>
+                </div>
                 <Input id="password" type="password" required />
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col">
+            <CardFooter className="flex flex-col gap-4">
               <Button className="w-full">Sign in</Button>
-              <p className="mt-4 text-center text-sm text-muted-foreground">
+              <p className="text-center text-sm text-muted-foreground">
                 Don&apos;t have an account?{" "}
-                <Link href="/signup" className="underline">
+                <Link href="/signup" className="underline font-semibold text-foreground">
                   Sign up
                 </Link>
               </p>

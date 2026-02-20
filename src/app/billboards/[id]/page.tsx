@@ -3,11 +3,11 @@ import { billboards, regions, vendors } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun, Star } from "lucide-react";
+import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun, Star, Share2 } from "lucide-react";
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
 import { BookingDialog } from "@/components/booking/BookingDialog";
@@ -39,12 +39,12 @@ export default function BillboardDetailPage({
 
   const descriptionContent =
     billboard.id === "bb-acc-011" ? (
-      <div>
-        <p className="text-lg text-muted-foreground">
+      <div className="prose dark:prose-invert max-w-none text-muted-foreground">
+        <p className="text-lg">
           Reach thousands daily with a 25-sec ad on our digital screen at one of
           Legon’s busiest entrances.
         </p>
-        <ul className="mt-4 space-y-2 text-muted-foreground">
+        <ul className="mt-4 space-y-2">
           <li>
             🎯{" "}
             <span className="font-semibold text-foreground">Audience:</span>{" "}
@@ -84,126 +84,106 @@ export default function BillboardDetailPage({
       case 'Rented':
         return <Badge variant="secondary">Rented</Badge>;
       default:
-        return <Badge className="border-green-300 bg-green-100 text-green-800 dark:border-green-700 dark:bg-green-900/50 dark:text-green-300">Available for Booking</Badge>;
+        return <Badge className="border-green-300 bg-green-100 text-green-800 dark:border-green-700 dark:bg-green-900/50 dark:text-green-300">Available</Badge>;
     }
   };
 
   return (
     <div className="bg-background text-foreground">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="px-0 hover:bg-transparent">
-            <Link href="/" className="flex items-center text-base">
+        <div className="mb-4">
+          <Button variant="ghost" asChild>
+            <Link href="/billboards" className="flex items-center text-base">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
+              Back to Billboards
             </Link>
           </Button>
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
           <div className="lg:col-span-2">
-            <div className="mb-4 lg:hidden">
-              <h1 className="text-3xl font-extrabold">{billboard.title}</h1>
-              <div className="mt-4 flex gap-2">
-                <BookingDialog billboard={billboard} />
-                <Button className="w-full" size="lg" variant="outline">
-                  Browse More
-                </Button>
+            <Card className="overflow-hidden border shadow-sm">
+              <div className="aspect-[4/3] relative">
+                <Image
+                  src={billboard.imageUrl}
+                  alt={billboard.title}
+                  fill
+                  className="object-cover"
+                  data-ai-hint="billboard image"
+                  priority
+                />
               </div>
-            </div>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <Image
-                src={billboard.imageUrl}
-                alt={billboard.title}
-                width={800}
-                height={600}
-                className="h-auto w-full object-cover"
-                data-ai-hint="billboard image"
-                priority
-              />
             </Card>
 
-            <div className="mt-8 hidden justify-between lg:flex">
-              <h1 className="text-4xl font-extrabold">{billboard.title}</h1>
-              <div className="flex gap-2">
-                <BookingDialog billboard={billboard} />
-                <Button size="lg" variant="outline">
-                  Browse More
-                </Button>
+            <div className="mt-8">
+              <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start">
+                  <div>
+                    <Badge variant="secondary" className="text-sm">{billboard.type}</Badge>
+                    <h1 className="text-3xl lg:text-4xl font-extrabold mt-2">{billboard.title}</h1>
+                    <p className="text-lg text-muted-foreground mt-1">{billboard.address}, {billboard.city}, {regionName}</p>
+                  </div>
+                  <div className="flex gap-2 mb-4 md:mb-0">
+                    <Button variant="outline" size="icon"><Share2 /></Button>
+                    <BookingDialog billboard={billboard} />
+                </div>
               </div>
             </div>
-
-            <div className="mt-8">
-              <h2 className="text-2xl font-bold">Description</h2>
-              <div className="mt-4">{descriptionContent}</div>
-            </div>
-
+            
             <Separator className="my-8" />
 
-            <div>
-              <h2 className="text-2xl font-bold">Share this Billboard</h2>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Button variant="outline">
-                  <Copy className="mr-2" /> Copy Link
-                </Button>
-                <Button variant="outline">
-                  <Facebook className="mr-2" /> Facebook
-                </Button>
-                <Button variant="outline">
-                  <Twitter className="mr-2" /> Twitter
-                </Button>
-                <Button variant="outline">
-                  <Linkedin className="mr-2" /> LinkedIn
-                </Button>
-                <Button variant="outline">
-                  WhatsApp
-                </Button>
-              </div>
+            <div className="space-y-8">
+                <div>
+                    <h2 className="text-2xl font-bold">Description</h2>
+                    <div className="mt-4">{descriptionContent}</div>
+                </div>
+                {vendor && (
+                    <div>
+                        <h2 className="text-2xl font-bold">Vendor Information</h2>
+                        <Card className="mt-4">
+                            <CardHeader className="flex flex-row items-center gap-4">
+                                <Image src={vendor.imageUrl} alt={vendor.name} width={64} height={64} className="rounded-md" data-ai-hint="company logo" />
+                                <div>
+                                    <CardTitle>{vendor.name}</CardTitle>
+                                    <CardDescription>{vendor.serviceType}</CardDescription>
+                                </div>
+                            </CardHeader>
+                        </Card>
+                    </div>
+                )}
             </div>
+
           </div>
 
           <div className="lg:col-span-1">
-            <Card className="sticky top-24 rounded-2xl shadow-lg">
+            <Card className="sticky top-24 shadow-lg">
               <CardHeader>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary" className="text-sm">
-                    {billboard.type}
-                  </Badge>
-                  {getStatusBadge()}
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">Price</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-price">
+                      GH₵{billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </span>
+                    <span className="text-base font-medium text-muted-foreground">/month</span>
+                  </div>
                 </div>
-                <CardTitle className="pt-4 text-2xl">{billboard.title}</CardTitle>
-                {vendor && (
-                  <p className="text-muted-foreground">
-                    by{" "}
-                    <Link href="#" className="font-semibold text-primary hover:underline">
-                      {vendor.name}
-                    </Link>
-                  </p>
-                )}
               </CardHeader>
               <CardContent>
-                <Separator className="mb-6" />
+                <BookingDialog billboard={billboard} />
+                <Separator className="my-6" />
+                <h3 className="font-semibold mb-4">Billboard Details</h3>
                 <div className="space-y-5 text-base">
                    <div className="flex items-start">
                     <CheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
-                        <span className="font-semibold">Booking Status</span>
+                        <span className="font-semibold">Status</span>
                         <p className="text-muted-foreground">{billboard.status}</p>
-                    </div>
-                   </div>
-                   <div className="flex items-start">
-                    <MapPin className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
-                    <div>
-                        <span className="font-semibold">Location</span>
-                        <p className="text-muted-foreground">{billboard.address}, {billboard.city}, {regionName}</p>
                     </div>
                    </div>
                    <div className="flex items-start">
                     <Maximize className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
                         <span className="font-semibold">Dimensions</span>
-                        <p className="text-muted-foreground">{billboard.size} (landscape)</p>
+                        <p className="text-muted-foreground">{billboard.size}</p>
                     </div>
                    </div>
                    <div className="flex items-start">
@@ -235,25 +215,16 @@ export default function BillboardDetailPage({
                     </div>
                    </div>
                 </div>
-                <Separator className="my-6" />
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Price</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-price">
-                      GH₵ {billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                    </span>
-                    <span className="text-base font-medium text-muted-foreground">/month</span>
-                  </div>
-                </div>
                 {billboard.isDigital && (
                      <>
                      <Separator className="my-6" />
-                     <div className="space-y-2">
-                       <h3 className="text-lg font-semibold">Availability</h3>
-                       <p className="text-base text-muted-foreground">
-                         10 of 10 slots available
-                       </p>
-                     </div>
+                      <div className="space-y-2">
+                        <h3 className="font-semibold">Digital Screen Info</h3>
+                        <div className="text-base text-muted-foreground">
+                            <p>Slots Available: 10 of 10</p>
+                            <p>Ad Duration: 25 seconds</p>
+                        </div>
+                      </div>
                    </>
                 )}
               </CardContent>
