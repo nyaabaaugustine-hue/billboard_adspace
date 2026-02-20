@@ -36,9 +36,12 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
         <div className="flex flex-col justify-between flex-1 relative">
             {getStatusBadge()}
           <div>
-            <p className="text-xl font-bold text-primary pt-10">
-              GH₵ {billboard.pricePerMonth.toLocaleString()} / Monthly
-            </p>
+            <div className="flex items-baseline gap-1 pt-10">
+                <span className="text-2xl font-bold text-accent">
+                    GH₵ {billboard.pricePerMonth.toLocaleString()}
+                </span>
+                <span className="text-sm text-muted-foreground">/ Monthly</span>
+            </div>
             <h3 className="text-2xl font-semibold text-foreground group-hover:underline mt-1">
               {billboard.title}
             </h3>
