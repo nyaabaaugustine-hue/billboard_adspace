@@ -1,27 +1,13 @@
-import type { SVGProps } from "react";
+import Image from 'next/image';
 
-export function OwareLogo(props: SVGProps<SVGSVGElement>) {
+export function OwareLogo({ width, height }: { width?: number; height?: number }) {
   return (
-    <div className="flex items-center justify-center gap-2" >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-      >
-        <circle cx="6" cy="12" r="3" fill="hsl(var(--primary))" />
-        <circle cx="12" cy="12" r="3" fill="hsl(var(--accent))" />
-        <circle cx="18" cy="12" r="3" fill="hsl(var(--primary))" />
-      </svg>
-      <span className="self-center whitespace-nowrap font-headline text-2xl font-semibold text-foreground">
-        Oware<span className="text-primary">Ads</span>
-      </span>
-    </div>
+    <Image
+      src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613078/ChatGPT_Image_Feb_20_2026_06_35_49_PM_rneszg.png"
+      alt="OwareAds Logo"
+      width={width || 140}
+      height={height || 35}
+      priority
+    />
   );
 }
