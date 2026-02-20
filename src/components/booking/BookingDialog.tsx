@@ -35,6 +35,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
+import { OwareLogo } from '../icons/OwareLogo';
 
 const bookingFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -81,10 +82,13 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px] bg-card">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">
+          <div className="mx-auto mb-4">
+            <OwareLogo />
+          </div>
+          <DialogTitle className="text-2xl font-bold text-center">
             Book: {billboard.title}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-center">
             Complete the form below to submit your booking request.
           </DialogDescription>
         </DialogHeader>
