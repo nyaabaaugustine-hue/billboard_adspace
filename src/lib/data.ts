@@ -446,7 +446,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-05-21T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra15/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613078/c_cru7cl.jpg",
     vendorId: "ven-003",
   },
   {
@@ -468,7 +468,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-05-22T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra16/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/adfd_aiwbkv.jpg",
     vendorId: "ven-001",
   },
   {
@@ -490,7 +490,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-05-23T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra17/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/gh_wrpkun.jpg",
     vendorId: "ven-002",
   },
 ];

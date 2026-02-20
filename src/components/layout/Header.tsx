@@ -22,7 +22,7 @@ export function Header() {
       <nav className="container flex h-20 items-center justify-between gap-4">
         <div className="hidden md:flex">
           <Link href="/" className="flex items-center">
-            <OwareLogo height={32} width={128} />
+            <OwareLogo height={30} width={120} />
           </Link>
         </div>
         
@@ -49,7 +49,7 @@ export function Header() {
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between w-full">
             <Link href="/" className="flex items-center">
-                <OwareLogo height={32} width={128} />
+                <OwareLogo height={30} width={120} />
             </Link>
             <Sheet>
             <SheetTrigger asChild>
@@ -61,7 +61,7 @@ export function Header() {
             <SheetContent side="right">
               <SheetHeader>
                 <Link href="/" className="flex items-center">
-                  <OwareLogo height={32} width={128} />
+                  <OwareLogo height={30} width={120} />
                 </Link>
               </SheetHeader>
               <div className="mt-8 flex flex-col gap-4">

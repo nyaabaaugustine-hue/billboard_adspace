@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center">
-            <OwareLogo height={32} width={128} />
+            <OwareLogo height={30} width={120} />
           </div>
           <p className="text-center text-sm text-muted-foreground">
             © {new Date().getFullYear()} OwareAds. All rights reserved.
