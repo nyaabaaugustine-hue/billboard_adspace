@@ -3,7 +3,7 @@ import Image from 'next/image';
 export function OwareLogo({ width, height }: { width?: number; height?: number }) {
   return (
     <Image
-      src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613078/ChatGPT_Image_Feb_20_2026_06_35_49_PM_rneszg.png"
+      src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771617987/cv_euqiu3.png"
       alt="OwareAds Logo"
       width={width || 64}
       height={height || 16}
