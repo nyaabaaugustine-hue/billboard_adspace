@@ -314,7 +314,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-02-22T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra9/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/b415e38c-3345-4a12-89a1-696ce0dd929b-650x400_zza5m4.jpg",
     vendorId: "ven-003",
   },
   {
@@ -336,7 +336,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-04-01T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra10/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/TXOX5211-650x400_tlm1a3.jpg",
     vendorId: "ven-004",
   },
   {
@@ -358,7 +358,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-01-05T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra11/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/MANHYIA-600x400_hfvzqd.jpg",
     vendorId: "ven-004",
   },
   {
@@ -380,7 +380,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-10-10T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra12/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/IMG_0144-600x400_qbjtud.jpg",
     vendorId: "ven-001",
   },
   {
@@ -402,7 +402,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-03-18T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra13/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/IMG_0905-650x400_km6jxl.jpg",
     vendorId: "ven-004",
   },
   {
@@ -424,7 +424,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-05-20T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra14/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/78002aea-afac-4e23-8492-bb16dbf3621c_o2iypu.jpg",
     vendorId: "ven-002",
   },
   {

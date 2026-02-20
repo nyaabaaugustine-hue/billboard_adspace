@@ -47,7 +47,7 @@ export function PartnerVendors() {
                         alt={vendor.name}
                         width={120}
                         height={80}
-                        className="object-contain flex-grow"
+                        className="object-contain"
                         data-ai-hint="company logo"
                       />
                       <p className="mt-4 text-center font-semibold text-sm text-foreground">{vendor.name}</p>
