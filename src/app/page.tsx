@@ -11,6 +11,7 @@ import { RecentBillboards } from "@/components/home/RecentBillboards";
 import { PartnerVendors } from "@/components/home/PartnerVendors";
 import { type SearchFilters } from '@/components/home/SmartSearchBar';
 import { Testimonials } from '@/components/home/Testimonials';
+import { AsibiFab } from '@/components/ai/AsibiFab';
 
 export default function Home() {
   const [displayBillboards, setDisplayBillboards] = useState(billboards);
@@ -108,6 +109,7 @@ export default function Home() {
         <RecentBillboards />
         <PartnerVendors />
         <Testimonials />
+        <AsibiFab />
       </main>
       <Footer />
     </div>
