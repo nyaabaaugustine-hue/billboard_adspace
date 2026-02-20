@@ -9,8 +9,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Search } from "lucide-react";
-import { Input } from "../ui/input";
+import { Menu } from "lucide-react";
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
@@ -19,40 +18,32 @@ const navLinks = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
       <nav className="container flex h-20 items-center justify-between gap-4">
         <div className="hidden md:flex">
           <Link href="/" className="flex items-center">
             <OwareLogo className="h-8 w-8 text-primary" />
           </Link>
         </div>
-
-        <div className="hidden md:flex items-center justify-center flex-1">
-          <div className="w-full max-w-md rounded-full border shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center">
-              <Input
-                type="search"
-                placeholder="Search destinations"
-                className="flex-1 bg-transparent pl-6 pr-4 border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-l-full"
-              />
-              <Button type="submit" size="icon" className="rounded-full bg-primary h-8 w-8 mr-2">
-                <Search className="h-4 w-4 text-primary-foreground" />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-
+        
         <div className="hidden items-center gap-2 md:flex">
           <Button variant="ghost" asChild>
               <Link
                 href="#"
-                className="font-semibold"
+                className="font-semibold text-base"
               >
                 List a billboard
               </Link>
             </Button>
-          <Button>Login</Button>
+          <Button variant="ghost" asChild>
+              <Link
+                href="#"
+                className="font-semibold text-base"
+              >
+                Login
+              </Link>
+            </Button>
+          <Button size="lg" className="rounded-full font-bold text-base">Sign Up</Button>
         </div>
 
         {/* Mobile Header */}
@@ -91,7 +82,8 @@ export function Header() {
                         List a billboard
                     </Link>
                 </Button>
-                <Button className="mt-4 w-full">Login</Button>
+                <Button className="mt-4 w-full text-lg h-12">Login</Button>
+                <Button variant="secondary" className="mt-2 w-full text-lg h-12">Sign Up</Button>
               </div>
             </SheetContent>
           </Sheet>

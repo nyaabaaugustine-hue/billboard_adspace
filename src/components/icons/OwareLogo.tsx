@@ -19,7 +19,7 @@ export function OwareLogo(props: SVGProps<SVGSVGElement>) {
         <circle cx="12" cy="12" r="3" fill="hsl(var(--accent))" />
         <circle cx="18" cy="12" r="3" fill="hsl(var(--primary))" />
       </svg>
-      <span className="self-center whitespace-nowrap font-headline text-2xl font-semibold text-black">
+      <span className="self-center whitespace-nowrap font-headline text-2xl font-semibold text-foreground">
         Oware<span className="text-primary">Ads</span>
       </span>
     </div>
