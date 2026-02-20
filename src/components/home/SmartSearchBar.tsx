@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { BillboardType } from "@/lib/types";
+import { Separator } from "../ui/separator";
 
 const billboardTypes: BillboardType[] = ["Digital LED", "Gantry", "Unipole", "Wall"];
 
@@ -34,29 +35,31 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
 
   return (
     <div className="mt-4 w-full max-w-4xl">
-      <div className="grid grid-cols-1 md:grid-cols-10 items-center gap-px rounded-md bg-background/80 backdrop-blur-md p-2 shadow-2xl border border-border">
-        <div className="relative md:col-span-4">
-          <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <div className="flex h-16 items-center rounded-md bg-black/20 backdrop-blur-md p-2 shadow-2xl border border-white/20">
+        <div className="relative flex-grow h-full flex items-center">
+          <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-300" />
           <Input
             type="text"
-            placeholder="Search by city, region or address..."
-            className="h-14 w-full rounded-none bg-transparent pl-12 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            placeholder="Search by city, region..."
+            className="h-full w-full bg-transparent text-white placeholder:text-stone-300 pl-12 text-base border-none rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="relative md:col-span-2">
+        <Separator orientation="vertical" className="h-8 bg-white/20" />
+
+        <div className="relative h-full flex items-center">
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"ghost"}
                   className={cn(
-                    "h-14 w-full justify-start text-left font-normal pl-12 hover:bg-transparent text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none",
-                    !date && "text-muted-foreground"
+                    "h-full w-48 justify-start text-left font-normal px-12 hover:bg-black/20 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none text-white",
+                    !date && "text-stone-300"
                   )}
                 >
-                  <CalendarIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <CalendarIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-300" />
                   {date ? format(date, "PPP") : <span>Date</span>}
                 </Button>
               </PopoverTrigger>
@@ -71,10 +74,12 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
             </Popover>
         </div>
         
-        <div className="relative md:col-span-3">
-             <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
+        <Separator orientation="vertical" className="h-8 bg-white/20" />
+        
+        <div className="relative h-full flex items-center">
+             <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-300 z-10" />
             <Select onValueChange={setType} value={type}>
-                <SelectTrigger className="h-14 w-full bg-transparent pl-12 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none data-[placeholder]:text-muted-foreground">
+                <SelectTrigger className="h-full w-48 bg-transparent pl-12 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none data-[placeholder]:text-stone-300 text-white hover:bg-black/20">
                     <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -84,11 +89,9 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
             </Select>
         </div>
 
-        <div className="md:col-span-1 flex items-center justify-end h-14">
-            <Button type="submit" size="icon" className="rounded-md bg-primary h-12 w-12 shrink-0" onClick={handleSearchClick}>
-                <Search className="h-6 w-6 text-primary-foreground" />
-            </Button>
-        </div>
+        <Button type="submit" size="icon" className="bg-primary h-12 w-12 shrink-0 ml-2" onClick={handleSearchClick}>
+            <Search className="h-6 w-6 text-primary-foreground" />
+        </Button>
       </div>
     </div>
   );
