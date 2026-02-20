@@ -25,9 +25,9 @@ const navLinks = [
 ];
 
 const dashboardLinks = [
-    { href: "/dashboard", label: "Admin Dashboard" },
-    { href: "/vendor-dashboard", label: "Vendor Dashboard" },
-    { href: "/user-dashboard", label: "User Dashboard" },
+    { href: "/dashboard/admin", label: "Admin Dashboard" },
+    { href: "/dashboard/vendor", label: "Vendor Dashboard" },
+    { href: "/dashboard/user", label: "User Dashboard" },
 ]
 
 export function Header() {
@@ -114,15 +114,21 @@ export function Header() {
                       {link.label}
                     </Link>
                   ))}
-                   {dashboardLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="rounded-md p-2 text-base font-medium hover:bg-muted"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
+                   <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="font-semibold text-base justify-between">
+                        Dashboards <ChevronDown className="ml-2 h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        {dashboardLinks.map(link => (
+                            <DropdownMenuItem key={link.href} asChild>
+                                <Link href={link.href}>{link.label}</Link>
+                            </DropdownMenuItem>
+                        ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
                   <Button variant="ghost" asChild>
                       <Link
                           href="#"
