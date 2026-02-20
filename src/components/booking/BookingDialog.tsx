@@ -153,7 +153,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
                 render={({ field }) => (
                   <FormItem className="col-span-2 flex flex-col">
                     <FormLabel>Requested Start Date</FormLabel>
-                    <Popover>
+                    <Popover modal={true}>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
