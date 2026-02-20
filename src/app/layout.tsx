@@ -3,6 +3,18 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Alegreya, Belleza } from "next/font/google";
+
+const belleza = Belleza({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-belleza",
+});
+
+const alegreya = Alegreya({
+  subsets: ["latin"],
+  variable: "--font-alegreya",
+});
 
 export const metadata: Metadata = {
   title: "OwareAds - Ghana's Billboard & Advertising Ecosystem",
@@ -18,20 +30,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613514/ChatGPT_Image_Feb_20_2026_06_51_05_PM_fdqymq.png" sizes="any" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
+          rel="icon"
+          href="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613514/ChatGPT_Image_Feb_20_2026_06_51_05_PM_fdqymq.png"
+          sizes="any"
         />
       </head>
       <body
-        className={cn("font-body antialiased", "min-h-screen bg-background")}
+        className={cn(
+          "min-h-screen bg-background font-body antialiased",
+          belleza.variable,
+          alegreya.variable
+        )}
       >
         <ThemeProvider
           attribute="class"

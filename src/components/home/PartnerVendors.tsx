@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -41,7 +40,7 @@ export function PartnerVendors() {
             <CarouselContent className="-ml-4">
               {vendors.map((vendor) => (
                 <CarouselItem key={vendor.id} className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <div className="flex flex-col items-center justify-center p-4 aspect-[3/2] bg-card rounded-2xl border transition-shadow hover:shadow-lg">
+                  <div className="flex flex-col items-center justify-center p-4 aspect-[3/2] bg-card rounded-md border transition-shadow hover:shadow-lg">
                       <Image
                         src={vendor.imageUrl}
                         alt={vendor.name}
