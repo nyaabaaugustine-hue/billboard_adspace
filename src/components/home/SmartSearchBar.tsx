@@ -35,13 +35,13 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
 
   return (
     <div className="mt-4 w-full max-w-4xl">
-      <div className="flex h-auto flex-col gap-2 rounded-lg bg-black/20 p-2 shadow-2xl backdrop-blur-md border border-white/20 md:h-16 md:flex-row md:gap-0">
-        <div className="relative flex h-12 flex-grow items-center md:h-full">
+      <div className="flex h-auto flex-col gap-2 rounded-xl bg-black/20 p-2 shadow-2xl backdrop-blur-md border border-white/20 md:h-16 md:flex-row md:items-center md:gap-0 md:p-1 md:rounded-full">
+        <div className="relative flex-grow">
           <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-300" />
           <Input
             type="text"
             placeholder="Search by city, region..."
-            className="h-full w-full rounded-md border-none bg-transparent pl-12 text-base text-white placeholder:text-stone-300 focus-visible:ring-0 focus-visible:ring-offset-0 md:rounded-none"
+            className="h-12 w-full rounded-lg border-none bg-transparent pl-11 text-base text-white placeholder:text-stone-300 focus-visible:ring-0 focus-visible:ring-offset-0 md:h-full md:rounded-l-full md:rounded-r-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -49,17 +49,17 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
 
         <Separator orientation="vertical" className="h-8 bg-white/20 hidden md:block" />
 
-        <div className="relative flex h-12 items-center md:h-full md:w-48">
+        <div className="relative md:w-48">
+          <CalendarIcon className="absolute left-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-stone-300" />
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"ghost"}
                   className={cn(
-                    "h-full w-full justify-start rounded-md border-none px-12 text-left text-base font-normal text-white hover:bg-black/20 focus-visible:ring-0 focus-visible:ring-offset-0 md:rounded-none",
+                    "h-12 w-full justify-start rounded-lg border-none bg-transparent pl-11 text-left text-base font-normal text-white hover:bg-black/20 focus-visible:ring-0 focus-visible:ring-offset-0 md:h-full md:rounded-none",
                     !date && "text-stone-300"
                   )}
                 >
-                  <CalendarIcon className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-300" />
                   {date ? format(date, "PPP") : <span>Date</span>}
                 </Button>
               </PopoverTrigger>
@@ -76,10 +76,10 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
         
         <Separator orientation="vertical" className="h-8 bg-white/20 hidden md:block" />
         
-        <div className="relative flex h-12 items-center md:h-full md:w-48">
+        <div className="relative md:w-48">
              <Building className="absolute left-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-stone-300" />
             <Select onValueChange={setType} value={type}>
-                <SelectTrigger className="h-full w-full rounded-md border-none bg-transparent pl-12 text-base text-white hover:bg-black/20 data-[placeholder]:text-stone-300 focus-visible:ring-0 focus-visible:ring-offset-0 md:rounded-none">
+                <SelectTrigger className="h-12 w-full rounded-lg border-none bg-transparent pl-11 text-base text-white hover:bg-black/20 data-[placeholder]:text-stone-300 focus-visible:ring-0 focus-visible:ring-offset-0 md:h-full md:rounded-none">
                     <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -89,7 +89,7 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
             </Select>
         </div>
 
-        <Button type="submit" size="icon" className="h-12 w-full shrink-0 bg-primary md:ml-2 md:w-12" onClick={handleSearchClick}>
+        <Button type="submit" className="h-12 w-full shrink-0 rounded-lg bg-primary md:w-14 md:rounded-r-full md:rounded-l-none" onClick={handleSearchClick}>
             <Search className="h-6 w-6 text-primary-foreground" />
         </Button>
       </div>

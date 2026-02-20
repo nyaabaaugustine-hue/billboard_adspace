@@ -100,10 +100,10 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero onSearch={handleSearch} />
+        <WhyChooseUs />
         <div id="billboard-results" className="container mx-auto scroll-mt-20 px-4 py-16">
           <BillboardGrid billboards={displayBillboards} title={gridTitle} />
         </div>
-        <WhyChooseUs />
         <RecentBillboards />
         <PartnerVendors />
       </main>
