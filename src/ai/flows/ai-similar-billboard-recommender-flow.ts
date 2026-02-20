@@ -67,7 +67,7 @@ Current Billboard Details:
 - Title: {{{currentBillboard.title}}}
 - Type: {{{currentBillboard.type}}}
 - Size: {{{currentBillboard.size}}}
-- Price Per Month: {{{currentBillboard.pricePerMonth}}} GHS
+- Price Per Month: {{{currentBillboard.pricePerMonth}}} GH₵
 - City: {{{currentBillboard.city}}}
 - Address: {{{currentBillboard.address}}}
 - Latitude: {{{currentBillboard.latitude}}}

@@ -47,7 +47,7 @@ export function BillboardCard({ billboard }: BillboardCardProps) {
         </div>
        </div>
        <p className="mt-2 text-base font-medium text-foreground">
-            <span className="font-bold">GHS {billboard.pricePerMonth.toLocaleString()}</span> / month
+            <span className="font-bold">GH₵ {billboard.pricePerMonth.toLocaleString()}</span> / month
         </p>
     </Link>
   );

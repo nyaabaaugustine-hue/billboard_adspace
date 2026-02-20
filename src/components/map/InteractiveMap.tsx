@@ -53,7 +53,7 @@ export default function InteractiveMap({ billboards }: InteractiveMapProps) {
                 </h3>
                 <p className="text-sm text-muted-foreground">{billboard.city}</p>
                 <p className="font-sans text-base font-semibold text-accent">
-                  GHS {billboard.pricePerMonth.toLocaleString()}{" "}
+                  GH₵ {billboard.pricePerMonth.toLocaleString()}{" "}
                   <span className="text-xs font-normal text-muted-foreground">
                     / month
                   </span>

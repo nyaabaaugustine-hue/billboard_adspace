@@ -13,7 +13,7 @@ import {z} from 'genkit';
 // Input Schema
 const AiCampaignLocationRecommenderInputSchema = z.object({
   targetAudience: z.string().describe('A detailed description of the target audience for the campaign (e.g., age, interests, income level, location preferences).'),
-  budget: z.string().describe('A description of the campaign budget (e.g., "low", "medium", "high", or a specific range like "GHC 5000-10000 per month").'),
+  budget: z.string().describe('A description of the campaign budget (e.g., "low", "medium", "high", or a specific range like "GH₵ 5000-10000 per month").'),
   campaignGoals: z.string().describe('A detailed description of the campaign goals (e.g., "increase brand awareness by 20%", "drive foot traffic to new store in Accra", "generate leads for online courses").'),
   availableLocations: z.array(z.object({
     id: z.string().describe('Unique identifier for the billboard.'),
@@ -36,9 +36,9 @@ const AiCampaignLocationRecommenderOutputSchema = z.object({
   })).describe('A list of recommended locations for billboard placement.'),
   generalAdvice: z.string().describe('General advice and insights to maximize the effectiveness of the outdoor advertising campaign.'),
   suggestedPricingRange: z.object({
-    min: z.number().describe('Suggested minimum price per month for billboards in the recommended locations, in GHC.'),
-    max: z.number().describe('Suggested maximum price per month for billboards in the recommended locations, in GHC.'),
-  }).optional().describe('An optional suggested pricing range (GHC per month) for billboards in the recommended locations, for admin internal reference. This is not for automatic pricing.'),
+    min: z.number().describe('Suggested minimum price per month for billboards in the recommended locations, in GH₵.'),
+    max: z.number().describe('Suggested maximum price per month for billboards in the recommended locations, in GH₵.'),
+  }).optional().describe('An optional suggested pricing range (GH₵ per month) for billboards in the recommended locations, for admin internal reference. This is not for automatic pricing.'),
 });
 export type AiCampaignLocationRecommenderOutput = z.infer<typeof AiCampaignLocationRecommenderOutputSchema>;
 

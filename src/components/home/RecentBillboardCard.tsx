@@ -37,7 +37,7 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
             {getStatusBadge()}
           <div>
             <p className="text-xl font-bold text-primary pt-10">
-              GHS {billboard.pricePerMonth.toLocaleString()} / Monthly
+              GH₵ {billboard.pricePerMonth.toLocaleString()} / Monthly
             </p>
             <h3 className="text-2xl font-semibold text-foreground group-hover:underline mt-1">
               {billboard.title}

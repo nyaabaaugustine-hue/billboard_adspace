@@ -9,7 +9,7 @@ import { DollarSign, Megaphone, Briefcase, Users } from "lucide-react";
 const stats = [
   {
     title: "Total Revenue",
-    value: "GHS 1,250,000",
+    value: "GH₵ 1,250,000",
     change: "+12.5% from last month",
     icon: DollarSign,
   },

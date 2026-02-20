@@ -38,13 +38,15 @@ export function Header() {
             </Button>
           <Button variant="ghost" asChild>
               <Link
-                href="#"
+                href="/login"
                 className="font-semibold text-base"
               >
                 Login
               </Link>
             </Button>
-          <Button size="lg" className="rounded-full font-bold text-base">Sign Up</Button>
+          <Button size="lg" className="rounded-full font-bold text-base" asChild>
+            <Link href="/signup">Sign Up</Link>
+          </Button>
           <ThemeToggle />
         </div>
 
@@ -86,8 +88,12 @@ export function Header() {
                           List a billboard
                       </Link>
                   </Button>
-                  <Button className="mt-4 w-full text-lg h-12">Login</Button>
-                  <Button variant="secondary" className="mt-2 w-full text-lg h-12">Sign Up</Button>
+                  <Button asChild className="mt-4 w-full text-lg h-12">
+                    <Link href="/login">Login</Link>
+                  </Button>
+                  <Button asChild variant="secondary" className="mt-2 w-full text-lg h-12">
+                    <Link href="/signup">Sign Up</Link>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>

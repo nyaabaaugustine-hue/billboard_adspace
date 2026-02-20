@@ -27,8 +27,8 @@ export type AiPricingGuidanceInput = z.infer<typeof AiPricingGuidanceInputSchema
 
 // Output Schema
 const AiPricingGuidanceOutputSchema = z.object({
-  suggestedMinPricePerMonth: z.number().min(0).describe('The suggested minimum monthly price in GHS for the billboard.'),
-  suggestedMaxPricePerMonth: z.number().min(0).describe('The suggested maximum monthly price in GHS for the billboard.'),
+  suggestedMinPricePerMonth: z.number().min(0).describe('The suggested minimum monthly price in GH₵ for the billboard.'),
+  suggestedMaxPricePerMonth: z.number().min(0).describe('The suggested maximum monthly price in GH₵ for the billboard.'),
   rationale: z.string().describe('A detailed explanation for the suggested pricing range, considering all input factors.')
 });
 export type AiPricingGuidanceOutput = z.infer<typeof AiPricingGuidanceOutputSchema>;
@@ -39,7 +39,7 @@ const aiPricingGuidancePrompt = ai.definePrompt({
   input: { schema: AiPricingGuidanceInputSchema },
   output: { schema: AiPricingGuidanceOutputSchema },
   prompt: `You are an expert market analyst and pricing consultant specializing in outdoor advertising in Ghana.
-Your task is to provide a suggested monthly rental price range (in Ghanaian Cedis - GHS) for a billboard, along with a detailed rationale.
+Your task is to provide a suggested monthly rental price range (in Ghanaian Cedis - GH₵) for a billboard, along with a detailed rationale.
 The pricing suggestions are for an administrator to consider, NOT for automatic pricing.
 The suggested range should be competitive and profitable, taking into account the Ghanaian market context.
 
@@ -59,14 +59,14 @@ Consider these factors when determining the price range:
 4.  **Traffic and Visibility:** Higher traffic estimates and visibility scores directly correlate with higher advertising value.
 5.  **Market Conditions:** Acknowledge the general economic climate and advertising demand in Ghana.
 
-Provide a conservative yet realistic monthly price range in GHS.
+Provide a conservative yet realistic monthly price range in GH₵.
 Ensure the rationale clearly explains how each factor contributed to your suggestion.
 
 Example Output Format:
 {
   "suggestedMinPricePerMonth": 1500,
   "suggestedMaxPricePerMonth": 2500,
-  "rationale": "Based on a prime location in Accra, high traffic, and digital capabilities, a range of GHS 1500-2500 is suggested. The high visibility score further justifies the upper end of this range..."
+  "rationale": "Based on a prime location in Accra, high traffic, and digital capabilities, a range of GH₵ 1500-2500 is suggested. The high visibility score further justifies the upper end of this range..."
 }
 `
 });

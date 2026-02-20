@@ -11,6 +11,7 @@ import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChar
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
 import { BookingDialog } from "@/components/booking/BookingDialog";
+import { useEffect, useState } from "react";
 
 export default function BillboardDetailPage({
   params,
@@ -18,6 +19,16 @@ export default function BillboardDetailPage({
   params: { id: string };
 }) {
   const billboard = billboards.find((b) => b.id === params.id);
+  const [trafficLabel, setTrafficLabel] = useState('Daily Traffic');
+
+  useEffect(() => {
+    if (billboard) {
+      const label = (billboard.type === 'Unipole' || billboard.type === 'Gantry') && billboard.trafficEstimate > 150000 
+        ? 'Highway Exposure' 
+        : 'Daily Traffic';
+      setTrafficLabel(label);
+    }
+  }, [billboard]);
 
   if (!billboard) {
     notFound();
@@ -212,7 +223,7 @@ export default function BillboardDetailPage({
                    <div className="flex items-start">
                     <BarChart className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
-                        <span className="font-semibold">{(billboard.type === 'Unipole' || billboard.type === 'Gantry') && billboard.trafficEstimate > 150000 ? 'Highway Exposure' : 'Daily Traffic'}</span>
+                        <span className="font-semibold">{trafficLabel}</span>
                         <p className="text-muted-foreground">{billboard.trafficEstimate.toLocaleString()} est. daily views</p>
                     </div>
                    </div>
@@ -228,7 +239,7 @@ export default function BillboardDetailPage({
                 <div className="space-y-2">
                   <h3 className="text-lg font-semibold">Price</h3>
                   <p className="text-3xl font-bold text-primary">
-                    GHS {billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}/month
+                    GH₵ {billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}/month
                   </p>
                 </div>
                 {billboard.isDigital && (
