@@ -47,6 +47,11 @@ export function Header() {
                 Dashboard
               </Link>
             </Button>
+            <Button variant="outline" asChild>
+              <Link href="#" className="font-semibold text-base">
+                List a Billboard
+              </Link>
+            </Button>
           <Button variant="ghost" asChild>
               <Link
                 href="/login"
@@ -55,7 +60,7 @@ export function Header() {
                 Login
               </Link>
             </Button>
-          <Button size="lg" className="font-bold text-base" asChild>
+          <Button size="lg" className="font-bold text-base rounded-md" asChild>
             <Link href="/signup">Sign Up</Link>
           </Button>
           <ThemeToggle />

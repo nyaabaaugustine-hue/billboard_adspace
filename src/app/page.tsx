@@ -27,7 +27,7 @@ export default function Home() {
         );
     }
 
-    if (type) {
+    if (type && type !== 'all') {
         filtered = filtered.filter(billboard => billboard.type === type);
     }
     

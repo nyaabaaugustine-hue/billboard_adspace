@@ -40,7 +40,7 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
           <Input
             type="text"
             placeholder="Search by city, region or address..."
-            className="h-14 w-full rounded-md md:rounded-r-none bg-transparent pl-12 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="h-14 w-full rounded-none bg-transparent pl-12 text-base border-none focus-visible:ring-0 focus-visible:ring-offset-0"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -78,7 +78,7 @@ export function SmartSearchBar({ onSearch }: SmartSearchBarProps) {
                     <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="">All Types</SelectItem>
+                    <SelectItem value="all">All Types</SelectItem>
                     {billboardTypes.map(bt => <SelectItem key={bt} value={bt}>{bt}</SelectItem>)}
                 </SelectContent>
             </Select>
