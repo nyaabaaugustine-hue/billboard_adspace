@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Alegreya, Belleza } from "next/font/google";
+import { AppLoader } from "@/components/layout/AppLoader";
 
 const belleza = Belleza({
   subsets: ["latin"],
@@ -49,7 +50,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AppLoader>{children}</AppLoader>
           <Toaster />
         </ThemeProvider>
       </body>
