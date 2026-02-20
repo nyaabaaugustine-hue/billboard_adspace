@@ -13,23 +13,28 @@ import { type SearchFilters } from '@/components/home/SmartSearchBar';
 
 export default function Home() {
   const [displayBillboards, setDisplayBillboards] = useState(billboards);
+  const [gridTitle, setGridTitle] = useState('Featured Billboards');
 
   const handleSearch = (filters: SearchFilters) => {
     const { searchTerm, date, type } = filters;
     let filtered = [...billboards];
+    let isSearchActive = false;
 
     // Filter by type
     if (type && type !== 'all') {
         filtered = filtered.filter(billboard => billboard.type === type);
+        isSearchActive = true;
     }
     
     // Filter by availability if a date is selected
     if (date) {
         filtered = filtered.filter(billboard => billboard.status === 'Available');
+        isSearchActive = true;
     }
 
     // Filter and sort by search term for relevance
     if (searchTerm) {
+        isSearchActive = true;
         const lowercasedFilter = searchTerm.toLowerCase();
 
         const searchResults = filtered
@@ -79,6 +84,8 @@ export default function Home() {
         setDisplayBillboards(filtered);
     }
 
+    setGridTitle(isSearchActive ? 'Search Results' : 'Featured Billboards');
+
     // Scroll to results after a short delay to allow the DOM to update
     setTimeout(() => {
         const element = document.getElementById('billboard-results');
@@ -94,7 +101,7 @@ export default function Home() {
       <main className="flex-grow">
         <Hero onSearch={handleSearch} />
         <div id="billboard-results" className="container mx-auto scroll-mt-20 px-4 py-16">
-          <BillboardGrid billboards={displayBillboards} />
+          <BillboardGrid billboards={displayBillboards} title={gridTitle} />
         </div>
         <WhyChooseUs />
         <RecentBillboards />

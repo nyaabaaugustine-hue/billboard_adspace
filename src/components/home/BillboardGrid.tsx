@@ -13,11 +13,12 @@ import {
 
 interface BillboardGridProps {
   billboards: Billboard[];
+  title?: string;
 }
 
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'visibility' | 'traffic';
 
-export function BillboardGrid({ billboards }: BillboardGridProps) {
+export function BillboardGrid({ billboards, title = 'Featured Billboards' }: BillboardGridProps) {
   const [sortOption, setSortOption] = useState<SortOption>('default');
 
   const sortedBillboards = useMemo(() => {
@@ -46,7 +47,7 @@ export function BillboardGrid({ billboards }: BillboardGridProps) {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold tracking-tight">
-          Featured Billboards
+          {title}
         </h2>
         <div className="w-48">
           <Select onValueChange={(value) => setSortOption(value as SortOption)} defaultValue="default">
