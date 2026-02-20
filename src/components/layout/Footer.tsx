@@ -92,6 +92,19 @@ export function Footer() {
             </div>
           </div>
         </div>
+
+        <div className="mt-8 text-center text-sm text-muted-foreground">
+            Developed by{' '}
+            <a
+                href="https://cybergh.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+            >
+                Cyber
+            </a>
+        </div>
+
       </div>
     </footer>
   );
