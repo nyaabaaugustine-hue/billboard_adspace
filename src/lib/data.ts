@@ -28,7 +28,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2023-10-01T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra1/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611850/NYAN4430-650x400_tihxj9.jpg",
     vendorId: "ven-001",
   },
   {
@@ -50,7 +50,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-09-15T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra2/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611851/RZIN7200-650x400_wmodbr.jpg",
     vendorId: "ven-003",
   },
   {
@@ -72,7 +72,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-11-01T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/kumasi1/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611851/DSC07660_mitg4j.jpg",
     vendorId: "ven-002",
   },
   {
@@ -94,7 +94,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-08-20T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/kumasi2/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611850/P1010146-650x400_jdppu3.jpg",
     vendorId: "ven-001",
   },
   {
@@ -116,7 +116,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-01-10T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/takoradi1/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611851/7f0fbe51-c0c5-4647-b776-80740f569f6f-650x400_kdjcz4.jpg",
     vendorId: "ven-004",
   },
   {
@@ -138,7 +138,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-12-05T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/tamale1/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611854/DVDX7776-650x400_cxynsf.jpg",
     vendorId: "ven-003",
   },
   {
@@ -160,7 +160,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-02-15T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra3/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611854/GOLDFIELDS-stadium-6-600x400_ic6vbd.jpg",
     vendorId: "ven-004",
   },
   {
@@ -182,7 +182,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-03-01T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra4/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/RFQS1780-650x400_afoj0i.jpg",
     vendorId: "ven-001",
   },
   {
@@ -204,7 +204,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-01-20T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra5/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/Recoverd_jpg_file5765-650x400_lngcac.jpg",
     vendorId: "ven-002",
   },
   {
@@ -226,7 +226,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-12-10T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra6/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/PMDH0483-650x400_zu612c.jpg",
     vendorId: "ven-003",
   },
   {
@@ -248,7 +248,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2024-02-01T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/tema1/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611853/n15n-650x400_sz3pkz.jpg",
     vendorId: "ven-001",
   },
   {
@@ -270,7 +270,7 @@ export const billboards: Billboard[] = [
     isDigital: true,
     isActive: true,
     createdAt: "2024-03-10T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra7/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/78002aea-afac-4e23-8492-bb16dbf3621c_o2iypu.jpg",
     vendorId: "ven-004",
   },
   {
@@ -292,7 +292,7 @@ export const billboards: Billboard[] = [
     isDigital: false,
     isActive: true,
     createdAt: "2023-11-25T12:00:00Z",
-    imageUrl: "https://picsum.photos/seed/accra8/600/400",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771611852/MANHYIA-600x400_hfvzqd.jpg",
     vendorId: "ven-002",
   },
   {
@@ -482,7 +482,7 @@ export const billboards: Billboard[] = [
     regionId: "1",
     city: "Accra",
     address: "Labone, Accra",
-    latitude: 5.561,
+    latitude: 5.61,
     longitude: -0.171,
     pricePerMonth: 2400,
     trafficEstimate: 130000,
