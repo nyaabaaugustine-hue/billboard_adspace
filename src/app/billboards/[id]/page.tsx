@@ -4,12 +4,11 @@ import Image from "next/image";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Maximize, DollarSign, BarChart, Eye, Star } from "lucide-react";
+import { Maximize, BarChart, Star } from "lucide-react";
+import { BillboardDescription } from "@/components/ai/BillboardDescription";
+import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 
 export default function BillboardDetailPage({
   params,
@@ -53,13 +52,15 @@ export default function BillboardDetailPage({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 mt-12">
           <div className="lg:col-span-2">
             <h2 className="font-semibold text-xl mb-4">Description</h2>
-             <p className="max-w-prose text-base">
-                This is a placeholder description. With our AI tools, a
-                compelling and detailed description will be generated here to
-                highlight the unique selling points and appeal to potential
-                advertisers, focusing on the billboard's prime location, high
-                traffic, and excellent visibility.
-             </p>
+             <BillboardDescription billboard={{
+                type: billboard.type,
+                size: billboard.size,
+                regionId: billboard.regionId,
+                city: billboard.city,
+                address: billboard.address,
+                trafficEstimate: billboard.trafficEstimate,
+                visibilityScore: billboard.visibilityScore,
+             }} />
           </div>
           <div className="lg:col-span-1">
             <Card className="sticky top-24 shadow-lg rounded-xl border-2 p-4">
@@ -105,6 +106,7 @@ export default function BillboardDetailPage({
             </Card>
           </div>
         </div>
+        <SimilarBillboards currentBillboard={billboard} />
       </div>
     </div>
   );

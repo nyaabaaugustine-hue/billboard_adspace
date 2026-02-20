@@ -2,12 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Billboard } from "@/lib/types";
 import { Star } from "lucide-react";
+import { regions } from "@/lib/data";
 
 interface BillboardCardProps {
   billboard: Billboard;
 }
 
 export function BillboardCard({ billboard }: BillboardCardProps) {
+  const regionName = regions.find(r => r.id === billboard.regionId)?.name;
+
   return (
     <Link href={`/billboards/${billboard.id}`} className="group">
       <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-200">
@@ -23,7 +26,7 @@ export function BillboardCard({ billboard }: BillboardCardProps) {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm font-semibold text-foreground">
-            {billboard.city}, {billboard.regionId === "1" ? "Greater Accra" : "Region"}
+            {billboard.city}{regionName && `, ${regionName}`}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">{billboard.title}</p>
         </div>
