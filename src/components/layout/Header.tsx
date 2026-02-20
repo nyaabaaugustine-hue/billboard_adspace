@@ -9,15 +9,26 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Menu, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
   { href: "#", label: "For Advertisers" },
   { href: "#", label: "For Vendors" },
-  { href: "/dashboard", label: "Dashboard" },
 ];
+
+const dashboardLinks = [
+    { href: "/dashboard", label: "Admin Dashboard" },
+    { href: "/vendor-dashboard", label: "Vendor Dashboard" },
+    { href: "/user-dashboard", label: "User Dashboard" },
+]
 
 export function Header() {
   return (
@@ -28,7 +39,7 @@ export function Header() {
             <OwareLogo />
           </Link>
           <div className="hidden md:flex items-center gap-2">
-             {navLinks.slice(0,3).map((link) => (
+             {navLinks.map((link) => (
                 <Button key={link.href} variant="ghost" asChild>
                     <Link href={link.href} className="font-semibold text-base">
                         {link.label}
@@ -39,14 +50,21 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" asChild>
-              <Link
-                href="/dashboard"
-                className="font-semibold text-base"
-              >
-                Dashboard
-              </Link>
-            </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="font-semibold text-base">
+                Dashboards <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                {dashboardLinks.map(link => (
+                     <DropdownMenuItem key={link.href} asChild>
+                        <Link href={link.href}>{link.label}</Link>
+                    </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
             <Button variant="outline" asChild>
               <Link href="#" className="font-semibold text-base">
                 List a Billboard
@@ -88,6 +106,15 @@ export function Header() {
                 </SheetHeader>
                 <div className="mt-8 flex flex-col gap-4">
                   {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-md p-2 text-lg font-medium hover:bg-muted"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                   {dashboardLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
