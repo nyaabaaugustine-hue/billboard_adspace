@@ -20,7 +20,7 @@ import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
-  { href: "#", label: "For Advertisers" },
+  { href: "/for-advertisers", label: "For Advertisers" },
   { href: "#", label: "For Vendors" },
 ];
 
