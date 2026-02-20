@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
@@ -44,6 +45,7 @@ export function Header() {
               </Link>
             </Button>
           <Button size="lg" className="rounded-full font-bold text-base">Sign Up</Button>
+          <ThemeToggle />
         </div>
 
         {/* Mobile Header */}
@@ -51,42 +53,45 @@ export function Header() {
             <Link href="/" className="flex items-center">
                 <OwareLogo />
             </Link>
-            <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetHeader>
-                <Link href="/" className="flex items-center">
-                  <OwareLogo />
-                </Link>
-              </SheetHeader>
-              <div className="mt-8 flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-md p-2 text-lg font-medium hover:bg-muted"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                 <Button variant="ghost" asChild>
-                    <Link
-                        href="#"
-                        className="rounded-md p-2 text-lg font-medium hover:bg-muted justify-start"
-                    >
-                        List a billboard
-                    </Link>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
                 </Button>
-                <Button className="mt-4 w-full text-lg h-12">Login</Button>
-                <Button variant="secondary" className="mt-2 w-full text-lg h-12">Sign Up</Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <SheetHeader>
+                  <Link href="/" className="flex items-center">
+                    <OwareLogo />
+                  </Link>
+                </SheetHeader>
+                <div className="mt-8 flex flex-col gap-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-md p-2 text-lg font-medium hover:bg-muted"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                  <Button variant="ghost" asChild>
+                      <Link
+                          href="#"
+                          className="rounded-md p-2 text-lg font-medium hover:bg-muted justify-start"
+                      >
+                          List a billboard
+                      </Link>
+                  </Button>
+                  <Button className="mt-4 w-full text-lg h-12">Login</Button>
+                  <Button variant="secondary" className="mt-2 w-full text-lg h-12">Sign Up</Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </nav>
     </header>
