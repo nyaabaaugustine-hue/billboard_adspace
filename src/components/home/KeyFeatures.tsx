@@ -35,20 +35,20 @@ export function KeyFeatures() {
             More than just a marketplace. We provide the tools, insights, and network to make your outdoor advertising campaigns a success.
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div key={feature.title}>
-              <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-primary text-primary-foreground">
-                <feature.icon className="h-6 w-6" aria-hidden="true" />
-              </div>
-              <div className="mt-5">
-                <h3 className="text-lg font-semibold leading-6 text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-base text-muted-foreground">
-                  {feature.description}
-                </p>
-              </div>
+            <div key={feature.title} className="bg-card p-8 rounded-2xl border border-transparent hover:border-primary/50 hover:shadow-lg transition-all duration-300">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <feature.icon className="h-7 w-7" aria-hidden="true" />
+                </div>
+                <div>
+                    <h3 className="text-xl font-bold text-foreground">
+                    {feature.title}
+                    </h3>
+                    <p className="mt-2 text-base text-muted-foreground">
+                    {feature.description}
+                    </p>
+                </div>
             </div>
           ))}
         </div>
