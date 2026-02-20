@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { cn } from '@/lib/utils';
 
 const chartData = [
   { month: 'January', revenue: 18600 },
@@ -33,9 +34,9 @@ const chartConfig = {
   },
 };
 
-export function RevenueChart() {
+export function RevenueChart({ className }: { className?: string }) {
   return (
-    <Card>
+    <Card className={cn(className)}>
       <CardHeader>
         <CardTitle>Revenue Over Time</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

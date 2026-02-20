@@ -19,6 +19,15 @@ import {
     TableHeader,
     TableRow,
   } from '@/components/ui/table';
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+  } from '@/components/ui/dropdown-menu';
+  import { Button } from '@/components/ui/button';
+  import { MoreHorizontal } from 'lucide-react';
+import { cn } from '@/lib/utils';
   
   const bookings = [
     {
@@ -78,9 +87,9 @@ import {
     }
   }
   
-  export function RecentBookingsTable() {
+  export function RecentBookingsTable({ className }: { className?: string }) {
     return (
-      <Card>
+      <Card className={cn(className)}>
         <CardHeader>
           <CardTitle>Recent Bookings</CardTitle>
           <CardDescription>
@@ -92,37 +101,48 @@ import {
             <TableHeader>
               <TableRow>
                 <TableHead>Customer</TableHead>
-                <TableHead className="hidden sm:table-cell">Billboard</TableHead>
-                <TableHead className="hidden md:table-cell">Status</TableHead>
+                <TableHead className="hidden xl:table-cell">Billboard</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
+                <TableHead>
+                    <span className="sr-only">Actions</span>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {bookings.map((booking) => (
                 <TableRow key={booking.email}>
                   <TableCell>
-                    <div className="flex items-center gap-4">
-                      <Avatar className="hidden h-9 w-9 sm:flex">
-                        <AvatarImage src={booking.avatar} alt="Avatar" />
-                        <AvatarFallback>{booking.customer.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                      <div className="grid gap-1">
-                        <p className="text-sm font-medium leading-none">
-                          {booking.customer}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {booking.email}
-                        </p>
-                      </div>
+                    <div className="grid gap-1">
+                      <p className="text-sm font-medium leading-none">
+                        {booking.customer}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {booking.email}
+                      </p>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden xl:table-cell">
                     {booking.billboard}
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell className="hidden sm:table-cell">
                     {getStatusBadge(booking.status)}
                   </TableCell>
                   <TableCell className="text-right">GH₵{booking.amount}</TableCell>
+                   <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button aria-haspopup="true" size="icon" variant="ghost">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Approve</DropdownMenuItem>
+                        <DropdownMenuItem>Reject</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

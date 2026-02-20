@@ -8,6 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import { OwareLogo } from "@/components/icons/OwareLogo";
 import {
@@ -16,6 +17,8 @@ import {
   Briefcase,
   Users,
   Settings,
+  CreditCard,
+  LineChart,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -29,7 +32,9 @@ export default function DashboardLayout({
       <div className="min-h-screen bg-background">
         <Sidebar>
           <SidebarHeader>
-            <OwareLogo />
+             <Link href="/" className="block">
+                <OwareLogo />
+             </Link>
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
@@ -42,7 +47,7 @@ export default function DashboardLayout({
                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Link href="/dashboard/billboards" className="w-full">
+                <Link href="#" className="w-full">
                   <SidebarMenuButton tooltip="Billboards">
                     <Megaphone />
                     <span>Billboards</span>
@@ -50,25 +55,51 @@ export default function DashboardLayout({
                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Bookings">
-                  <Briefcase />
-                  <span>Bookings</span>
-                </SidebarMenuButton>
+                 <Link href="#" className="w-full">
+                    <SidebarMenuButton tooltip="Bookings">
+                      <Briefcase />
+                      <span>Bookings</span>
+                    </SidebarMenuButton>
+                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Vendors">
-                  <Users />
-                  <span>Vendors</span>
-                </SidebarMenuButton>
+                 <Link href="#" className="w-full">
+                    <SidebarMenuButton tooltip="Vendors">
+                      <Users />
+                      <span>Vendors</span>
+                    </SidebarMenuButton>
+                 </Link>
               </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Settings">
-                  <Settings />
-                  <span>Settings</span>
-                </SidebarMenuButton>
+               <SidebarMenuItem>
+                 <Link href="#" className="w-full">
+                    <SidebarMenuButton tooltip="Payments">
+                      <CreditCard />
+                      <span>Payments</span>
+                    </SidebarMenuButton>
+                 </Link>
+              </SidebarMenuItem>
+               <SidebarMenuItem>
+                 <Link href="#" className="w-full">
+                    <SidebarMenuButton tooltip="Reports">
+                      <LineChart />
+                      <span>Reports</span>
+                    </SidebarMenuButton>
+                 </Link>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
+          <SidebarFooter>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <Link href="#" className="w-full">
+                        <SidebarMenuButton tooltip="Settings">
+                            <Settings />
+                            <span>Settings</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
         </Sidebar>
         <SidebarInset>
           <Header />
