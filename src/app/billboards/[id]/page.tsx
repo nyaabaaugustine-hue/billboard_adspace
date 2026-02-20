@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle } from "lucide-react";
+import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun } from "lucide-react";
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
 
@@ -64,6 +64,17 @@ export default function BillboardDetailPage({
         }}
       />
     );
+
+  const getStatusBadge = () => {
+    switch (billboard.status) {
+      case 'On Hold':
+        return <Badge className="border-yellow-300 bg-yellow-100 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300">On Hold</Badge>;
+      case 'Rented':
+        return <Badge variant="secondary">Rented</Badge>;
+      default:
+        return <Badge className="border-green-300 bg-green-100 text-green-800 dark:border-green-700 dark:bg-green-900/50 dark:text-green-300">Available for Booking</Badge>;
+    }
+  };
 
   return (
     <div className="bg-background text-foreground">
@@ -147,9 +158,7 @@ export default function BillboardDetailPage({
                   <Badge variant="secondary" className="text-sm">
                     {billboard.type}
                   </Badge>
-                  <Badge className="border-green-300 bg-green-100 text-green-800 dark:border-green-700 dark:bg-green-900/50 dark:text-green-300">
-                    Available for Booking
-                  </Badge>
+                  {getStatusBadge()}
                 </div>
                 <CardTitle className="pt-4 text-2xl">{billboard.title}</CardTitle>
                 {vendor && (
@@ -168,7 +177,7 @@ export default function BillboardDetailPage({
                     <CheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
                         <span className="font-semibold">Booking Status</span>
-                        <p className="text-muted-foreground">This billboard is ready for booking</p>
+                        <p className="text-muted-foreground">{billboard.status}</p>
                     </div>
                    </div>
                    <div className="flex items-start">
@@ -183,6 +192,20 @@ export default function BillboardDetailPage({
                     <div>
                         <span className="font-semibold">Dimensions</span>
                         <p className="text-muted-foreground">{billboard.size} (landscape)</p>
+                    </div>
+                   </div>
+                   <div className="flex items-start">
+                    <Layers className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
+                    <div>
+                        <span className="font-semibold">Sides</span>
+                        <p className="text-muted-foreground">{billboard.sides}</p>
+                    </div>
+                   </div>
+                   <div className="flex items-start">
+                    <Sun className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
+                    <div>
+                        <span className="font-semibold">Lighting</span>
+                        <p className="text-muted-foreground">{billboard.lighting ? 'Yes' : 'No'}</p>
                     </div>
                    </div>
                    <div className="flex items-start">

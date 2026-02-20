@@ -14,6 +14,8 @@ export type BookingStatus =
 export type PaymentStatus = "PENDING" | "SUCCESS" | "FAILED";
 export type PaymentMethod = "MoMo" | "Card";
 
+export type BillboardStatus = "Available" | "On Hold" | "Rented";
+
 export interface Region {
   id: string;
   name: string;
@@ -24,6 +26,9 @@ export interface Billboard {
   title: string;
   type: BillboardType;
   size: string;
+  sides: number;
+  lighting: boolean;
+  status: BillboardStatus;
   regionId: string;
   city: string;
   address: string;
