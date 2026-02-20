@@ -13,7 +13,7 @@ export function AsibiFab() {
                     size="icon"
                 >
                     <Image 
-                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771168493/eds_bjytks.png" 
+                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771205327/straight_yqwg78.png" 
                         alt="Ask Asibi"
                         fill
                         className="object-cover"

@@ -25,7 +25,7 @@ export function AsibiAssistant() {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const pathname = usePathname();
-    const asibiAvatarUrl = "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771168493/eds_bjytks.png";
+    const asibiAvatarUrl = "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771205327/straight_yqwg78.png";
 
     const getRole = (): Role => {
         if (pathname.startsWith('/dashboard/admin')) return 'ADMIN';
