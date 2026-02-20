@@ -504,7 +504,7 @@ export const vendors: Vendor[] = [
     phone: "024 123 4567",
     rating: 4.8,
     verified: true,
-    imageUrl: "https://picsum.photos/seed/vendorprint/400/300",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771506208/as_g9b1tj.jpg",
   },
   {
     id: "ven-002",
@@ -514,7 +514,7 @@ export const vendors: Vendor[] = [
     phone: "020 987 6543",
     rating: 4.9,
     verified: true,
-    imageUrl: "https://picsum.photos/seed/vendordesign/400/300",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771506208/xz_ytdm3m.png",
   },
   {
     id: "ven-003",
@@ -524,7 +524,7 @@ export const vendors: Vendor[] = [
     phone: "055 555 8888",
     rating: 4.7,
     verified: true,
-    imageUrl: "https://picsum.photos/seed/vendorinstall/400/300",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771506208/bu_oup6ys.png",
   },
   {
     id: "ven-004",
@@ -534,6 +534,6 @@ export const vendors: Vendor[] = [
     phone: "050 123 4567",
     rating: 4.9,
     verified: true,
-    imageUrl: "https://picsum.photos/seed/envisiondigital/400/300",
+    imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771236535/nyhaho_rznhuo.png",
   },
 ];
