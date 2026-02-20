@@ -77,7 +77,7 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
             const fallbackBillboards = billboards
               .filter(b => b.id !== currentBillboard.id)
               .sort(() => 0.5 - Math.random()) // Shuffle
-              .slice(0, 3);
+              .slice(0, 5);
             setRecommendations(fallbackBillboards);
         }
       } catch (error) {
@@ -86,7 +86,7 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
         const fallbackBillboards = billboards
             .filter(b => b.id !== currentBillboard.id)
             .sort(() => 0.5 - Math.random()) // Shuffle
-            .slice(0, 3);
+            .slice(0, 5);
         setRecommendations(fallbackBillboards);
       } finally {
         setLoading(false);
@@ -117,15 +117,12 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
     );
   }
 
-  if (recommendations.length === 0) {
-    return null; // Should not happen with the fallback, but as a safeguard.
-  }
-
   return (
     <div className="mt-16">
       <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
         Similar Billboards
       </h2>
+      {recommendations.length > 0 ? (
         <Carousel
           plugins={[plugin.current]}
           className="w-full"
@@ -148,6 +145,9 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
           <CarouselPrevious className="hidden sm:flex" />
           <CarouselNext className="hidden sm:flex" />
         </Carousel>
+      ) : (
+        <p className="text-muted-foreground">No similar billboards found at the moment.</p>
+      )}
     </div>
   );
 }

@@ -56,7 +56,7 @@ const similarBillboardRecommenderPrompt = ai.definePrompt({
   name: 'similarBillboardRecommenderPrompt',
   input: { schema: SimilarBillboardRecommenderInputSchema },
   output: { schema: SimilarBillboardRecommenderOutputSchema },
-  prompt: `You are an AI assistant specialized in outdoor advertising in Ghana. Your task is to recommend 3 similar billboards based on the provided billboard details. The recommendations should be hypothetical but realistic, varying slightly in price (e.g., within +/- 15%), location (within the same city or a closely neighboring area, with latitude/longitude slightly adjusted by up to 0.05 degrees), size, and type, while maintaining overall similarity to the 'currentBillboard'.
+  prompt: `You are an AI assistant specialized in outdoor advertising in Ghana. Your task is to recommend 5 similar billboards based on the provided billboard details. The recommendations should be hypothetical but realistic, varying slightly in price (e.g., within +/- 15%), location (within the same city or a closely neighboring area, with latitude/longitude slightly adjusted by up to 0.05 degrees), size, and type, while maintaining overall similarity to the 'currentBillboard'.
 
 Ensure that the generated billboard IDs are unique and distinct from the 'currentBillboard.id'. Provide a brief reason for each recommendation, highlighting the similarities.
 
@@ -73,7 +73,7 @@ Current Billboard Details:
 - Latitude: {{{currentBillboard.latitude}}}
 - Longitude: {{{currentBillboard.longitude}}}
 
-Generate 3 similar billboard recommendations. Each recommendation must include a unique ID, title, type, size, pricePerMonth, city, address, latitude, longitude, and a 'reason' explaining its similarity. Remember to generate new, hypothetical details.`,
+Generate 5 similar billboard recommendations. Each recommendation must include a unique ID, title, type, size, pricePerMonth, city, address, latitude, longitude, and a 'reason' explaining its similarity. Remember to generate new, hypothetical details.`,
 });
 
 const similarBillboardRecommenderFlow = ai.defineFlow(
