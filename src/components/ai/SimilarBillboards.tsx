@@ -24,7 +24,7 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
   const [loading, setLoading] = useState(true);
 
   const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({ delay: 7000, stopOnInteraction: true })
   );
 
   useEffect(() => {
