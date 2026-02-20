@@ -59,6 +59,12 @@
       "description": "Technicians installing a large billboard.",
       "imageUrl": "https://images.unsplash.com/photo-1657728468462-d1b99f5ae3e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b3JrZXJzJTIwY29uc3RydWN0aW9ufGVufDB8fHx8MTc3MTYwOTkzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "workers construction"
+    },
+    {
+      "id": "why-choose-us-1",
+      "description": "Smiling customer service representative with a headset on in an office.",
+      "imageUrl": "https://images.unsplash.com/photo-1558021211-6514f395939a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8Y3VzdG9tZXIlMjBzZXJ2aWNlfGVufDB8fHx8MTc3MTY5NTgxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "customer service"
     }
   ]
 }

@@ -6,7 +6,7 @@ export function Hero() {
   const heroImage = PlaceHolderImages.find((img) => img.id === "hero-1");
 
   return (
-    <div className="relative h-[60vh] min-h-[500px] w-full text-primary-foreground">
+    <div className="relative h-[60vh] min-h-[500px] w-full">
       <div className="absolute inset-0">
         {heroImage && (
           <Image
@@ -23,12 +23,12 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
-        <h1 className="mb-4 text-4xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
+        <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl">
           Book Premium Billboard Spaces
           <br />
           Across <span className="text-accent">Ghana</span>
         </h1>
-        <p className="mb-8 max-w-2xl text-lg text-primary-foreground/80 md:text-xl">
+        <p className="mb-8 max-w-2xl text-lg text-neutral-200 md:text-xl">
           Discover, book, and manage high-impact advertising spaces with ease.
         </p>
         <SmartSearchBar />
