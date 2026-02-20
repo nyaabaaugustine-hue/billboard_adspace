@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Maximize, DollarSign, BarChart, Eye } from "lucide-react";
+import { MapPin, Maximize, DollarSign, BarChart, Eye, Star } from "lucide-react";
 
 export default function BillboardDetailPage({
   params,
@@ -25,70 +25,70 @@ export default function BillboardDetailPage({
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <Card className="overflow-hidden">
-              <div className="relative h-96 w-full">
-                <Image
-                  src={billboard.imageUrl}
-                  alt={billboard.title}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  data-ai-hint="billboard image"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="font-headline text-4xl">
-                  {billboard.title}
-                </CardTitle>
-                <CardDescription className="flex items-center gap-2 pt-2">
-                  <MapPin className="h-4 w-4" />
+        <div className="mb-4">
+            <h1 className="font-bold text-2xl">{billboard.title}</h1>
+            <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span>{billboard.visibilityScore}</span>
+                </div>
+                <span>·</span>
+                 <p className="underline">
                   {billboard.address}, {billboard.city}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <h3 className="mb-4 font-headline text-2xl">Description</h3>
-                <p className="max-w-prose text-lg">
-                  This is a placeholder description. With our AI tools, a
-                  compelling and detailed description will be generated here to
-                  highlight the unique selling points and appeal to potential
-                  advertisers, focusing on the billboard's prime location, high
-                  traffic, and excellent visibility.
                 </p>
-              </CardContent>
-            </Card>
+            </div>
+        </div>
+
+        <div className="h-96 w-full overflow-hidden rounded-lg">
+            <Image
+                src={billboard.imageUrl}
+                alt={billboard.title}
+                width={1200}
+                height={600}
+                className="h-full w-full object-cover object-center"
+                data-ai-hint="billboard image"
+            />
+        </div>
+
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 mt-12">
+          <div className="lg:col-span-2">
+            <h2 className="font-semibold text-xl mb-4">Description</h2>
+             <p className="max-w-prose text-base">
+                This is a placeholder description. With our AI tools, a
+                compelling and detailed description will be generated here to
+                highlight the unique selling points and appeal to potential
+                advertisers, focusing on the billboard's prime location, high
+                traffic, and excellent visibility.
+             </p>
           </div>
           <div className="lg:col-span-1">
-            <Card className="sticky top-24">
-              <CardHeader>
-                <CardTitle className="font-headline text-3xl">
-                  Booking Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <DollarSign className="h-6 w-6 text-accent" />
-                    <div>
-                      <p className="font-bold">
+            <Card className="sticky top-24 shadow-lg rounded-xl border-2 p-4">
+              <CardContent className="p-2">
+                 <div className="flex justify-between items-baseline mb-6">
+                    <p>
+                        <span className="font-bold text-2xl">
                         GHS {billboard.pricePerMonth.toLocaleString()}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        per month
-                      </p>
+                        </span>
+                        <span className="text-muted-foreground"> / month</span>
+                    </p>
+                     <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span>{billboard.visibilityScore}</span>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Maximize className="h-6 w-6 text-accent" />
+                 </div>
+
+                <div className="space-y-4 mb-6">
+                   <div className="flex items-center gap-4">
+                    <Maximize className="h-6 w-6 text-foreground" />
                     <div>
-                      <p className="font-bold">{billboard.size}</p>
+                      <p className="font-semibold">{billboard.size}</p>
                       <p className="text-sm text-muted-foreground">Size</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <BarChart className="h-6 w-6 text-accent" />
+                   <div className="flex items-center gap-4">
+                    <BarChart className="h-6 w-6 text-foreground" />
                     <div>
-                      <p className="font-bold">
+                      <p className="font-semibold">
                         {billboard.trafficEstimate.toLocaleString()}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -96,22 +96,10 @@ export default function BillboardDetailPage({
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Eye className="h-6 w-6 text-accent" />
-                    <div>
-                      <p className="font-bold">{billboard.visibilityScore}/10</p>
-                      <p className="text-sm text-muted-foreground">
-                        Visibility Score
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
-                <Button size="lg" className="w-full text-lg">
+                <Button size="lg" className="w-full text-lg h-12 bg-primary hover:bg-primary/90">
                   Book Now
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Contact via WhatsApp
                 </Button>
               </CardContent>
             </Card>
