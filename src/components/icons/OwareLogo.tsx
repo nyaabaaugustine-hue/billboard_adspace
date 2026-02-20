@@ -5,8 +5,8 @@ export function OwareLogo({ width, height }: { width?: number; height?: number }
     <Image
       src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613078/ChatGPT_Image_Feb_20_2026_06_35_49_PM_rneszg.png"
       alt="OwareAds Logo"
-      width={width || 120}
-      height={height || 30}
+      width={width || 100}
+      height={height || 25}
       priority
     />
   );
