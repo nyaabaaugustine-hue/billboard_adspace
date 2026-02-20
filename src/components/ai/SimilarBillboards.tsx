@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { aiSimilarBillboardRecommender, type SimilarBillboardRecommenderOutput } from '@/ai/flows/ai-similar-billboard-recommender-flow';
 import type { Billboard, BillboardType } from '@/lib/types';
+import { billboards } from '@/lib/data';
 import { Skeleton } from '../ui/skeleton';
 import {
   Carousel,
@@ -18,10 +19,8 @@ interface SimilarBillboardsProps {
   currentBillboard: Billboard;
 }
 
-type RecommendedBillboard = SimilarBillboardRecommenderOutput['recommendations'][0];
-
 export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) {
-  const [recommendations, setRecommendations] = useState<RecommendedBillboard[]>([]);
+  const [recommendations, setRecommendations] = useState<Billboard[]>([]);
   const [loading, setLoading] = useState(true);
 
   const plugin = React.useRef(
@@ -45,49 +44,56 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
             longitude: currentBillboard.longitude,
           },
         });
-        if (result && Array.isArray(result.recommendations)) {
-          setRecommendations(result.recommendations);
+        
+        if (result && Array.isArray(result.recommendations) && result.recommendations.length > 0) {
+            const aiBillboards = result.recommendations.map((rec): Billboard => {
+                const randomVendorId = 'ven-00' + (Math.floor(Math.random() * 4) + 1);
+                return {
+                    id: rec.id,
+                    title: rec.title,
+                    type: rec.type as BillboardType,
+                    size: rec.size,
+                    pricePerMonth: rec.pricePerMonth,
+                    city: rec.city,
+                    address: rec.address,
+                    latitude: rec.latitude,
+                    longitude: rec.longitude,
+                    regionId: currentBillboard.regionId,
+                    isDigital: rec.type === 'Digital LED',
+                    isActive: true,
+                    status: 'Available',
+                    sides: 1,
+                    lighting: rec.type === 'Digital LED',
+                    trafficEstimate: Math.floor(Math.random() * 50000) + 50000,
+                    visibilityScore: Math.floor(Math.random() * 3) + 7,
+                    createdAt: new Date().toISOString(),
+                    imageUrl: `https://picsum.photos/seed/${rec.id}/600/400`,
+                    vendorId: randomVendorId,
+                };
+            });
+            setRecommendations(aiBillboards);
         } else {
-            // Handle cases where AI returns non-array or empty recommendations
-            setRecommendations([]);
+            // Fallback to static data
+            const fallbackBillboards = billboards
+              .filter(b => b.id !== currentBillboard.id)
+              .sort(() => 0.5 - Math.random()) // Shuffle
+              .slice(0, 3);
+            setRecommendations(fallbackBillboards);
         }
       } catch (error) {
-        console.error('Error fetching similar billboards:', error);
-        setRecommendations([]);
+        console.error('Error fetching similar billboards, using fallback:', error);
+        // Fallback to static data on error
+        const fallbackBillboards = billboards
+            .filter(b => b.id !== currentBillboard.id)
+            .sort(() => 0.5 - Math.random()) // Shuffle
+            .slice(0, 3);
+        setRecommendations(fallbackBillboards);
       } finally {
         setLoading(false);
       }
     }
     getRecommendations();
   }, [currentBillboard]);
-  
-  const toBillboardType = (rec: RecommendedBillboard): Billboard => {
-    // Assign a vendorId from existing vendors for placeholder data
-    const randomVendorId = 'ven-00' + (Math.floor(Math.random() * 4) + 1);
-
-    return {
-        id: rec.id,
-        title: rec.title,
-        type: rec.type as BillboardType,
-        size: rec.size,
-        pricePerMonth: rec.pricePerMonth,
-        city: rec.city,
-        address: rec.address,
-        latitude: rec.latitude,
-        longitude: rec.longitude,
-        regionId: currentBillboard.regionId, // Use current billboard's region
-        isDigital: rec.type === 'Digital LED',
-        isActive: true,
-        status: 'Available',
-        sides: 1,
-        lighting: rec.type === 'Digital LED',
-        trafficEstimate: Math.floor(Math.random() * 50000) + 50000, // random dummy data
-        visibilityScore: Math.floor(Math.random() * 3) + 7, // random dummy data between 7-9
-        createdAt: new Date().toISOString(),
-        imageUrl: `https://picsum.photos/seed/${rec.id}/600/400`,
-        vendorId: randomVendorId,
-    }
-  }
 
   if (loading) {
     return (
@@ -112,18 +118,7 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
   }
 
   if (recommendations.length === 0) {
-    return (
-        <div className="mt-16">
-            <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
-                Similar Billboards
-            </h2>
-            <div className="flex h-48 items-center justify-center rounded-2xl border bg-card">
-                <p className="text-muted-foreground">
-                    No similar billboards found at the moment.
-                </p>
-            </div>
-      </div>
-    )
+    return null; // Should not happen with the fallback, but as a safeguard.
   }
 
   return (
@@ -142,10 +137,10 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
           }}
         >
           <CarouselContent className="-ml-4">
-            {recommendations.map((rec) => (
-              <CarouselItem key={rec.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+            {recommendations.map((billboard) => (
+              <CarouselItem key={billboard.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
                  <div className="p-1 h-full">
-                    <SimilarBillboardCard billboard={toBillboardType(rec)} />
+                    <SimilarBillboardCard billboard={billboard} />
                  </div>
               </CarouselItem>
             ))}
