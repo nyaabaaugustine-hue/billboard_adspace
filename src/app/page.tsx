@@ -78,6 +78,14 @@ export default function Home() {
     } else {
         setDisplayBillboards(filtered);
     }
+
+    // Scroll to results after a short delay to allow the DOM to update
+    setTimeout(() => {
+        const element = document.getElementById('billboard-results');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 100);
   };
 
   return (
@@ -85,10 +93,10 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero onSearch={handleSearch} />
-        <WhyChooseUs />
-        <div className="container mx-auto px-4 py-16">
+        <div id="billboard-results" className="container mx-auto scroll-mt-20 px-4 py-16">
           <BillboardGrid billboards={displayBillboards} />
         </div>
+        <WhyChooseUs />
         <RecentBillboards />
         <PartnerVendors />
       </main>
