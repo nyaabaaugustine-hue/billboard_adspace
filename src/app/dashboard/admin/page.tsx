@@ -1,9 +1,14 @@
 import { StatCards } from "@/components/dashboard/admin/StatCards";
-import { RevenueChart } from "@/components/dashboard/shared/RevenueChart";
-import { RecentBookingsTable } from "@/components/dashboard/shared/RecentBookingsTable";
+import { SystemHealth } from "@/components/dashboard/admin/SystemHealth";
 import { Button } from "@/components/ui/button";
 import { Download, UserPlus } from "lucide-react";
-import { SystemHealth } from "@/components/dashboard/admin/SystemHealth";
+import { PlatformAnalyticsChart } from "@/components/dashboard/admin/PlatformAnalyticsChart";
+import { RecentPlatformActivity } from "@/components/dashboard/admin/RecentPlatformActivity";
+import { JobMarketInsights } from "@/components/dashboard/admin/JobMarketInsights";
+import { UserRoleDistribution } from "@/components/dashboard/admin/UserRoleDistribution";
+import { ModerationCenter } from "@/components/dashboard/admin/ModerationCenter";
+import { JobsExpiringSoon } from "@/components/dashboard/admin/JobsExpiringSoon";
+import { UserLocationBreakdown } from "@/components/dashboard/admin/UserLocationBreakdown";
 
 export default function AdminDashboardPage() {
   return (
@@ -34,8 +39,19 @@ export default function AdminDashboardPage() {
       <SystemHealth />
 
       <div className="grid grid-cols-12 gap-6">
-        <RevenueChart className="col-span-12 lg:col-span-7" />
-        <RecentBookingsTable className="col-span-12 lg:col-span-5" />
+        <PlatformAnalyticsChart className="col-span-12 lg:col-span-7" />
+        <RecentPlatformActivity className="col-span-12 lg:col-span-5" />
+      </div>
+
+      <div className="grid grid-cols-12 gap-6">
+        <JobMarketInsights className="col-span-12 lg:col-span-7" />
+        <UserRoleDistribution className="col-span-12 lg:col-span-5" />
+      </div>
+
+      <div className="grid grid-cols-12 gap-6">
+          <ModerationCenter className="col-span-12 md:col-span-6 lg:col-span-4" />
+          <JobsExpiringSoon className="col-span-12 md:col-span-6 lg:col-span-4" />
+          <UserLocationBreakdown className="col-span-12 lg:col-span-4" />
       </div>
     </div>
   );
