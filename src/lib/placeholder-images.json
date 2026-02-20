@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A vibrant street in Accra with a large billboard.",
+      "imageUrl": "https://images.unsplash.com/photo-1584696049838-8e692282a2e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjaXR5JTIwc3RyZWV0fGVufDB8fHx8MTc3MTUxODU0NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city street"
+    },
+    {
+      "id": "billboard-accra-1",
+      "description": "Digital billboard at a busy intersection in Accra.",
+      "imageUrl": "https://images.unsplash.com/photo-1573456373835-579c408de263?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxidXN5JTIwaW50ZXJzZWN0aW9ufGVufDB8fHx8MTc3MTYwOTkzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "busy intersection"
+    },
+    {
+      "id": "billboard-accra-2",
+      "description": "Unipole billboard along a highway in Accra.",
+      "imageUrl": "https://images.unsplash.com/photo-1646519368789-1b5d0ae830be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoaWdod2F5JTIwdHJhZmZpY3xlbnwwfHx8fDE3NzE1Nzg0Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "highway traffic"
+    },
+    {
+      "id": "billboard-kumasi-1",
+      "description": "Gantry billboard over a main road in Kumasi.",
+      "imageUrl": "https://images.unsplash.com/photo-1552570173-43e2d76c37f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwcm9hZHxlbnwwfHx8fDE3NzE2MDk5MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city road"
+    },
+    {
+      "id": "billboard-kumasi-2",
+      "description": "Wall billboard on a building in a commercial area of Kumasi.",
+      "imageUrl": "https://images.unsplash.com/photo-1478979464727-af7d24e18554?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxidWlsZGluZyUyMGZhY2FkZXxlbnwwfHx8fDE3NzE1MzMwNzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "building facade"
+    },
+    {
+      "id": "billboard-tamale-1",
+      "description": "Billboard near a market in Tamale.",
+      "imageUrl": "https://images.unsplash.com/photo-1701518025554-991e73cfb36f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYXJrZXQlMjBzdHJlZXR8ZW58MHx8fHwxNzcxNTA2NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "market street"
+    },
+    {
+      "id": "billboard-takoradi-1",
+      "description": "Billboard near the port in Takoradi.",
+      "imageUrl": "https://images.unsplash.com/photo-1755885610497-d472b6539d68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxpbmR1c3RyaWFsJTIwYXJlYXxlbnwwfHx8fDE3NzE2MDk5MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "industrial area"
+    },
+    {
+      "id": "vendor-printing",
+      "description": "A modern printing press in operation.",
+      "imageUrl": "https://images.unsplash.com/photo-1458067380247-41000a5397cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwcmludGluZyUyMHByZXNzfGVufDB8fHx8MTc3MTYwOTkzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "printing press"
+    },
+    {
+      "id": "vendor-design",
+      "description": "A graphic designer working on a computer.",
+      "imageUrl": "https://images.unsplash.com/photo-1690228254548-31ef53e40cd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z3JhcGhpYyUyMGRlc2lnbnxlbnwwfHx8fDE3NzE1ODk4NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "graphic design"
+    },
+    {
+      "id": "vendor-installation",
+      "description": "Technicians installing a large billboard.",
+      "imageUrl": "https://images.unsplash.com/photo-1657728468462-d1b99f5ae3e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b3JrZXJzJTIwY29uc3RydWN0aW9ufGVufDB8fHx8MTc3MTYwOTkzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "workers construction"
+    }
+  ]
 }
