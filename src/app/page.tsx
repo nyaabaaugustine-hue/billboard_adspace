@@ -4,6 +4,7 @@ import { billboards } from "@/lib/data";
 import { Hero } from "@/components/home/Hero";
 import { BillboardGrid } from "@/components/home/BillboardGrid";
 import { RecentBillboards } from "@/components/home/RecentBillboards";
+import { PartnerVendors } from "@/components/home/PartnerVendors";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
           <BillboardGrid billboards={billboards} />
         </div>
         <RecentBillboards />
+        <PartnerVendors />
       </main>
       <Footer />
     </div>
