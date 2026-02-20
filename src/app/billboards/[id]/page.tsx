@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun } from "lucide-react";
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
+import { BookingDialog } from "@/components/booking/BookingDialog";
 
 export default function BillboardDetailPage({
   params,
@@ -93,7 +94,7 @@ export default function BillboardDetailPage({
             <div className="mb-4 lg:hidden">
               <h1 className="text-3xl font-extrabold">{billboard.title}</h1>
               <div className="mt-4 flex gap-2">
-                <Button className="w-full" size="lg">Book Now</Button>
+                <BookingDialog billboard={billboard} />
                 <Button className="w-full" size="lg" variant="outline">
                   Browse More
                 </Button>
@@ -115,7 +116,7 @@ export default function BillboardDetailPage({
             <div className="mt-8 hidden justify-between lg:flex">
               <h1 className="text-4xl font-extrabold">{billboard.title}</h1>
               <div className="flex gap-2">
-                <Button size="lg">Book Now</Button>
+                <BookingDialog billboard={billboard} />
                 <Button size="lg" variant="outline">
                   Browse More
                 </Button>

@@ -15,8 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613514/ChatGPT_Image_Feb_20_2026_06_51_05_PM_fdqymq.png" sizes="any" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
