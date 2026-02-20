@@ -1,15 +1,23 @@
 'use client';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
 import { AsibiAssistant } from "./AsibiAssistant";
+import Image from 'next/image';
 
 export function AsibiFab() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50" size="icon">
-                    <Sparkles className="h-7 w-7" />
+                <Button 
+                    className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 p-0 overflow-hidden border-2 border-primary/50 transition-transform hover:scale-110 focus:ring-2 focus:ring-ring focus:ring-offset-2" 
+                    size="icon"
+                >
+                    <Image 
+                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771168493/eds_bjytks.png" 
+                        alt="Ask Asibi"
+                        fill
+                        className="object-cover"
+                    />
                     <span className="sr-only">Ask Asibi</span>
                 </Button>
             </SheetTrigger>

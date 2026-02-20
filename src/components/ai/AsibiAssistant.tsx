@@ -1,13 +1,13 @@
 'use client';
 import { useState } from "react";
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { SheetHeader, SheetTitle, SheetDescription } from "../ui/sheet";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { OwareLogo } from "../icons/OwareLogo";
-import { Send, Sparkles, Loader2, User } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Send, Loader2, User } from "lucide-react";
 import { asibiAssistant } from "@/ai/flows/asibi-assistant-flow";
 import { Role } from "@/lib/roles";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ export function AsibiAssistant() {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const pathname = usePathname();
+    const asibiAvatarUrl = "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771168493/eds_bjytks.png";
 
     const getRole = (): Role => {
         if (pathname.startsWith('/dashboard/admin')) return 'ADMIN';
@@ -59,8 +60,14 @@ export function AsibiAssistant() {
     return (
         <>
             <SheetHeader className="p-4 border-b">
-                <div className="flex items-center gap-2">
-                    <Sparkles className="h-6 w-6 text-primary" />
+                <div className="flex items-center gap-3">
+                     <Image 
+                        src={asibiAvatarUrl}
+                        alt="Asibi Assistant"
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                    />
                     <div>
                         <SheetTitle className="text-xl">Asibi Assistant</SheetTitle>
                         <SheetDescription>Your AI-powered guide to OwareAds</SheetDescription>
@@ -72,10 +79,9 @@ export function AsibiAssistant() {
                     {messages.map((message) => (
                         <div key={message.id} className={cn("flex gap-3", message.sender === 'user' ? "justify-end" : "justify-start")}>
                             {message.sender === 'asibi' && (
-                                <Avatar className="h-8 w-8 bg-primary/10 border border-primary/20">
-                                    <AvatarFallback className="bg-transparent">
-                                        <Sparkles className="h-5 w-5 text-primary" />
-                                    </AvatarFallback>
+                                <Avatar className="h-8 w-8">
+                                    <AvatarImage src={asibiAvatarUrl} alt="Asibi" />
+                                    <AvatarFallback>A</AvatarFallback>
                                 </Avatar>
                             )}
                             <div className={cn(
@@ -97,10 +103,9 @@ export function AsibiAssistant() {
                     ))}
                     {isLoading && (
                          <div className="flex gap-3 justify-start">
-                            <Avatar className="h-8 w-8 bg-primary/10 border border-primary/20">
-                                <AvatarFallback className="bg-transparent">
-                                    <Sparkles className="h-5 w-5 text-primary" />
-                                </AvatarFallback>
+                             <Avatar className="h-8 w-8">
+                                <AvatarImage src={asibiAvatarUrl} alt="Asibi" />
+                                <AvatarFallback>A</AvatarFallback>
                             </Avatar>
                             <div className="bg-muted rounded-2xl rounded-bl-none p-3 flex items-center">
                                 <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
