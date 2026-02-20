@@ -39,6 +39,7 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
         }
       } catch (error) {
         console.error('Error fetching similar billboards:', error);
+        setRecommendations([]);
       } finally {
         setLoading(false);
       }
@@ -70,42 +71,37 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
     }
   }
 
-  if (loading) {
-      return (
-         <div className="mt-16">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground mb-8">
-                Similar Billboards
-            </h2>
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                {[...Array(3)].map((_, i) => (
-                    <div key={i} className="space-y-4">
-                        <Skeleton className="aspect-square w-full rounded-lg" />
-                        <div className="space-y-2">
-                            <Skeleton className="h-4 w-2/3" />
-                            <Skeleton className="h-4 w-1/2" />
-                            <Skeleton className="h-4 w-1/3" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-      );
-  }
-
-  if (!recommendations || recommendations.length === 0) {
-    return null;
-  }
-
   return (
     <div className="mt-16">
-      <h2 className="text-2xl font-bold tracking-tight text-foreground mb-8">
+      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
         Similar Billboards
       </h2>
-      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {loading ? (
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="space-y-4">
+              <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-4 w-1/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : recommendations.length > 0 ? (
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {recommendations.map((rec) => (
             <BillboardCard key={rec.id} billboard={toBillboardType(rec)} />
           ))}
         </div>
+      ) : (
+        <div className="flex h-48 items-center justify-center rounded-2xl border bg-card">
+          <p className="text-muted-foreground">
+            No similar billboards found at the moment.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
