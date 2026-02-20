@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import { VendorStatCards } from "@/components/vendor-dashboard/VendorStatCards";
-import { VendorBillboardsTable } from "@/components/vendor-dashboard/VendorBillboardsTable";
-import { RevenueChart } from "@/components/dashboard/RevenueChart";
+import { VendorStatCards } from "@/components/dashboard/vendor/VendorStatCards";
+import { VendorBillboardsTable } from "@/components/dashboard/vendor/VendorBillboardsTable";
+import { RevenueChart } from "@/components/dashboard/shared/RevenueChart";
 
 export default function VendorDashboardPage() {
   return (

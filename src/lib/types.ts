@@ -63,3 +63,20 @@ export interface MapBillboard {
   pricePerMonth: number;
   city: string;
 }
+
+export interface Booking {
+  customer: string;
+  email: string;
+  avatar: string;
+  billboard: string;
+  amount: number;
+  status: 'Approved' | 'Pending' | 'Active' | 'Completed';
+}
+
+export interface Testimonial {
+  name: string;
+  role: string;
+  avatar: string;
+  rating: number;
+  comment: string;
+}

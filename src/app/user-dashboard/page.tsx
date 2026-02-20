@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import { UserStatCards } from "@/components/user-dashboard/UserStatCards";
-import { ActiveCampaigns } from "@/components/user-dashboard/ActiveCampaigns";
-import { RecentBookingsTable } from "@/components/dashboard/RecentBookingsTable";
+import { UserStatCards } from "@/components/dashboard/user/UserStatCards";
+import { ActiveCampaigns } from "@/components/dashboard/user/ActiveCampaigns";
+import { RecentBookingsTable } from "@/components/dashboard/shared/RecentBookingsTable";
 
 export default function UserDashboardPage() {
   return (

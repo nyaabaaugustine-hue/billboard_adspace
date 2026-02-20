@@ -28,50 +28,8 @@ import {
   import { Button } from '@/components/ui/button';
   import { MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { bookings } from '@/lib/data';
   
-  const bookings = [
-    {
-      customer: 'Olivia Martin',
-      email: 'olivia.martin@email.com',
-      avatar: '/avatars/01.png',
-      billboard: 'Spintex Road Digital',
-      amount: '15,000.00',
-      status: 'Approved',
-    },
-    {
-      customer: 'Jackson Lee',
-      email: 'jackson.lee@email.com',
-      avatar: '/avatars/02.png',
-      billboard: 'Accra Mall Unipole',
-      amount: '12,000.00',
-      status: 'Pending',
-    },
-    {
-      customer: 'Isabella Nguyen',
-      email: 'isabella.nguyen@email.com',
-      avatar: '/avatars/03.png',
-      billboard: 'Osu Oxford Street Digital',
-      amount: '20,000.00',
-      status: 'Approved',
-    },
-    {
-      customer: 'William Kim',
-      email: 'will@email.com',
-      avatar: '/avatars/04.png',
-      billboard: 'Tema Motorway Unipole',
-      amount: '13,000.00',
-      status: 'Active',
-    },
-    {
-      customer: 'Sofia Davis',
-      email: 'sofia.davis@email.com',
-      avatar: '/avatars/05.png',
-      billboard: 'Lapaz Gantry Billboard',
-      amount: '11,000.00',
-      status: 'Completed',
-    },
-  ];
-
   const getStatusBadge = (status: string) => {
     switch (status) {
         case 'Approved':
@@ -128,7 +86,7 @@ import { cn } from '@/lib/utils';
                   <TableCell className="hidden sm:table-cell">
                     {getStatusBadge(booking.status)}
                   </TableCell>
-                  <TableCell className="text-right">GH₵{booking.amount}</TableCell>
+                  <TableCell className="text-right">GH₵{booking.amount.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                    <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

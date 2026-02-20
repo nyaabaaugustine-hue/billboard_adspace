@@ -10,6 +10,7 @@ import { BillboardGrid } from "@/components/home/BillboardGrid";
 import { RecentBillboards } from "@/components/home/RecentBillboards";
 import { PartnerVendors } from "@/components/home/PartnerVendors";
 import { type SearchFilters } from '@/components/home/SmartSearchBar';
+import { Testimonials } from '@/components/home/Testimonials';
 
 export default function Home() {
   const [displayBillboards, setDisplayBillboards] = useState(billboards);
@@ -106,6 +107,7 @@ export default function Home() {
         </div>
         <RecentBillboards />
         <PartnerVendors />
+        <Testimonials />
       </main>
       <Footer />
     </div>

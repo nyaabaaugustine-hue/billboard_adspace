@@ -1,4 +1,4 @@
-import type { Billboard, Region, Vendor } from "./types";
+import type { Billboard, Region, Vendor, Booking } from "./types";
 
 export const regions: Region[] = [
   { id: "1", name: "Greater Accra" },
@@ -565,5 +565,48 @@ export const vendors: Vendor[] = [
     rating: 4.7,
     verified: false,
     imageUrl: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771617790/jhh_csljmn.jpg",
+  },
+];
+
+export const bookings: Booking[] = [
+  {
+    customer: 'Olivia Martin',
+    email: 'olivia.martin@email.com',
+    avatar: '/avatars/01.png',
+    billboard: 'Spintex Road Digital',
+    amount: 15000.00,
+    status: 'Approved',
+  },
+  {
+    customer: 'Jackson Lee',
+    email: 'jackson.lee@email.com',
+    avatar: '/avatars/02.png',
+    billboard: 'Accra Mall Unipole',
+    amount: 12000.00,
+    status: 'Pending',
+  },
+  {
+    customer: 'Isabella Nguyen',
+    email: 'isabella.nguyen@email.com',
+    avatar: '/avatars/03.png',
+    billboard: 'Osu Oxford Street Digital',
+    amount: 20000.00,
+    status: 'Approved',
+  },
+  {
+    customer: 'William Kim',
+    email: 'will@email.com',
+    avatar: '/avatars/04.png',
+    billboard: 'Tema Motorway Unipole',
+    amount: 13000.00,
+    status: 'Active',
+  },
+  {
+    customer: 'Sofia Davis',
+    email: 'sofia.davis@email.com',
+    avatar: '/avatars/05.png',
+    billboard: 'Lapaz Gantry Billboard',
+    amount: 11000.00,
+    status: 'Completed',
   },
 ];
