@@ -86,7 +86,7 @@ export function SimilarBillboardCard({ billboard }: SimilarBillboardCardProps) {
           <div className="space-y-1 mt-auto">
             <h3 className="text-md font-semibold">Price</h3>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold text-accent">
+              <span className="text-2xl font-bold text-price">
                 GH₵{billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
               </span>
               <span className="text-sm font-medium text-muted-foreground">/month</span>

@@ -239,7 +239,7 @@ export default function BillboardDetailPage({
                 <div className="space-y-2">
                   <h3 className="text-lg font-semibold">Price</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-accent">
+                    <span className="text-3xl font-bold text-price">
                       GH₵ {billboard.pricePerMonth.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                     </span>
                     <span className="text-base font-medium text-muted-foreground">/month</span>

@@ -37,7 +37,7 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
             {getStatusBadge()}
           <div>
             <div className="flex items-baseline gap-1 pt-10">
-                <span className="text-2xl font-bold text-accent">
+                <span className="text-2xl font-bold text-price">
                     GH₵ {billboard.pricePerMonth.toLocaleString()}
                 </span>
                 <span className="text-sm text-muted-foreground">/ Monthly</span>
