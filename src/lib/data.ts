@@ -26,6 +26,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-10-01T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra1/600/400",
+    vendorId: "ven-001",
   },
   {
     id: "bb-acc-002",
@@ -44,6 +45,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-09-15T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra2/600/400",
+    vendorId: "ven-003",
   },
   {
     id: "bb-kum-001",
@@ -62,6 +64,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-11-01T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/kumasi1/600/400",
+    vendorId: "ven-002",
   },
   {
     id: "bb-kum-002",
@@ -80,6 +83,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-08-20T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/kumasi2/600/400",
+    vendorId: "ven-001",
   },
   {
     id: "bb-tak-001",
@@ -98,6 +102,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-01-10T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/takoradi1/600/400",
+    vendorId: "ven-004",
   },
   {
     id: "bb-tam-001",
@@ -116,6 +121,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-12-05T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/tamale1/600/400",
+    vendorId: "ven-003",
   },
   {
     id: "bb-acc-003",
@@ -134,6 +140,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-02-15T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra3/600/400",
+    vendorId: "ven-004",
   },
   {
     id: "bb-acc-004",
@@ -152,6 +159,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-03-01T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra4/600/400",
+    vendorId: "ven-001",
   },
   {
     id: "bb-acc-005",
@@ -170,6 +178,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-01-20T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra5/600/400",
+    vendorId: "ven-002",
   },
   {
     id: "bb-acc-006",
@@ -188,6 +197,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-12-10T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra6/600/400",
+    vendorId: "ven-003",
   },
   {
     id: "bb-tem-001",
@@ -206,6 +216,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-02-01T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/tema1/600/400",
+    vendorId: "ven-001",
   },
   {
     id: "bb-acc-007",
@@ -224,6 +235,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-03-10T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra7/600/400",
+    vendorId: "ven-004",
   },
   {
     id: "bb-acc-008",
@@ -242,6 +254,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-11-25T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra8/600/400",
+    vendorId: "ven-002",
   },
   {
     id: "bb-acc-009",
@@ -260,6 +273,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-02-22T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra9/600/400",
+    vendorId: "ven-003",
   },
   {
     id: "bb-acc-010",
@@ -278,24 +292,26 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-04-01T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra10/600/400",
+    vendorId: "ven-004",
   },
   {
     id: "bb-acc-011",
-    title: "Legon Campus Wall",
-    type: "Wall",
-    size: "10m x 8m",
+    title: "Accra - Legon Campus (Screen inside Pentagon Block B)",
+    type: "Digital LED",
+    size: "1920px x 1080px",
     regionId: "1",
     city: "Accra",
-    address: "University of Ghana, Legon Campus Entrance",
+    address: "Legon Campus, Pentagon Block B",
     latitude: 5.65,
     longitude: -0.187,
-    pricePerMonth: 7500,
-    trafficEstimate: 110000,
-    visibilityScore: 7,
-    isDigital: false,
+    pricePerMonth: 763.63,
+    trafficEstimate: 10000,
+    visibilityScore: 8,
+    isDigital: true,
     isActive: true,
     createdAt: "2024-01-05T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra11/600/400",
+    vendorId: "ven-004",
   },
   {
     id: "bb-acc-012",
@@ -314,6 +330,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2023-10-10T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra12/600/400",
+    vendorId: "ven-001",
   },
   {
     id: "bb-acc-013",
@@ -332,6 +349,7 @@ export const billboards: Billboard[] = [
     isActive: true,
     createdAt: "2024-03-18T12:00:00Z",
     imageUrl: "https://picsum.photos/seed/accra13/600/400",
+    vendorId: "ven-004",
   },
 ];
 
@@ -365,5 +383,15 @@ export const vendors: Vendor[] = [
     rating: 4.7,
     verified: true,
     imageUrl: "https://picsum.photos/seed/vendorinstall/400/300",
+  },
+  {
+    id: "ven-004",
+    name: "Envision Digital",
+    serviceType: "DESIGN",
+    region: "Greater Accra",
+    phone: "050 123 4567",
+    rating: 4.9,
+    verified: true,
+    imageUrl: "https://picsum.photos/seed/envisiondigital/400/300",
   },
 ];

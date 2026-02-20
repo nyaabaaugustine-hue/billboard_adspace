@@ -36,6 +36,7 @@ export interface Billboard {
   isActive: boolean;
   createdAt: string;
   imageUrl: string;
+  vendorId?: string;
 }
 
 export interface Vendor {
