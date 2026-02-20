@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
     Dialog,
@@ -25,6 +25,9 @@ import {
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
+import { OwareLogo } from '../icons/OwareLogo';
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,6 +38,93 @@ const GoogleIcon = () => (
     </svg>
 );
 
+
+function ReviewForm() {
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { toast } = useToast();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        setIsSubmitting(false);
+        setOpen(false);
+        toast({
+            title: "Review Submitted!",
+            description: "Thank you for your feedback. We appreciate you taking the time to share your experience.",
+        });
+    }
+
+    return (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="outline">
+                    <GoogleIcon />
+                    Write a review
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-lg">
+                <DialogHeader className="text-center items-center">
+                    <div className="mx-auto mb-4">
+                        <OwareLogo />
+                    </div>
+                    <DialogTitle className="text-2xl">Write a review</DialogTitle>
+                    <DialogDescription>
+                        Share your experience with OwareAds. Your feedback helps us improve.
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit}>
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-1 gap-2">
+                            <Label htmlFor="name">Full Name</Label>
+                            <Input id="name" placeholder="John Doe" required/>
+                        </div>
+                        <div className="grid grid-cols-1 gap-2">
+                            <Label htmlFor="rating">Rating</Label>
+                            <div className="flex items-center">
+                                {[...Array(5)].map((star, index) => {
+                                const ratingValue = index + 1;
+                                return (
+                                    <button
+                                    type="button"
+                                    key={index}
+                                    className="bg-transparent border-none cursor-pointer"
+                                    onClick={() => setRating(ratingValue)}
+                                    onMouseEnter={() => setHover(ratingValue)}
+                                    onMouseLeave={() => setHover(0)}
+                                    >
+                                    <Star
+                                        className={cn(
+                                        "h-6 w-6 transition-colors",
+                                        ratingValue <= (hover || rating)
+                                            ? "text-amber-400 fill-amber-400"
+                                            : "text-muted-foreground/50"
+                                        )}
+                                    />
+                                    </button>
+                                );
+                                })}
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 gap-2">
+                            <Label htmlFor="review">Review</Label>
+                            <Textarea id="review" placeholder="Tell us about your experience..." required />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button type="submit" className="w-full" disabled={isSubmitting}>
+                            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Submit Review
+                        </Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
+    )
+}
 
 export function Testimonials() {
   const plugin = React.useRef(
@@ -106,39 +196,7 @@ export function Testimonials() {
                 </div>
                 <p className="text-muted-foreground">(120+ reviews)</p>
             </div>
-             <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="outline">
-                        <GoogleIcon />
-                        Write a review
-                    </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                    <DialogTitle>Write a review</DialogTitle>
-                    <DialogDescription>
-                        Share your experience with OwareAds. Your feedback helps us improve.
-                    </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                        Name
-                        </Label>
-                        <Input id="name" placeholder="John Doe" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="review" className="text-right">
-                        Review
-                        </Label>
-                        <Textarea id="review" placeholder="Your experience..." className="col-span-3" />
-                    </div>
-                    </div>
-                    <DialogFooter>
-                    <Button type="submit">Submit Review</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+             <ReviewForm />
         </div>
 
       </div>

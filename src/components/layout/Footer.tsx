@@ -16,9 +16,9 @@ export function Footer() {
       title: 'Product',
       links: [
         { label: 'Browse Billboards', href: '/billboards' },
-        { label: 'List a Billboard', href: '#' },
-        { label: 'For Advertisers', href: '#' },
-        { label: 'For Vendors', href: '#' },
+        { label: 'List a Billboard', href: '/for-vendors' },
+        { label: 'For Advertisers', href: '/for-advertisers' },
+        { label: 'For Vendors', href: '/for-vendors' },
       ],
     },
     {

@@ -21,7 +21,7 @@ import { ThemeToggle } from "../theme-toggle";
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
   { href: "/for-advertisers", label: "For Advertisers" },
-  { href: "#", label: "For Vendors" },
+  { href: "/for-vendors", label: "For Vendors" },
 ];
 
 const dashboardLinks = [
@@ -66,7 +66,7 @@ export function Header() {
           </DropdownMenu>
 
             <Button variant="outline" asChild>
-              <Link href="#" className="font-semibold text-base">
+              <Link href="/for-vendors" className="font-semibold text-base">
                 List a Billboard
               </Link>
             </Button>
@@ -131,7 +131,7 @@ export function Header() {
 
                   <Button variant="ghost" asChild>
                       <Link
-                          href="#"
+                          href="/for-vendors"
                           className="rounded-md p-2 text-base font-medium hover:bg-muted justify-start"
                       >
                           List a billboard
