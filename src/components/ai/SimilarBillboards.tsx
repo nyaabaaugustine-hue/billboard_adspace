@@ -60,6 +60,9 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
         regionId: currentBillboard.regionId, // Use current billboard's region
         isDigital: rec.type === 'Digital LED',
         isActive: true,
+        status: 'Available',
+        sides: 1,
+        lighting: rec.type === 'Digital LED',
         trafficEstimate: Math.floor(Math.random() * 50000) + 50000, // random dummy data
         visibilityScore: Math.floor(Math.random() * 3) + 7, // random dummy data between 7-9
         createdAt: new Date().toISOString(),

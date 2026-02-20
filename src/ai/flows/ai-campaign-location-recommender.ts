@@ -55,9 +55,9 @@ Consider the unique characteristics of Ghana, including popular cities, regions,
 
 Available Billboard Information (if provided):
 {{#if availableLocations}}
-```json
+'''json
 {{{json availableLocations}}}
-```
+'''
 {{else}}
 No specific billboard data provided. Rely on general market knowledge.
 {{/if}}

@@ -240,12 +240,7 @@ export default function BillboardDetailPage({
           </div>
         </div>
 
-        <div className="mt-16">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">
-                Recommended Listings
-            </h2>
-            <SimilarBillboards currentBillboard={billboard} />
-        </div>
+        <SimilarBillboards currentBillboard={billboard} />
       </div>
     </div>
   );
