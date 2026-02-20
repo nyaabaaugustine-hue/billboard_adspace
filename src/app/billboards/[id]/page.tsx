@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun } from "lucide-react";
+import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun, Star } from "lucide-react";
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
 import { BookingDialog } from "@/components/booking/BookingDialog";
@@ -212,8 +212,15 @@ export default function BillboardDetailPage({
                    <div className="flex items-start">
                     <BarChart className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary" />
                     <div>
-                        <span className="font-semibold">Traffic</span>
+                        <span className="font-semibold">{(billboard.type === 'Unipole' || billboard.type === 'Gantry') && billboard.trafficEstimate > 150000 ? 'Highway Exposure' : 'Daily Traffic'}</span>
                         <p className="text-muted-foreground">{billboard.trafficEstimate.toLocaleString()} est. daily views</p>
+                    </div>
+                   </div>
+                   <div className="flex items-start">
+                    <Star className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-primary fill-current" />
+                    <div>
+                        <span className="font-semibold">Visibility Score</span>
+                        <p className="text-muted-foreground">{billboard.visibilityScore} / 10</p>
                     </div>
                    </div>
                 </div>
