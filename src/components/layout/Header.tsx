@@ -55,7 +55,7 @@ export function Header() {
                 Login
               </Link>
             </Button>
-          <Button size="lg" className="rounded-full font-bold text-base" asChild>
+          <Button size="lg" className="font-bold text-base" asChild>
             <Link href="/signup">Sign Up</Link>
           </Button>
           <ThemeToggle />

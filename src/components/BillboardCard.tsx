@@ -25,7 +25,7 @@ export function BillboardCard({ billboard }: BillboardCardProps) {
                 data-ai-hint="billboard image"
                 />
             </div>
-             <Button variant="ghost" size="icon" className="absolute top-3 right-3 rounded-full bg-background/60 hover:bg-background/80 text-foreground">
+             <Button variant="ghost" size="icon" className="absolute top-3 right-3 rounded-lg bg-background/60 hover:bg-background/80 text-foreground">
                 <Heart className="h-5 w-5" />
             </Button>
         </div>
