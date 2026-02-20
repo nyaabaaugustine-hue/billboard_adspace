@@ -37,8 +37,8 @@ export function KeyFeatures() {
         </div>
         <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div key={feature.title} className="text-center">
-              <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-primary text-primary-foreground mx-auto">
+            <div key={feature.title}>
+              <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-primary text-primary-foreground">
                 <feature.icon className="h-6 w-6" aria-hidden="true" />
               </div>
               <div className="mt-5">
