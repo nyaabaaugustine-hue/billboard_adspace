@@ -1,5 +1,5 @@
 'use client';
-import { regions } from "@/lib/data";
+import { regions, billboards as mockBillboards, vendors as mockVendors } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,13 +57,30 @@ export default function BillboardDetailPage({
   const firestore = useFirestore();
 
   const billboardRef = useMemo(() => doc(firestore, 'billboards', params.id), [firestore, params.id]);
-  const { data: billboard, loading: billboardLoading } = useDoc<Billboard>(billboardRef);
+  const { data: billboardFromHook, loading: billboardLoading } = useDoc<Billboard>(billboardRef);
+
+    // Fallback to mock data if billboard is not found in Firestore
+  const billboard = useMemo(() => {
+    if (!billboardLoading && !billboardFromHook) {
+        return mockBillboards.find(b => b.id === params.id) ?? null;
+    }
+    return billboardFromHook;
+  }, [billboardFromHook, billboardLoading, params.id]);
 
   const vendorRef = useMemo(() => {
     if (!billboard?.vendorId) return null;
     return doc(firestore, 'vendors', billboard.vendorId);
   }, [firestore, billboard?.vendorId]);
-  const { data: vendor, loading: vendorLoading } = useDoc<Vendor>(vendorRef);
+  const { data: vendorFromHook, loading: vendorLoading } = useDoc<Vendor>(vendorRef);
+
+  // Fallback for vendor data
+  const vendor = useMemo(() => {
+      if (!vendorLoading && !vendorFromHook && billboard?.vendorId) {
+          return mockVendors.find(v => v.id === billboard.vendorId) ?? null;
+      }
+      return vendorFromHook;
+  }, [vendorFromHook, vendorLoading, billboard]);
+
   
   const [trafficLabel, setTrafficLabel] = useState('Daily Traffic');
 
@@ -328,3 +345,5 @@ export default function BillboardDetailPage({
     </div>
   );
 }
+
+    

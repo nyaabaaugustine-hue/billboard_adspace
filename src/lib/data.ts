@@ -610,3 +610,5 @@ export const bookings: Booking[] = [
     status: 'Completed',
   },
 ];
+
+    
