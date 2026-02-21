@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Alegreya, Belleza } from "next/font/google";
 import { AppLoader } from "@/components/layout/AppLoader";
 import { FirebaseClientProvider } from "@/firebase/client-provider";
+import { GlobalEngagement } from "@/components/GlobalEngagement";
 
 const belleza = Belleza({
   subsets: ["latin"],
@@ -52,7 +53,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AppLoader>{children}</AppLoader>
+            <AppLoader>
+              {children}
+              <GlobalEngagement />
+            </AppLoader>
             <Toaster />
           </ThemeProvider>
         </FirebaseClientProvider>
