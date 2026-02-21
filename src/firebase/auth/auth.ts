@@ -37,6 +37,7 @@ export function getFirebaseAuthErrorMessage(error: any): string {
             return 'The password is too weak.';
         case 'auth/user-not-found':
         case 'auth/wrong-password':
+        case 'auth/user-disabled':
             return 'Invalid email or password. Please try again.';
         case 'auth/too-many-requests':
             return 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.';
@@ -81,6 +82,8 @@ export async function signInWithGoogle(): Promise<User> {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
+    // Force token refresh to ensure it's available for Firestore rules
+    await user.getIdToken(true);
     await manageUserProfile(user);
     return user;
   } catch (error: any) {
@@ -92,13 +95,19 @@ export async function signInWithGoogle(): Promise<User> {
 }
 
 export async function signUpWithEmailAndPassword(name: string, email: string, password: string): Promise<User> {
+    let user: User | null = null;
     try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
-        const user = result.user;
+        user = result.user;
+        // Force token refresh to ensure it's available for Firestore rules
+        await user.getIdToken(true);
         await updateProfile(user, { displayName: name });
         await manageUserProfile(user, { displayName: name });
         return user;
     } catch (error) {
+        if (user) {
+           await firebaseSignOut(auth);
+        }
         throw error;
     }
 }
