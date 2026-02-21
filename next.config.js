@@ -41,6 +41,14 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // These modules are not used in the client-side bundle.
+      // So we can safely externalize them to avoid webpack errors.
+      config.externals.push('@opentelemetry/instrumentation');
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
