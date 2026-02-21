@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { onSnapshot, type Query, type DocumentData } from 'firebase/firestore';
 
 export function useCollection<T extends DocumentData>(query: Query<T> | null) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const dataRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!query) {
@@ -18,7 +19,15 @@ export function useCollection<T extends DocumentData>(query: Query<T> | null) {
     const unsubscribe = onSnapshot(query, 
       (snapshot) => {
         const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as T));
-        setData(docs);
+        const stringifiedData = JSON.stringify(docs);
+
+        // By comparing stringified data, we prevent re-renders if the underlying data hasn't changed.
+        // This breaks potential infinite loops in components that depend on this hook.
+        if (stringifiedData !== dataRef.current) {
+          dataRef.current = stringifiedData;
+          setData(docs);
+        }
+
         setLoading(false);
         setError(null);
       },
