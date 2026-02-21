@@ -146,10 +146,18 @@ export default function ForVendorsPage() {
                 <Testimonials />
 
                 {/* Final CTA */}
-                <section className="py-16 sm:py-24 bg-primary/10">
-                     <div className="container mx-auto px-4 text-center">
+                <section className="relative py-16 sm:py-24">
+                     <Image
+                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/adfd_aiwbkv.jpg"
+                        alt="Billboard on a highway"
+                        fill
+                        className="object-cover"
+                        data-ai-hint="highway billboard"
+                    />
+                    <div className="absolute inset-0 bg-black/70" />
+                     <div className="relative z-10 container mx-auto px-4 text-center text-white">
                           <h2 className="text-3xl sm:text-4xl font-bold">Ready to Boost Your Revenue?</h2>
-                         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                         <p className="mt-4 text-lg text-neutral-200 max-w-2xl mx-auto">
                             Join our network of successful billboard owners today and start maximizing your earnings.
                          </p>
                          <div className="mt-8">
