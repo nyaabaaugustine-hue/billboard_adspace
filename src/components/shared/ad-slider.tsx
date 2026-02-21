@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Sparkles, MapPin } from 'lucide-react';
+import { X, Sparkles, MapPin, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, limit } from 'firebase/firestore';
 import type { Billboard } from '@/lib/types';
-import { Skeleton } from '../ui/skeleton';
+import { billboards as mockBillboards } from '@/lib/data';
 
 export function AdSlider() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,8 +26,11 @@ export function AdSlider() {
     if (fetchedBillboards && fetchedBillboards.length > 0) {
       const shuffled = [...fetchedBillboards].sort(() => 0.5 - Math.random());
       setAds(shuffled.slice(0, 5));
+    } else if (!loading && fetchedBillboards && fetchedBillboards.length === 0) {
+      const shuffled = [...mockBillboards].sort(() => 0.5 - Math.random());
+      setAds(shuffled.slice(0, 5));
     }
-  }, [fetchedBillboards]);
+  }, [fetchedBillboards, loading]);
 
   useEffect(() => {
     if (sessionStorage.getItem('adSliderDismissed') === 'true') {
@@ -101,18 +104,24 @@ export function AdSlider() {
                             GH₵{currentAd.pricePerMonth.toLocaleString()}
                         </div>
                     </div>
-                    <div className="flex-grow">
+                    <div className="flex-grow min-w-0">
                         <div className="flex items-center gap-2">
                              <Sparkles className="h-4 w-4 text-primary" />
                              <p className="text-xs font-bold uppercase tracking-wider text-primary">Featured Billboard</p>
                         </div>
-                        <p className="font-semibold text-sm text-foreground group-hover:underline leading-tight mt-1">
+                        <p className="font-semibold text-sm text-foreground group-hover:underline leading-tight mt-1 truncate">
                             {currentAd.title}
                         </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                            <MapPin className="h-3 w-3" />
-                            {currentAd.city}
-                        </p>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground mt-1 gap-2">
+                          <div className="flex items-center gap-1 min-w-0">
+                              <MapPin className="h-3 w-3 shrink-0" />
+                              <span className="truncate">{currentAd.city}</span>
+                          </div>
+                          <div className="flex items-center gap-1 min-w-0">
+                              <Building className="h-3 w-3 shrink-0" />
+                              <span className="truncate">{currentAd.type}</span>
+                          </div>
+                        </div>
                     </div>
                 </div>
                 <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0 z-10" onClick={(e) => {
