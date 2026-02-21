@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import {
   Carousel,
@@ -21,7 +21,7 @@ export function PartnerVendors() {
   );
 
   const firestore = useFirestore();
-  const vendorsCol = collection(firestore, 'vendors');
+  const vendorsCol = useMemo(() => collection(firestore, 'vendors'), [firestore]);
   const { data: vendors, loading } = useCollection<Vendor>(vendorsCol);
 
   return (

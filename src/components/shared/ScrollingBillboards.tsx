@@ -4,12 +4,12 @@ import type { Billboard } from '@/lib/types';
 import { collection, limit, query } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { Skeleton } from '../ui/skeleton';
 
 export function ScrollingBillboards() {
     const firestore = useFirestore();
-    const billboardsCol = collection(firestore, 'billboards');
-    const billboardsQuery = query(billboardsCol, limit(10));
+    const billboardsQuery = useMemo(() => query(collection(firestore, 'billboards'), limit(10)), [firestore]);
     const { data: billboards, loading } = useCollection<Billboard>(billboardsQuery);
 
     if (loading) {

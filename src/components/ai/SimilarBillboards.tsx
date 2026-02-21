@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { aiSimilarBillboardRecommender } from '@/ai/flows/ai-similar-billboard-recommender-flow';
 import type { Billboard, BillboardType } from '@/lib/types';
 import { useCollection, useFirestore } from '@/firebase';
@@ -25,8 +25,9 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
   const [loading, setLoading] = useState(true);
 
   const firestore = useFirestore();
-  const billboardsCol = collection(firestore, 'billboards');
-  const fallbackQuery = query(billboardsCol, where('city', '==', currentBillboard.city), limit(10));
+  const fallbackQuery = useMemo(() => {
+    return query(collection(firestore, 'billboards'), where('city', '==', currentBillboard.city), limit(10));
+  }, [firestore, currentBillboard.city]);
   const { data: fallbackBillboardsData, loading: fallbackLoading } = useCollection<Billboard>(fallbackQuery);
 
   const plugin = React.useRef(

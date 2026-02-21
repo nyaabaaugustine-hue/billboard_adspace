@@ -28,7 +28,7 @@ const AsibiFab = dynamic(() => import('@/components/ai/AsibiFab').then(mod => mo
 export default function Home() {
   const firestore = useFirestore();
 
-  const billboardsCol = collection(firestore, 'billboards');
+  const billboardsCol = useMemo(() => collection(firestore, 'billboards'), [firestore]);
   const { data: allBillboards, loading: billboardsLoading } = useCollection<Billboard>(billboardsCol);
 
   const [displayBillboards, setDisplayBillboards] = useState<Billboard[] | null>(null);

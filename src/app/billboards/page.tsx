@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { BillboardGrid } from '@/components/home/BillboardGrid';
 import { Header } from '@/components/layout/Header';
@@ -21,7 +21,7 @@ const InteractiveMap = dynamic(() => import('@/components/map/InteractiveMap'), 
 export default function BillboardsPage() {
   const [view, setView] = useState('grid');
   const firestore = useFirestore();
-  const billboardsCol = collection(firestore, 'billboards');
+  const billboardsCol = useMemo(() => collection(firestore, 'billboards'), [firestore]);
   const { data: billboards, loading } = useCollection<Billboard>(billboardsCol);
 
   const mapBillboardsData: MapBillboard[] = (billboards || []).map((b) => ({

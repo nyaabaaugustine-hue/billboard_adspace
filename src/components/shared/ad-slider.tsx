@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { X, Sparkles, MapPin, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ export function AdSlider() {
 
   const [ads, setAds] = useState<Billboard[]>([]);
   const firestore = useFirestore();
-  const billboardsQuery = query(collection(firestore, 'billboards'), limit(10));
+  const billboardsQuery = useMemo(() => query(collection(firestore, 'billboards'), limit(10)), [firestore]);
   const { data: fetchedBillboards, loading } = useCollection<Billboard>(billboardsQuery);
 
   useEffect(() => {
