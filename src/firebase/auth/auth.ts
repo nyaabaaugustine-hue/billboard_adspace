@@ -52,7 +52,7 @@ export function getFirebaseAuthErrorMessage(error: any): string {
         default:
             console.error("Unhandled auth error:", error);
             // Provide the raw error message if it's one of our custom ones
-            if (error.message.startsWith('Failed to save user profile')) {
+            if (error.message && error.message.startsWith('Failed to save user profile')) {
                 return error.message;
             }
             return 'An unexpected error occurred. Please check the console for details and try again.';
