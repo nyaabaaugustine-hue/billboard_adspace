@@ -70,7 +70,7 @@ export function AdSlider() {
 
       // Cleanup function for the inner timer
       return () => clearTimeout(nextAdTimer);
-    }, 14000); // An ad is shown for 12s, then we start the 2s hide/switch process. 12000 + 2000 = 14000
+    }, 35000); // An ad is shown for 33s, then we start the 2s hide/switch process. 33000 + 2000 = 35000
 
     // Cleanup function for the main timers
     return () => {
@@ -97,7 +97,7 @@ export function AdSlider() {
   return (
     <div
       className={cn(
-        'fixed bottom-4 left-4 z-50 w-full max-w-sm transition-all duration-700 ease-in-out',
+        'fixed bottom-4 left-4 z-50 w-full max-w-sm md:max-w-md transition-all duration-700 ease-in-out',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >
