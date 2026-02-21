@@ -9,7 +9,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Send, Loader2, User } from "lucide-react";
 import { asibiAssistant } from "@/ai/flows/asibi-assistant-flow";
-import { Role } from "@/lib/roles";
+import { Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 interface Message {

@@ -15,7 +15,7 @@ import { OwareLogo } from "@/components/icons/OwareLogo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { adminMenu, vendorMenu, userMenu, adminProfile, vendorProfile, userProfile } from "@/config/dashboard-menus";
-import type { Role } from "@/lib/roles";
+import type { Role } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ChevronRight } from "lucide-react";
 

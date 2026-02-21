@@ -1,4 +1,5 @@
-export type Role = "ADMIN" | "CUSTOMER" | "VENDOR" | "SUPER_ADMIN";
+
+export type Role = "ADMIN" | "VENDOR" | "USER";
 
 export type BillboardType = "Unipole" | "Gantry" | "Wall" | "Digital LED";
 
@@ -42,6 +43,16 @@ export interface Billboard {
   createdAt: string;
   imageUrl: string;
   vendorId?: string;
+}
+
+export interface UserProfile {
+    id: string;
+    uid: string;
+    email: string;
+    displayName: string | null;
+    photoURL: string | null;
+    role: Role;
+    createdAt: any; // Firestore Timestamp
 }
 
 export interface Vendor {

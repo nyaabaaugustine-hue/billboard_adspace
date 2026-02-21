@@ -1,7 +1,10 @@
+
+'use client';
+
 import { StatCards } from "@/components/dashboard/admin/StatCards";
 import { SystemHealth } from "@/components/dashboard/admin/SystemHealth";
 import { Button } from "@/components/ui/button";
-import { Download, UserPlus } from "lucide-react";
+import { Download, Loader2, UserPlus } from "lucide-react";
 import { PlatformAnalyticsChart } from "@/components/dashboard/admin/PlatformAnalyticsChart";
 import { RecentPlatformActivity } from "@/components/dashboard/admin/RecentPlatformActivity";
 import { JobMarketInsights } from "@/components/dashboard/admin/JobMarketInsights";
@@ -9,8 +12,46 @@ import { UserRoleDistribution } from "@/components/dashboard/admin/UserRoleDistr
 import { ModerationCenter } from "@/components/dashboard/admin/ModerationCenter";
 import { JobsExpiringSoon } from "@/components/dashboard/admin/JobsExpiringSoon";
 import { UserLocationBreakdown } from "@/components/dashboard/admin/UserLocationBreakdown";
+import { useDoc, useFirestore, useUser } from "@/firebase";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
+import { doc } from "firebase/firestore";
+import type { UserProfile } from "@/lib/types";
 
 export default function AdminDashboardPage() {
+  const { user, loading: userLoading } = useUser();
+  const router = useRouter();
+  const firestore = useFirestore();
+
+  const userProfileRef = useMemo(() => {
+    if (!user) return null;
+    return doc(firestore, 'users', user.uid);
+  }, [firestore, user]);
+
+  const { data: userProfile, loading: profileLoading } = useDoc<UserProfile>(userProfileRef);
+
+  useEffect(() => {
+    if (!userLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, userLoading, router]);
+
+  useEffect(() => {
+    if (!profileLoading && userProfile && userProfile.role !== 'ADMIN') {
+        router.push('/dashboard/user');
+    }
+  }, [userProfile, profileLoading, router]);
+
+  const isLoading = userLoading || profileLoading;
+
+  if (isLoading || !userProfile || userProfile.role !== 'ADMIN') {
+    return (
+        <div className="flex h-screen w-full items-center justify-center bg-background">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">

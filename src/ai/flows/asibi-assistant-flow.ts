@@ -8,6 +8,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { billboards, vendors, bookings } from '@/lib/data';
+import { Role } from '@/lib/types';
 
 const AsibiInputSchema = z.object({
   query: z.string().describe("The user's question about billboards, vendors, campaigns, or the platform."),

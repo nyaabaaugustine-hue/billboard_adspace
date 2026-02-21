@@ -21,6 +21,7 @@ import {
   Activity,
   type LucideIcon,
 } from "lucide-react";
+import type { Role } from "@/lib/types";
 
 export interface MenuItem {
     href: string;

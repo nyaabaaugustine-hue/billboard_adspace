@@ -1,10 +1,33 @@
+
+'use client';
+
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 import { UserStatCards } from "@/components/dashboard/user/UserStatCards";
 import { ActiveCampaigns } from "@/components/dashboard/user/ActiveCampaigns";
 import { RecentBookingsTable } from "@/components/dashboard/shared/RecentBookingsTable";
+import { useUser } from "@/firebase";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function UserDashboardPage() {
+  const { user, loading: userLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!userLoading && !user) {
+        router.push('/login');
+    }
+  }, [user, userLoading, router]);
+
+  if (userLoading || !user) {
+    return (
+        <div className="flex h-screen w-full items-center justify-center bg-background">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
@@ -13,7 +36,7 @@ export default function UserDashboardPage() {
             My Dashboard
           </h1>
           <p className="text-muted-foreground">
-            Welcome, Olivia! Here's an overview of your advertising campaigns.
+            Welcome, {user.displayName || 'User'}! Here&apos;s an overview of your advertising campaigns.
           </p>
         </div>
         <div className="flex items-center space-x-2">
