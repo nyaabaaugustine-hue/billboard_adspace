@@ -6,6 +6,9 @@ import {
   GoogleAuthProvider,
   signOut as firebaseSignOut,
   type User,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -22,61 +25,93 @@ import { FirestorePermissionError } from '../errors';
 const { auth, firestore } = initializeFirebase();
 const provider = new GoogleAuthProvider();
 
-export async function signInWithGoogle(): Promise<User | null> {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+export function getFirebaseAuthErrorMessage(error: any): string {
+    switch (error.code) {
+        case 'auth/email-already-in-use':
+            return 'This email address is already in use by another account.';
+        case 'auth/invalid-email':
+            return 'The email address is not valid.';
+        case 'auth/operation-not-allowed':
+            return 'Email/password accounts are not enabled.';
+        case 'auth/weak-password':
+            return 'The password is too weak.';
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+            return 'Invalid email or password. Please try again.';
+        case 'auth/too-many-requests':
+            return 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.';
+        default:
+            return 'An unexpected error occurred. Please try again.';
+    }
+}
 
+
+async function manageUserProfile(user: User, additionalData: { displayName?: string | null } = {}): Promise<void> {
     const userRef = doc(firestore, 'users', user.uid);
-    
     const userDoc = await getDoc(userRef);
+
     if (!userDoc.exists()) {
-      const newUserProfile = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        role: 'USER',
-        createdAt: serverTimestamp(),
-      };
+        const displayName = additionalData.displayName || user.displayName;
+        const newUserProfile = {
+            uid: user.uid,
+            email: user.email,
+            displayName: displayName,
+            photoURL: user.photoURL,
+            role: 'USER', 
+            createdAt: serverTimestamp(),
+        };
 
-      try {
-        await setDoc(userRef, newUserProfile);
-      } catch (dbError: any) {
-        // If creating the user profile fails, we must sign the user out
-        // to prevent an inconsistent state.
-        console.error("Failed to create user profile, signing out.", dbError);
-        await firebaseSignOut(auth);
-
-        if (dbError.code === 'permission-denied') {
-            const permissionError = new FirestorePermissionError({
+        try {
+            await setDoc(userRef, newUserProfile);
+        } catch (dbError: any) {
+             console.error("Failed to create user profile in Firestore.", dbError);
+             const permissionError = new FirestorePermissionError({
                 path: userRef.path,
                 operation: 'create',
                 requestResourceData: newUserProfile,
             });
             errorEmitter.emit('permission-error', permissionError);
+            throw dbError;
         }
-        return null;
-      }
     }
+}
 
+
+export async function signInWithGoogle(): Promise<User> {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    await manageUserProfile(user);
     return user;
-
   } catch (error: any) {
-    if (error.code === 'auth/invalid-api-key') {
-        console.error(
-          'Firebase authentication failed: Invalid API Key. Please verify your Firebase project configuration in src/firebase/config.ts.'
-        );
-   } else if (error.code !== 'auth/popup-closed-by-user') {
-       console.error('Error signing in with Google:', error);
-   }
-
-    if (auth.currentUser) {
+    if (error.code !== 'auth/popup-closed-by-user' && auth.currentUser) {
         await firebaseSignOut(auth);
     }
-    return null;
+    throw error;
   }
 }
+
+export async function signUpWithEmailAndPassword(name: string, email: string, password: string): Promise<User> {
+    try {
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        const user = result.user;
+        await updateProfile(user, { displayName: name });
+        await manageUserProfile(user, { displayName: name });
+        return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function signInUserWithEmailAndPassword(email: string, password:string): Promise<User> {
+    try {
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        return result.user;
+    } catch(error) {
+        throw error;
+    }
+}
+
 
 export async function signOutUser(): Promise<void> {
   try {

@@ -10,18 +10,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { OwareLogo } from "@/components/icons/OwareLogo";
-import { signInWithGoogle } from "@/firebase/auth/auth";
+import { signInWithGoogle, signInUserWithEmailAndPassword, getFirebaseAuthErrorMessage } from "@/firebase/auth/auth";
 import { useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useToast } from "@/hooks/use-toast";
 
 const GoogleIcon = () => (
     <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
@@ -29,29 +33,69 @@ const GoogleIcon = () => (
     </svg>
 );
 
+const formSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(1, { message: "Password is required." }),
+});
+
 
 export default function LoginPage() {
   const bgImage = PlaceHolderImages.find((img) => img.id === "hero-1");
-  const { user, loading } = useUser();
+  const { user, loading: userLoading } = useUser();
   const router = useRouter();
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const { toast } = useToast();
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!userLoading && user) {
       router.push('/dashboard/user');
     }
-  }, [user, loading, router]);
+  }, [user, userLoading, router]);
 
   const handleGoogleSignIn = async () => {
-    setIsSigningIn(true);
-    const user = await signInWithGoogle();
-    if (!user) {
-      setIsSigningIn(false);
+    setIsGoogleLoading(true);
+    try {
+        await signInWithGoogle();
+        // On success, the useEffect hook will handle redirection.
+    } catch(error: any) {
+        if (error.code !== 'auth/popup-closed-by-user') {
+            toast({
+                variant: 'destructive',
+                title: 'Sign In Failed',
+                description: getFirebaseAuthErrorMessage(error),
+            });
+        }
+        setIsGoogleLoading(false);
     }
-    // On success, the useEffect hook will handle redirection.
   };
 
-  if (loading || (!loading && user)) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsEmailLoading(true);
+    try {
+      await signInUserWithEmailAndPassword(values.email, values.password);
+      // On success, the useEffect hook will handle redirection.
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Sign In Failed',
+        description: getFirebaseAuthErrorMessage(error),
+      });
+      setIsEmailLoading(false);
+    }
+  }
+
+  const isLoading = userLoading || isGoogleLoading || isEmailLoading;
+
+  if (userLoading || (!userLoading && user)) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
@@ -86,9 +130,9 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent className="grid gap-4">
                <div className="grid grid-cols-1 gap-4">
-                  <Button variant="outline" onClick={handleGoogleSignIn} disabled={isSigningIn}>
-                    {isSigningIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <GoogleIcon />}
-                     {isSigningIn ? 'Signing in...' : 'Login with Google'}
+                  <Button variant="outline" onClick={handleGoogleSignIn} disabled={isLoading}>
+                    {isGoogleLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <GoogleIcon />}
+                     {isGoogleLoading ? 'Signing in...' : 'Login with Google'}
                   </Button>
                </div>
                <div className="relative">
@@ -99,20 +143,45 @@ export default function LoginPage() {
                       <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
                   </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <Link href="#" className="ml-auto inline-block text-sm underline">Forgot your password?</Link>
-                </div>
-                <Input id="password" type="password" required />
-              </div>
+              <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="m@example.com" {...field} disabled={isLoading} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center">
+                              <FormLabel>Password</FormLabel>
+                              <Link href="#" className="ml-auto inline-block text-sm underline">Forgot your password?</Link>
+                          </div>
+                          <FormControl>
+                            <Input type="password" {...field} disabled={isLoading} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" className="w-full" disabled={isLoading}>
+                        {isEmailLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        Sign in
+                    </Button>
+                  </form>
+                </Form>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-              <Button className="w-full">Sign in</Button>
               <p className="text-center text-sm text-muted-foreground">
                 Don&apos;t have an account?{" "}
                 <Link href="/signup" className="underline font-semibold text-foreground">
