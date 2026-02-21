@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { format } from 'date-fns';
+import { format, addMonths } from 'date-fns';
 import { Calendar as CalendarIcon, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import type { Billboard } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -36,6 +37,9 @@ import {
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { OwareLogo } from '../icons/OwareLogo';
+import { useUser, useFirestore } from '@/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ToastAction } from '@/components/ui/toast';
 
 const bookingFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -53,26 +57,90 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { user } = useUser();
+  const firestore = useFirestore();
+  const router = useRouter();
 
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+    },
   });
+
+  useEffect(() => {
+    // Pre-fill form when user object is available or dialog is opened
+    if (open && user) {
+      form.reset({
+        name: user.displayName || '',
+        email: user.email || '',
+        phone: form.getValues('phone'), // Keep phone if already entered
+        company: form.getValues('company'), // Keep company if already entered
+        startDate: form.getValues('startDate'),
+      });
+    }
+  }, [user, form, open]);
 
   async function onSubmit(data: BookingFormValues) {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
     
-    console.log(data);
-    
-    setIsSubmitting(false);
-    setOpen(false);
-    form.reset();
+    if (!user) {
+        toast({
+            variant: 'destructive',
+            title: 'Authentication Required',
+            description: 'You must be logged in to submit a booking request.',
+            action: (
+              <ToastAction altText="Login" onClick={() => router.push('/login')}>
+                Login
+              </ToastAction>
+            ),
+        });
+        setIsSubmitting(false);
+        return;
+    }
 
-    toast({
-      title: 'Booking Request Sent!',
-      description: `Your request for "${billboard.title}" has been received. We will contact you shortly.`,
-    });
+    try {
+        const bookingsCol = collection(firestore, 'bookings');
+        const endDate = addMonths(data.startDate, 1);
+
+        await addDoc(bookingsCol, {
+            userId: user.uid,
+            billboardId: billboard.id,
+            billboardTitle: billboard.title,
+            startDate: data.startDate,
+            endDate: endDate,
+            amount: billboard.pricePerMonth,
+            status: 'PENDING',
+            createdAt: serverTimestamp(),
+            customerDetails: {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                company: data.company || '',
+            }
+        });
+        
+        setIsSubmitting(false);
+        setOpen(false);
+        form.reset();
+
+        toast({
+            title: 'Booking Request Sent!',
+            description: `Your request for "${billboard.title}" has been received. Our team will contact you shortly to confirm.`,
+        });
+
+    } catch (error) {
+        console.error("Error creating booking:", error);
+        toast({
+            variant: 'destructive',
+            title: 'Submission Failed',
+            description: 'There was a problem submitting your request. Please try again later.',
+        });
+        setIsSubmitting(false);
+    }
   }
 
   return (
@@ -89,7 +157,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
             Book: {billboard.title}
           </DialogTitle>
           <DialogDescription className="text-center">
-            Complete the form below to submit your booking request.
+            Complete the form below to submit your booking request. We'll assume a 1-month duration for now.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
