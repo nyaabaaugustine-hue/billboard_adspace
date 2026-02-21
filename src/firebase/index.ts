@@ -5,7 +5,7 @@ import { getAuth, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { firebaseConfig } from './config';
 
-import { useFirebase as useFirebaseCore, FirebaseProvider, FirebaseClientProvider } from './provider';
+import { useFirebase as useFirebaseCore, FirebaseProvider } from './provider';
 import { useUser } from './auth/use-user';
 import { useDoc } from './firestore/use-doc';
 import { useCollection } from './firestore/use-collection';
@@ -34,7 +34,6 @@ const useFirestore = () => useFirebase().firestore;
 export {
   initializeFirebase,
   FirebaseProvider,
-  FirebaseClientProvider,
   useFirebase,
   useFirebaseApp,
   useAuth,
