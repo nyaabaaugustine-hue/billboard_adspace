@@ -7,6 +7,7 @@ import { CheckCircle, Search, Calendar, Rocket, BarChart, Users, Zap, Award } fr
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Testimonials } from '@/components/home/Testimonials';
 import { AsibiFab } from '@/components/ai/AsibiFab';
+import { ScrollingBillboards } from '@/components/shared/ScrollingBillboards';
 
 export default function ForAdvertisersPage() {
     const heroImage = PlaceHolderImages.find(img => img.id === 'hero-1');
@@ -85,6 +86,11 @@ export default function ForAdvertisersPage() {
                             </div>
                         </div>
                     </div>
+                </section>
+                
+                {/* Scrolling Billboards Section */}
+                <section className="py-16 sm:py-24 bg-background">
+                    <ScrollingBillboards />
                 </section>
 
                 {/* Features Section */}

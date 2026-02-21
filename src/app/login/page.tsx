@@ -120,7 +120,7 @@ export default function LoginPage() {
             data-ai-hint={bgImage.imageHint}
           />
         )}
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 flex h-full items-center justify-center p-4">
           <Card className="w-full max-w-md bg-card/80 backdrop-blur-lg border-white/20">
             <CardHeader className="text-center">
