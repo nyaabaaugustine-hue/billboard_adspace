@@ -2,6 +2,7 @@
 
 import { TrendingUp } from 'lucide-react';
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { subMonths, startOfMonth, format as formatDate, isAfter } from 'date-fns';
 
 import {
   Card,
@@ -17,15 +18,9 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { cn } from '@/lib/utils';
-
-const chartData = [
-  { month: 'January', revenue: 18600 },
-  { month: 'February', revenue: 30500 },
-  { month: 'March', revenue: 23700 },
-  { month: 'April', revenue: 7300 },
-  { month: 'May', revenue: 20900 },
-  { month: 'June', revenue: 21400 },
-];
+import type { FirestoreBooking } from '@/lib/types';
+import { useMemo } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const chartConfig = {
   revenue: {
@@ -34,12 +29,61 @@ const chartConfig = {
   },
 };
 
-export function RevenueChart({ className }: { className?: string }) {
+interface RevenueChartProps {
+    className?: string;
+    bookings: FirestoreBooking[];
+    loading: boolean;
+}
+
+export function RevenueChart({ className, bookings, loading }: RevenueChartProps) {
+    const chartData = useMemo(() => {
+        const sixMonthsAgo = startOfMonth(subMonths(new Date(), 5));
+        
+        const monthlyRevenue = Array.from({ length: 6 }).map((_, i) => {
+            const date = subMonths(new Date(), 5 - i);
+            return {
+                month: formatDate(date, 'MMM'),
+                revenue: 0,
+            };
+        });
+
+        bookings
+            .filter(booking => booking.status === 'COMPLETED' && booking.endDate && isAfter(booking.endDate.toDate(), sixMonthsAgo))
+            .forEach(booking => {
+                const monthStr = formatDate(booking.endDate.toDate(), 'MMM');
+                const monthData = monthlyRevenue.find(m => m.month === monthStr);
+                if (monthData) {
+                    monthData.revenue += booking.amount;
+                }
+            });
+
+        return monthlyRevenue;
+    }, [bookings]);
+
+    if(loading) {
+        return (
+            <Card className={cn(className)}>
+                <CardHeader>
+                    <Skeleton className="h-7 w-48" />
+                    <Skeleton className="h-4 w-56" />
+                </CardHeader>
+                <CardContent>
+                    <Skeleton className="h-[250px] w-full" />
+                </CardContent>
+                <CardFooter>
+                    <div className="flex w-full items-start gap-2 text-sm">
+                        <Skeleton className="h-4 w-full" />
+                    </div>
+                </CardFooter>
+            </Card>
+        )
+    }
+
   return (
     <Card className={cn(className)}>
       <CardHeader>
         <CardTitle>Revenue Over Time</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>Completed bookings over the last 6 months</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[250px] w-full">
@@ -57,7 +101,6 @@ export function RevenueChart({ className }: { className?: string }) {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
             <YAxis
                 tickLine={false}

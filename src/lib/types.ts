@@ -1,3 +1,4 @@
+import type { DocumentData } from 'firebase/firestore';
 
 export type Role = "ADMIN" | "VENDOR" | "USER";
 
@@ -43,6 +44,24 @@ export interface Billboard {
   createdAt: string;
   imageUrl: string;
   vendorId?: string;
+}
+
+export interface FirestoreBooking extends DocumentData {
+  id: string;
+  userId: string;
+  billboardId: string;
+  billboardTitle: string;
+  startDate: { toDate: () => Date };
+  endDate: { toDate: () => Date };
+  amount: number;
+  status: BookingStatus;
+  createdAt: any; // Firestore Timestamp
+  customerDetails: {
+    name: string;
+    email: string;
+    phone: string;
+    company?: string;
+  };
 }
 
 export interface UserProfile {
