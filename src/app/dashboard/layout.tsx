@@ -47,14 +47,12 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen bg-background">
-        <DashboardSidebar />
-        <SidebarInset>
-          <DashboardHeader />
-          <div className="flex-1 p-4 sm:p-6 lg:p-8">{children}</div>
-          <AsibiFab />
-        </SidebarInset>
-      </div>
+      <DashboardSidebar />
+      <SidebarInset>
+        <DashboardHeader />
+        <div className="flex-1 p-4 sm:p-6 lg:p-8">{children}</div>
+        <AsibiFab />
+      </SidebarInset>
     </SidebarProvider>
   );
 }
