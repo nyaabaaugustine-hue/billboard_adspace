@@ -1,14 +1,16 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Rocket } from 'lucide-react';
+import { OwareLogo } from '@/components/icons/OwareLogo';
 
 export function AdvertiseWithUs() {
   return (
-    <section className="bg-gradient-to-r from-primary/90 to-primary py-12">
+    <section className="py-12">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
-          <div className="flex items-center gap-4">
-            <Rocket className="h-12 w-12 text-primary-foreground/80 hidden sm:block" />
+        <div className="flex flex-col items-center justify-between gap-8 rounded-2xl bg-gradient-to-r from-primary/90 to-primary p-8 text-center shadow-lg sm:flex-row sm:text-left">
+          <div className="flex items-center gap-6">
+            <div className="hidden shrink-0 sm:block">
+                <OwareLogo width={80} />
+            </div>
             <div>
               <h2 className="font-headline text-3xl font-bold text-primary-foreground">
                 Advertise With Us

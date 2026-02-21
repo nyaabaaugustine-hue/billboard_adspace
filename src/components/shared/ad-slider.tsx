@@ -97,7 +97,7 @@ export function AdSlider() {
   return (
     <div
       className={cn(
-        'fixed bottom-4 left-4 z-50 w-full max-w-sm md:max-w-md transition-all duration-700 ease-in-out',
+        'fixed bottom-4 left-4 right-4 z-50 w-auto sm:left-4 sm:right-auto sm:w-full sm:max-w-sm md:max-w-md transition-all duration-700 ease-in-out',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >

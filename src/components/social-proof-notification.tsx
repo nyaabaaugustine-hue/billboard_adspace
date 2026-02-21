@@ -78,7 +78,7 @@ export function SocialProofNotification() {
   return (
     <div
       className={cn(
-        'fixed bottom-4 left-4 z-50 w-full max-w-xs transition-all duration-500 ease-in-out',
+        'fixed bottom-4 left-4 right-4 z-50 w-auto sm:right-auto sm:w-full sm:max-w-xs transition-all duration-500 ease-in-out',
         isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[calc(100%+2rem)]'
       )}
     >
