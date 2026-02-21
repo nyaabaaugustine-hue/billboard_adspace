@@ -8,12 +8,8 @@ export function AppLoader({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // This is a simple simulation of page load.
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500); 
-
-    return () => clearTimeout(timer);
+    // Show content as soon as the client has hydrated.
+    setIsLoading(false);
   }, []);
 
   return (
