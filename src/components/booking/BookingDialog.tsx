@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { format, addMonths } from 'date-fns';
+import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -50,6 +50,12 @@ const bookingFormSchema = z.object({
   startDate: z.date({
     required_error: 'A start date is required.',
   }),
+  endDate: z.date({
+    required_error: 'An end date is required.',
+  }),
+}).refine((data) => data.endDate > data.startDate, {
+  message: "End date must be after the start date.",
+  path: ["endDate"],
 });
 
 type BookingFormValues = z.infer<typeof bookingFormSchema>;
@@ -81,6 +87,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
         phone: form.getValues('phone'), // Keep phone if already entered
         company: form.getValues('company'), // Keep company if already entered
         startDate: form.getValues('startDate'),
+        endDate: form.getValues('endDate'),
       });
     }
   }, [user, form, open]);
@@ -105,14 +112,13 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
 
     try {
         const bookingsCol = collection(firestore, 'bookings');
-        const endDate = addMonths(data.startDate, 1);
 
         const newBookingRef = await addDoc(bookingsCol, {
             userId: user.uid,
             billboardId: billboard.id,
             billboardTitle: billboard.title,
             startDate: data.startDate,
-            endDate: endDate,
+            endDate: data.endDate,
             amount: billboard.pricePerMonth,
             status: 'PENDING',
             createdAt: serverTimestamp(),
@@ -164,7 +170,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
       <DialogTrigger asChild>
         <Button size="lg" className="w-full lg:w-auto">Book Now</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] bg-card">
+      <DialogContent className="sm:max-w-xl bg-card">
         <DialogHeader>
           <div className="mx-auto mb-4">
             <AdspaceLogo />
@@ -173,7 +179,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
             Book: {billboard.title}
           </DialogTitle>
           <DialogDescription className="text-center">
-            Complete the form below to submit your booking request. We'll assume a 1-month duration for now.
+            Complete the form below to submit your booking request.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -238,7 +244,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
-                  <FormItem className="col-span-2 flex flex-col">
+                  <FormItem className="col-span-2 sm:col-span-1 flex flex-col">
                     <FormLabel>Requested Start Date</FormLabel>
                     <Popover modal={true}>
                       <PopoverTrigger asChild>
@@ -267,6 +273,51 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
                           disabled={(date) =>
                             date < new Date(new Date().setHours(0,0,0,0))
                           }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="endDate"
+                render={({ field }) => (
+                  <FormItem className="col-span-2 sm:col-span-1 flex flex-col">
+                    <FormLabel>Requested End Date</FormLabel>
+                    <Popover modal={true}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) => {
+                            const startDate = form.getValues("startDate");
+                            if (startDate) {
+                                return date <= startDate;
+                            }
+                            return date < new Date(new Date().setHours(0,0,0,0));
+                          }}
                           initialFocus
                         />
                       </PopoverContent>
