@@ -11,25 +11,18 @@ import { AsibiFab } from '@/components/ai/AsibiFab';
 
 const team = [
     {
-        name: 'Augustine Nyaaba',
+        name: 'Van X Allotey',
         role: 'Founder & CEO',
         bio: 'The visionary behind Adspace, passionate about transforming outdoor advertising in Ghana with technology.',
-        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669466/20230526_112001_v382je.jpg',
-        avatarFallback: 'AN',
+        avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
+        avatarFallback: 'VA',
     },
     {
-        name: 'Jane Doe',
+        name: 'Augustine Nyaaba',
         role: 'Chief Technology Officer',
         bio: 'The architect of our robust platform, ensuring a seamless and secure experience for all users.',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/2.jpg',
-        avatarFallback: 'JD',
-    },
-    {
-        name: 'Kwame Owusu',
-        role: 'Head of Vendor Relations',
-        bio: 'Dedicated to building strong partnerships and empowering billboard owners across the nation.',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
-        avatarFallback: 'KO',
+        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669466/20230526_112001_v382je.jpg',
+        avatarFallback: 'AN',
     },
 ];
 
@@ -115,7 +108,7 @@ export default function AboutUsPage() {
                                 We are a team of innovators, marketers, and tech enthusiasts dedicated to your success.
                             </p>
                         </div>
-                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
                             {team.map((member) => (
                                 <div key={member.name} className="text-center flex flex-col items-center">
                                     <Avatar className="h-32 w-32 mb-4 border-4 border-primary/20">
@@ -159,14 +152,17 @@ export default function AboutUsPage() {
                      <div className="container mx-auto px-4 text-center">
                           <h2 className="text-3xl sm:text-4xl font-bold">Join Our Journey</h2>
                          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                            Whether you're looking to advertise or list your space, we're building the future of outdoor media together.
+                            Whether you're an advertiser, a vendor, or an investor, we're building the future of outdoor media together.
                          </p>
-                         <div className="mt-8 flex justify-center gap-4">
+                         <div className="mt-8 flex flex-wrap justify-center gap-4">
                              <Button asChild size="lg">
                                  <Link href="/billboards">Find Billboards</Link>
                              </Button>
                               <Button asChild variant="outline" size="lg">
                                  <Link href="/for-vendors">Become a Vendor</Link>
+                             </Button>
+                             <Button asChild size="lg" variant="secondary">
+                                 <Link href="#">Join Our Management</Link>
                              </Button>
                          </div>
                      </div>

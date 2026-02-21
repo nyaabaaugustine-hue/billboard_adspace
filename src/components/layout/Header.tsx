@@ -81,6 +81,21 @@ export function Header() {
             <AdspaceLogo />
           </Link>
           <div className="hidden md:flex items-center gap-2">
+             <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="font-semibold text-base">
+                        Home <ChevronDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                    <DropdownMenuItem asChild>
+                        <Link href="/">Home</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/about">About Us</Link>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
              {navLinks.map((link) => (
                 <Button key={link.href} variant="ghost" asChild>
                     <Link href={link.href} className="font-semibold text-base">
@@ -131,6 +146,21 @@ export function Header() {
                   </Link>
                 </SheetHeader>
                 <div className="mt-8 flex flex-col gap-4">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="font-semibold text-base justify-between">
+                            Home <ChevronDown className="ml-2 h-4 w-4" />
+                        </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                                <Link href="/">Home</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href="/about">About Us</Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
