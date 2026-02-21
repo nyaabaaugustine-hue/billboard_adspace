@@ -15,7 +15,7 @@ export function BillboardCard({ billboard }: BillboardCardProps) {
   return (
     <Link href={`/billboards/${billboard.id}`} className="group block">
         <div className="relative">
-             <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-card">
+             <div className="aspect-[4/3] w-full overflow-hidden rounded-[7%] bg-card">
                 <Image
                 src={billboard.imageUrl}
                 alt={billboard.title}

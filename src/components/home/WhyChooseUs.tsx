@@ -55,7 +55,7 @@ export function WhyChooseUs() {
                 </div>
             </dl>
           </div>
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl lg:order-first">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[7%] lg:order-first">
             <Image
               src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/gh_wrpkun.jpg"
               alt="Billboard at a junction"

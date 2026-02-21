@@ -193,7 +193,7 @@ export default function BillboardDetailPage({
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
           <div className="lg:col-span-2">
-            <Card className="overflow-hidden border shadow-sm">
+            <Card className="overflow-hidden border shadow-sm rounded-[7%]">
               <div className="aspect-[4/3] relative">
                 <Image
                   src={billboard.imageUrl}

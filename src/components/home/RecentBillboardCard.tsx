@@ -24,7 +24,7 @@ export function RecentBillboardCard({ billboard }: RecentBillboardCardProps) {
   return (
     <Link href={`/billboards/${billboard.id}`} className="block group">
       <div className="flex flex-col sm:flex-row gap-6 rounded-2xl border bg-card p-4 text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
-        <div className="relative aspect-[4/3] w-full sm:w-1/3 lg:w-1/4 overflow-hidden rounded-xl bg-card">
+        <div className="relative aspect-[4/3] w-full sm:w-1/3 lg:w-1/4 overflow-hidden rounded-[7%] bg-card">
           <Image
             src={billboard.imageUrl}
             alt={billboard.title}

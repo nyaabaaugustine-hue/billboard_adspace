@@ -100,7 +100,7 @@ import { Skeleton } from '@/components/ui/skeleton';
                     <TableRow key={billboard.id}>
                     <TableCell>
                         <div className="flex items-center gap-4">
-                            <div className="relative w-16 h-12 rounded-md overflow-hidden bg-muted hidden sm:block">
+                            <div className="relative w-16 h-12 rounded-[7%] overflow-hidden bg-muted hidden sm:block">
                                 <Image src={billboard.imageUrl} alt={billboard.title} fill className="object-cover" data-ai-hint="billboard image" />
                             </div>
                             <div className="grid gap-1">

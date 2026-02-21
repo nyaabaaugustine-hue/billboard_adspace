@@ -33,7 +33,7 @@ export function SimilarBillboardCard({ billboard }: SimilarBillboardCardProps) {
   return (
     <Link href={`/billboards/${billboard.id}`} className="block h-full group">
       <Card className="flex flex-col h-full rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-2xl">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-[7%]">
             <Image
                 src={billboard.imageUrl}
                 alt={billboard.title}

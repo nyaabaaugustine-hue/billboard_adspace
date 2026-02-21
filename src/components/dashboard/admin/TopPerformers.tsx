@@ -136,7 +136,7 @@ export function TopPerformers({ className, bookings, billboards, vendors, loadin
            <div className="space-y-4">
             {topBillboards.length > 0 ? topBillboards.map((billboard) => (
               <div key={billboard.id} className="flex items-center">
-                 <div className="relative w-12 h-9 rounded-md overflow-hidden mr-4 bg-muted">
+                 <div className="relative w-12 h-9 rounded-[7%] overflow-hidden mr-4 bg-muted">
                     <Image src={billboard.imageUrl} alt={billboard.title} fill className="object-cover" data-ai-hint="billboard image" />
                  </div>
                 <div className="space-y-1">

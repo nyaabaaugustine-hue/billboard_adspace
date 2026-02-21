@@ -53,7 +53,7 @@ export function ActiveCampaigns({ className }: { className?: string }) {
                             {campaign.billboards.map(b => (
                                 <Link href={`/billboards/${b.id}`} key={b.id} className="block shrink-0">
                                     <div className="w-48">
-                                        <div className="relative aspect-video w-full rounded-md overflow-hidden bg-muted">
+                                        <div className="relative aspect-video w-full rounded-[7%] overflow-hidden bg-muted">
                                             <Image src={b.imageUrl} alt={b.title} fill className="object-cover" data-ai-hint="billboard image" />
                                         </div>
                                         <p className="text-xs font-medium mt-1 truncate">{b.title}</p>
