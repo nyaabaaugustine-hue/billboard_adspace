@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { aiSimilarBillboardRecommender, type SimilarBillboardRecommenderOutput } from '@/ai/flows/ai-similar-billboard-recommender-flow';
+import { aiSimilarBillboardRecommender } from '@/ai/flows/ai-similar-billboard-recommender-flow';
 import type { Billboard, BillboardType } from '@/lib/types';
-import { billboards } from '@/lib/data';
+import { useCollection, useFirestore } from '@/firebase';
+import { collection, query, where, limit } from 'firebase/firestore';
 import { Skeleton } from '../ui/skeleton';
 import {
   Carousel,
@@ -23,11 +24,18 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
   const [recommendations, setRecommendations] = useState<Billboard[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const firestore = useFirestore();
+  const billboardsCol = collection(firestore, 'billboards');
+  const fallbackQuery = query(billboardsCol, where('city', '==', currentBillboard.city), limit(10));
+  const { data: fallbackBillboardsData, loading: fallbackLoading } = useCollection<Billboard>(fallbackQuery);
+
   const plugin = React.useRef(
     Autoplay({ delay: 7000, stopOnInteraction: true })
   );
 
   useEffect(() => {
+    if (fallbackLoading) return;
+
     async function getRecommendations() {
       try {
         setLoading(true);
@@ -73,29 +81,35 @@ export function SimilarBillboards({ currentBillboard }: SimilarBillboardsProps) 
             });
             setRecommendations(aiBillboards);
         } else {
-            // Fallback to static data
-            const fallbackBillboards = billboards
-              .filter(b => b.id !== currentBillboard.id)
-              .sort(() => 0.5 - Math.random()) // Shuffle
-              .slice(0, 5);
-            setRecommendations(fallbackBillboards);
+            if (fallbackBillboardsData) {
+                const fallback = fallbackBillboardsData
+                  .filter(b => b.id !== currentBillboard.id)
+                  .sort(() => 0.5 - Math.random())
+                  .slice(0, 5);
+                setRecommendations(fallback);
+            }
         }
       } catch (error) {
         console.error('Error fetching similar billboards, using fallback:', error);
-        // Fallback to static data on error
-        const fallbackBillboards = billboards
-            .filter(b => b.id !== currentBillboard.id)
-            .sort(() => 0.5 - Math.random()) // Shuffle
-            .slice(0, 5);
-        setRecommendations(fallbackBillboards);
+         if (fallbackBillboardsData) {
+            const fallback = fallbackBillboardsData
+              .filter(b => b.id !== currentBillboard.id)
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 5);
+            setRecommendations(fallback);
+        }
       } finally {
         setLoading(false);
       }
     }
+    
     getRecommendations();
-  }, [currentBillboard]);
 
-  if (loading) {
+  }, [currentBillboard, fallbackBillboardsData, fallbackLoading]);
+
+  const isLoading = loading || fallbackLoading;
+
+  if (isLoading) {
     return (
       <div className="mt-16">
         <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">

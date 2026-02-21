@@ -1,5 +1,5 @@
 'use client';
-import { billboards, regions, vendors } from "@/lib/data";
+import { regions } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,18 +7,32 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Copy, Facebook, Linkedin, Twitter, MapPin, Maximize, BarChart, CheckCircle, Layers, Sun, Star, Share2 } from "lucide-react";
+import { ArrowLeft, Share2, Maximize, BarChart, CheckCircle, Layers, Sun, Star } from "lucide-react";
 import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
 import { BillboardDescription } from "@/components/ai/BillboardDescription";
 import { BookingDialog } from "@/components/booking/BookingDialog";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useDoc, useFirestore } from "@/firebase";
+import { doc } from "firebase/firestore";
+import type { Billboard, Vendor } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function BillboardDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const billboard = billboards.find((b) => b.id === params.id);
+  const firestore = useFirestore();
+
+  const billboardRef = useMemo(() => doc(firestore, 'billboards', params.id), [firestore, params.id]);
+  const { data: billboard, loading: billboardLoading } = useDoc<Billboard>(billboardRef);
+
+  const vendorRef = useMemo(() => {
+    if (!billboard?.vendorId) return null;
+    return doc(firestore, 'vendors', billboard.vendorId);
+  }, [firestore, billboard?.vendorId]);
+  const { data: vendor, loading: vendorLoading } = useDoc<Vendor>(vendorRef);
+  
   const [trafficLabel, setTrafficLabel] = useState('Daily Traffic');
 
   useEffect(() => {
@@ -30,11 +44,56 @@ export default function BillboardDetailPage({
     }
   }, [billboard]);
 
+  if (billboardLoading) {
+    return (
+      <div className="bg-background text-foreground">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-4">
+            <Skeleton className="h-10 w-40 rounded-md" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
+            <div className="lg:col-span-2">
+              <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+
+              <div className="mt-8 space-y-4">
+                <Skeleton className="h-6 w-24 rounded-md" />
+                <Skeleton className="h-10 w-3/4 rounded-md" />
+                <Skeleton className="h-6 w-1/2 rounded-md" />
+              </div>
+              
+              <Separator className="my-8" />
+
+              <div className="space-y-8">
+                  <div>
+                      <Skeleton className="h-8 w-1/3 rounded-md mb-4" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-3/4" />
+                      </div>
+                  </div>
+                  <div>
+                      <Skeleton className="h-8 w-1/3 rounded-md mb-4" />
+                      <Skeleton className="h-28 w-full rounded-lg" />
+                  </div>
+              </div>
+
+            </div>
+
+            <div className="lg:col-span-1">
+              <Skeleton className="sticky top-24 h-[500px] w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (!billboard) {
     notFound();
   }
 
-  const vendor = vendors.find((v) => v.id === billboard.vendorId);
   const regionName = regions.find(r => r.id === billboard.regionId)?.name;
 
   const descriptionContent =
@@ -136,7 +195,7 @@ export default function BillboardDetailPage({
                     <h2 className="text-xl md:text-2xl font-bold">Description</h2>
                     <div className="mt-4">{descriptionContent}</div>
                 </div>
-                {vendor && (
+                {vendorLoading ? <Skeleton className="h-28 w-full rounded-lg" /> : (vendor && (
                     <div>
                         <h2 className="text-xl md:text-2xl font-bold">Vendor Information</h2>
                         <Card className="mt-4">
@@ -149,7 +208,7 @@ export default function BillboardDetailPage({
                             </CardHeader>
                         </Card>
                     </div>
-                )}
+                ))}
             </div>
 
           </div>
