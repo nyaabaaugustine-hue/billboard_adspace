@@ -1,5 +1,5 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyDPEXp4_HqsjOBPbH9c8G-1K9c7SszM9eA",
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: "owareads.firebaseapp.com",
     projectId: "owareads",
     storageBucket: "owareads.appspot.com",
