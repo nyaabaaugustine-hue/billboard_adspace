@@ -108,7 +108,7 @@ export default function AboutUsPage() {
                                 We are a team of innovators, marketers, and tech enthusiasts dedicated to your success.
                             </p>
                         </div>
-                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
+                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center">
                             {team.map((member) => (
                                 <div key={member.name} className="text-center flex flex-col items-center">
                                     <Avatar className="h-32 w-32 mb-4 border-4 border-primary/20">
