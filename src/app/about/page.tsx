@@ -30,7 +30,7 @@ const team = [
         name: 'Aisha Mohammed',
         role: 'Chief Marketing Officer',
         bio: 'Driving brand growth and connecting advertisers with their perfect audience through strategic marketing.',
-        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771670823/ASWD_chqgfr.jpg',
+        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771671397/L_jytie6.jpg',
         avatarFallback: 'AM',
     },
 ];
