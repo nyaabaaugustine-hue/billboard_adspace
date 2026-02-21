@@ -73,21 +73,23 @@ export function AdSlider() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >
-      <div className="rounded-xl bg-card p-4 shadow-2xl border flex gap-4 items-center">
-        <div className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0">
-          <Megaphone className="h-5 w-5 text-secondary-foreground" />
+        <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20">
+            <div className="flex gap-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shrink-0">
+                    <Megaphone className="h-5 w-5" />
+                </div>
+                <div className="flex-grow">
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary">Sponsored</p>
+                    <Link href={ads[currentAdIndex].link} className="font-semibold text-sm text-foreground hover:underline">
+                        {ads[currentAdIndex].text}
+                    </Link>
+                </div>
+            </div>
+            <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0" onClick={handleDismiss}>
+                <X className="h-4 w-4" />
+                <span className="sr-only">Dismiss</span>
+            </Button>
         </div>
-        <div className="flex-grow">
-          <Link href={ads[currentAdIndex].link} className="font-semibold text-sm hover:underline">
-            {ads[currentAdIndex].text}
-          </Link>
-          <p className="text-muted-foreground text-xs">Sponsored Promotion</p>
-        </div>
-        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={handleDismiss}>
-          <X className="h-4 w-4" />
-          <span className="sr-only">Dismiss</span>
-        </Button>
-      </div>
     </div>
   );
 }

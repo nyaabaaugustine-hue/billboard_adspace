@@ -82,21 +82,28 @@ export function SocialProofNotification() {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >
-      <div className="rounded-xl bg-card p-4 shadow-2xl border flex gap-4 items-start">
-        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-          <Zap className="h-5 w-5 text-primary" />
+      <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20">
+        <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-primary/80 to-primary/40" />
+        <div className="flex items-start gap-4 pl-4">
+            <div className="mt-1 flex-shrink-0">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20">
+                <Zap className="h-5 w-5 text-primary" />
+                </div>
+            </div>
+            <div className="flex-grow">
+                <p className="font-semibold text-sm text-foreground">Live Platform Activity</p>
+                <p className="text-muted-foreground text-sm">{currentNotification}</p>
+                <div className="mt-2">
+                <Button variant="link" size="sm" className="h-auto p-0 text-xs text-muted-foreground/80 hover:text-muted-foreground" onClick={handleStop}>
+                    Stop seeing these
+                </Button>
+                </div>
+            </div>
+            <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0" onClick={() => setIsVisible(false)}>
+                <X className="h-4 w-4" />
+                <span className="sr-only">Dismiss</span>
+            </Button>
         </div>
-        <div className="flex-grow">
-          <p className="font-semibold text-sm">Live Platform Activity</p>
-          <p className="text-muted-foreground text-sm">{currentNotification}</p>
-          <div className="mt-2">
-            <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={handleStop}>Stop seeing these</Button>
-          </div>
-        </div>
-        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => setIsVisible(false)}>
-          <X className="h-4 w-4" />
-          <span className="sr-only">Dismiss</span>
-        </Button>
       </div>
     </div>
   );
