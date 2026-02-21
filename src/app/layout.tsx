@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "Rent billboards, book advertising services, and grow your business with Adspace.",
   icons: {
-    icon: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771617987/cv_euqiu3.png",
+    icon: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669841/adspace_zcwlql.png",
   },
 };
 
