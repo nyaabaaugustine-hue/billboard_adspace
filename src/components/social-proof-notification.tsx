@@ -78,12 +78,12 @@ export function SocialProofNotification() {
   return (
     <div
       className={cn(
-        'fixed bottom-4 left-4 right-4 z-50 w-auto sm:right-auto sm:w-full sm:max-w-xs transition-all duration-500 ease-in-out',
-        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[calc(100%+2rem)]'
+        'fixed bottom-4 right-4 z-50 w-full max-w-sm transition-all duration-500 ease-in-out',
+        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[calc(100%+2rem)]'
       )}
     >
-      <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20">
-        <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-primary/80 to-primary/40" />
+      <div className="relative overflow-hidden rounded-xl bg-card/70 p-4 shadow-2xl backdrop-blur-xl border border-primary/30">
+        <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-primary to-primary/50" />
         <div className="flex items-start gap-4 pl-4">
             <div className="mt-1 flex-shrink-0">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20">
