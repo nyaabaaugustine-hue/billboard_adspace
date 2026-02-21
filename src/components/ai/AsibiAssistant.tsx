@@ -70,7 +70,7 @@ export function AsibiAssistant() {
                     />
                     <div>
                         <SheetTitle className="text-xl">Asibi Assistant</SheetTitle>
-                        <SheetDescription>Your AI-powered guide to OwareAds</SheetDescription>
+                        <SheetDescription>Your AI-powered guide to Adspace</SheetDescription>
                     </div>
                 </div>
             </SheetHeader>

@@ -37,7 +37,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { OwareLogo } from '../icons/OwareLogo';
+import { AdspaceLogo } from '../icons/OwareLogo';
 import { useUser, useFirestore } from '@/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ToastAction } from '@/components/ui/toast';
@@ -167,7 +167,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
       <DialogContent className="sm:max-w-[480px] bg-card">
         <DialogHeader>
           <div className="mx-auto mb-4">
-            <OwareLogo />
+            <AdspaceLogo />
           </div>
           <DialogTitle className="text-2xl font-bold text-center">
             Book: {billboard.title}

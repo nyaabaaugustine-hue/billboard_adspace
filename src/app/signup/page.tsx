@@ -15,7 +15,7 @@ import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { OwareLogo } from "@/components/icons/OwareLogo";
+import { AdspaceLogo } from "@/components/icons/OwareLogo";
 import { signInWithGoogle, signUpWithEmailAndPassword, getFirebaseAuthErrorMessage } from "@/firebase/auth/auth";
 import { useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
@@ -128,7 +128,7 @@ export default function SignupPage() {
             <Card className="w-full max-w-md bg-card/80 backdrop-blur-lg border-white/20">
               <CardHeader className="text-center">
                  <div className="mx-auto mb-4">
-                    <OwareLogo />
+                    <AdspaceLogo />
                 </div>
                 <CardTitle className="text-2xl">Create an Account</CardTitle>
                 <CardDescription>

@@ -11,7 +11,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-import { OwareLogo } from "@/components/icons/OwareLogo";
+import { AdspaceLogo } from "@/components/icons/OwareLogo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { adminMenu, vendorMenu, userMenu, adminProfile, vendorProfile, userProfile } from "@/config/dashboard-menus";
@@ -64,7 +64,7 @@ export function DashboardSidebar() {
     <Sidebar>
       <SidebarHeader>
         <Link href="/" className="block">
-          <OwareLogo />
+          <AdspaceLogo />
         </Link>
       </SidebarHeader>
       <SidebarContent>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OwareLogo } from "../icons/OwareLogo";
+import { AdspaceLogo } from "../icons/OwareLogo";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { Button } from "../ui/button";
 
@@ -44,7 +44,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="space-y-4">
-            <OwareLogo />
+            <AdspaceLogo />
             <p className="max-w-xs text-muted-foreground">
               Ghana's leading platform for discovering and booking premium billboard spaces.
             </p>
@@ -79,7 +79,7 @@ export function Footer() {
         <div className="mt-12 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} OwareAds. All rights reserved.
+              © {new Date().getFullYear()} Adspace. All rights reserved.
             </p>
             <div className="flex gap-4">
               <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary">

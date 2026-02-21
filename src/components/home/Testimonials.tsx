@@ -25,7 +25,7 @@ import {
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { OwareLogo } from '../icons/OwareLogo';
+import { AdspaceLogo } from '../icons/OwareLogo';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
@@ -69,11 +69,11 @@ function ReviewForm() {
             <DialogContent className="sm:max-w-lg">
                 <DialogHeader className="text-center items-center">
                     <div className="mx-auto mb-4">
-                        <OwareLogo />
+                        <AdspaceLogo />
                     </div>
                     <DialogTitle className="text-2xl">Write a review</DialogTitle>
                     <DialogDescription>
-                        Share your experience with OwareAds. Your feedback helps us improve.
+                        Share your experience with Adspace. Your feedback helps us improve.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>

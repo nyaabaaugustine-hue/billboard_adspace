@@ -11,7 +11,7 @@ export default function PrivacyPage() {
                         <h1>Privacy Policy</h1>
                         <p>Last updated: {new Date().toLocaleDateString()}</p>
                         
-                        <p>Your privacy is important to us. It is OwareAds's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.</p>
+                        <p>Your privacy is important to us. It is Adspace's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.</p>
 
                         <h2>1. Information We Collect</h2>
                         <p>We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we’re collecting it and how it will be used.</p>
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
                             <li>To create and manage your account.</li>
                             <li>To process your transactions.</li>
                             <li>To send you related information, including confirmations, invoices, technical notices, updates, security alerts, and support messages.</li>
-                            <li>To communicate with you about products, services, offers, and events offered by OwareAds.</li>
+                            <li>To communicate with you about products, services, offers, and events offered by Adspace.</li>
                         </ul>
 
                         <h2>3. Security of Your Information</h2>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
                         <p>We may update our privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page. You are advised to review this privacy policy periodically for any changes.</p>
 
                         <h2>Contact Us</h2>
-                        <p>For any questions or concerns regarding your privacy, you may contact us using the following details: contact@owareads.com</p>
+                        <p>For any questions or concerns regarding your privacy, you may contact us using the following details: contact@adspace.com</p>
                     </div>
                 </div>
             </main>

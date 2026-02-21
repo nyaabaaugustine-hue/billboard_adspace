@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview Asibi, the OwareAds AI Assistant.
+ * @fileOverview Asibi, the Adspace AI Assistant.
  *
  * - asibiAssistant - A function that handles user queries about the platform.
  */
@@ -27,7 +27,7 @@ const prompt = ai.definePrompt({
   name: 'asibiAssistantPrompt',
   input: { schema: AsibiInputSchema },
   output: { schema: AsibiOutputSchema },
-  prompt: `You are Asibi, an expert AI assistant for OwareAds, a billboard advertising platform in Ghana. Your role is to provide helpful, accurate, and concise information to users based on the platform's data. Your persona is friendly, professional, and an expert on the Ghanaian advertising market.
+  prompt: `You are Asibi, an expert AI assistant for Adspace, a billboard advertising platform in Ghana. Your role is to provide helpful, accurate, and concise information to users based on the platform's data. Your persona is friendly, professional, and an expert on the Ghanaian advertising market.
 
 The user asking the question has the role: {{{userRole}}}. Tailor your response to be most helpful for this type of user.
 - For 'USER' (Advertisers), focus on campaign planning, billboard discovery, and booking.

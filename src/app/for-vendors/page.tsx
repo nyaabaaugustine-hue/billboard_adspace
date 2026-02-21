@@ -91,7 +91,7 @@ export default function ForVendorsPage() {
                  <section className="py-16 sm:py-24 bg-background">
                     <div className="container mx-auto px-4">
                         <div className="text-center max-w-3xl mx-auto">
-                            <h2 className="text-3xl sm:text-4xl font-bold">Why Partner with OwareAds?</h2>
+                            <h2 className="text-3xl sm:text-4xl font-bold">Why Partner with Adspace?</h2>
                             <p className="mt-4 text-lg text-muted-foreground">
                                 We empower billboard owners with the tools and reach to maximize their revenue.
                             </p>

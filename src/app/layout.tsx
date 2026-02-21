@@ -20,9 +20,9 @@ const alegreya = Alegreya({
 });
 
 export const metadata: Metadata = {
-  title: "OwareAds - Ghana's Billboard & Advertising Ecosystem",
+  title: "Adspace - Ghana's Billboard & Advertising Ecosystem",
   description:
-    "Rent billboards, book advertising services, and grow your business with OwareAds.",
+    "Rent billboards, book advertising services, and grow your business with Adspace.",
 };
 
 export default function RootLayout({

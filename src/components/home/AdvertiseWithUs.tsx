@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { OwareLogo } from '@/components/icons/OwareLogo';
+import { AdspaceLogo } from '@/components/icons/OwareLogo';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -22,7 +22,7 @@ export function AdvertiseWithUs() {
       <div className="relative container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto">
             <div className="inline-block mb-6">
-                 <OwareLogo width={100} />
+                 <AdspaceLogo width={100} />
             </div>
             <h2 className="font-headline text-4xl sm:text-5xl font-bold text-white">
                 Advertise With Us

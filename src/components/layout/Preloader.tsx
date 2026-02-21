@@ -1,6 +1,6 @@
 'use client';
 
-import { OwareLogo } from '../icons/OwareLogo';
+import { AdspaceLogo } from '../icons/OwareLogo';
 import { motion } from 'framer-motion';
 
 export function Preloader() {
@@ -15,7 +15,7 @@ export function Preloader() {
         repeat: Infinity,
       }}
     >
-      <OwareLogo width={128} height={32} />
+      <AdspaceLogo width={128} height={32} />
     </motion.div>
   );
 }

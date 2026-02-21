@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { OwareLogo } from "@/components/icons/OwareLogo";
+import { AdspaceLogo } from "@/components/icons/OwareLogo";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -78,7 +78,7 @@ export function Header() {
       <nav className="container flex h-20 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="items-center hidden md:flex">
-            <OwareLogo />
+            <AdspaceLogo />
           </Link>
           <div className="hidden md:flex items-center gap-2">
              {navLinks.map((link) => (
@@ -113,7 +113,7 @@ export function Header() {
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between w-full">
             <Link href="/" className="flex items-center">
-                <OwareLogo />
+                <AdspaceLogo />
             </Link>
             <div className="flex items-center gap-2">
               <ThemeToggle />
@@ -127,7 +127,7 @@ export function Header() {
               <SheetContent side="right">
                 <SheetHeader>
                   <Link href="/" className="flex items-center">
-                    <OwareLogo />
+                    <AdspaceLogo />
                   </Link>
                 </SheetHeader>
                 <div className="mt-8 flex flex-col gap-4">
