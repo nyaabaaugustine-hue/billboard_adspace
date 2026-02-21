@@ -16,6 +16,7 @@ import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import type { Billboard } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AdvertiseWithUs } from '@/components/home/AdvertiseWithUs';
 
 export default function Home() {
   const firestore = useFirestore();
@@ -139,6 +140,7 @@ export default function Home() {
         <RecentBillboards billboards={recentBillboards} loading={recentLoading} />
         <PartnerVendors />
         <Testimonials />
+        <AdvertiseWithUs />
         <AsibiFab />
       </main>
       <Footer />
