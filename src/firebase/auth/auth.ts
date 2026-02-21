@@ -16,7 +16,7 @@ import {
   getDoc,
   serverTimestamp,
   collection,
-  addDoc,
+  writeBatch,
 } from 'firebase/firestore';
 import { auth, firestore } from '../firebase';
 
@@ -25,6 +25,11 @@ const provider = new GoogleAuthProvider();
 
 export function getFirebaseAuthErrorMessage(error: any): string {
     const errorCode = error.code || 'unknown';
+
+    // Prioritize the detailed, custom error message from manageUserProfile
+    if (error.message && error.message.startsWith('Failed to save user profile')) {
+        return error.message;
+    }
 
     switch (errorCode) {
         case 'auth/email-already-in-use':
@@ -53,10 +58,6 @@ export function getFirebaseAuthErrorMessage(error: any): string {
              return "Failed to save your profile due to a permissions issue. Please ensure your Firestore security rules allow writes to the 'users' collection for authenticated users.";
         default:
             console.error("Unhandled auth error:", error);
-            // Provide the raw error message if it's one of our custom ones
-            if (error.message && error.message.startsWith('Failed to save user profile')) {
-                return error.message;
-            }
             return 'An unexpected error occurred. Please check the console for details and try again.';
     }
 }
@@ -76,22 +77,24 @@ async function manageUserProfile(user: User, additionalData: { displayName?: str
             createdAt: serverTimestamp(),
         };
 
+        const eventRef = doc(collection(firestore, 'events'));
+        const newEvent = {
+            type: 'USER_SIGNED_UP',
+            userId: user.uid,
+            entityId: user.uid,
+            entityType: 'user',
+            timestamp: serverTimestamp(),
+            details: {
+                displayName: displayName,
+                email: user.email,
+            }
+        };
+
         try {
-            await setDoc(userRef, newUserProfile);
-            
-            // Add USER_SIGNED_UP event
-            const eventsCol = collection(firestore, 'events');
-            await addDoc(eventsCol, {
-                type: 'USER_SIGNED_UP',
-                userId: user.uid,
-                entityId: user.uid,
-                entityType: 'user',
-                timestamp: serverTimestamp(),
-                details: {
-                    displayName: displayName,
-                    email: user.email,
-                }
-            });
+            const batch = writeBatch(firestore);
+            batch.set(userRef, newUserProfile);
+            batch.set(eventRef, newEvent);
+            await batch.commit();
 
         } catch (dbError: any) {
             console.error("Firestore Error creating user profile:", dbError);
