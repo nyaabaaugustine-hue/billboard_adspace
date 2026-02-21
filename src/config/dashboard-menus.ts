@@ -17,6 +17,7 @@ import {
   Bell,
   LifeBuoy,
   Activity,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import type { Role } from "@/lib/types";
@@ -82,7 +83,7 @@ export const userMenu: MenuGroup[] = [
         title: "Menu",
         items: [
             { href: "/dashboard/user", label: "Dashboard", tooltip: "Dashboard", icon: LayoutDashboard },
-            { href: "#", label: "Active Campaigns", tooltip: "Active Campaigns", icon: Target },
+            { href: "/dashboard/user/new-campaign", label: "New Campaign", tooltip: "AI Campaign Recommender", icon: Sparkles },
             { href: "#", label: "Booking History", tooltip: "Booking History", icon: History },
             { href: "#", label: "Saved Billboards", tooltip: "Saved Billboards", icon: Heart },
             { href: "#", label: "Payments", tooltip: "Payments", icon: CreditCard },

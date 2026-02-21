@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { SavedBillboards } from "@/components/dashboard/user/SavedBillboards";
 import { useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function UserDashboardPage() {
   const { user, loading: userLoading } = useUser();
@@ -41,9 +41,11 @@ export default function UserDashboardPage() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
-            <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Start New Campaign
+            <Button asChild>
+                <Link href="/dashboard/user/new-campaign">
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Start New Campaign
+                </Link>
             </Button>
         </div>
       </div>
