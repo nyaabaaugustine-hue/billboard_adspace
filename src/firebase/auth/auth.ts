@@ -97,12 +97,19 @@ export async function signUpWithEmailAndPassword(name: string, email: string, pa
     try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         user = result.user;
-        // Force token refresh to ensure it's available for Firestore rules
-        await getIdToken(user, true);
+        
+        // 1. Update the user's profile on Firebase Auth
         await updateProfile(user, { displayName: name });
+        
+        // 2. Force a token refresh to ensure the auth state is up-to-date for Firestore rules
+        await getIdToken(user, true);
+        
+        // 3. Create the user profile document in Firestore
         await manageUserProfile(user, { displayName: name });
+
         return user;
     } catch (error) {
+        // If any step fails, sign out the partially created user to ensure a clean state
         if (user) {
            await firebaseSignOut(auth);
         }
