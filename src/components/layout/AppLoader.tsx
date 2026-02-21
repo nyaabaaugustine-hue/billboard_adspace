@@ -11,7 +11,7 @@ export function AppLoader({ children }: { children: React.ReactNode }) {
     // This is a simple simulation of page load.
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1800); 
+    }, 500); 
 
     return () => clearTimeout(timer);
   }, []);
