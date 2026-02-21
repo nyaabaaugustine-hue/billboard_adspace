@@ -2,7 +2,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Loader2, PlusCircle } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { VendorStatCards } from "@/components/dashboard/vendor/VendorStatCards";
 import { VendorBillboardsTable } from "@/components/dashboard/vendor/VendorBillboardsTable";
 import { RevenueChart } from "@/components/dashboard/shared/RevenueChart";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { doc } from "firebase/firestore";
 import type { UserProfile } from "@/lib/types";
+import { AddBillboardDialog } from "@/components/dashboard/vendor/AddBillboardDialog";
 
 
 export default function VendorDashboardPage() {
@@ -60,10 +61,7 @@ export default function VendorDashboardPage() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
-            <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add New Billboard
-            </Button>
+            <AddBillboardDialog />
         </div>
       </div>
 
