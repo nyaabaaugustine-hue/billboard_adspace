@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Represents a user's profile in the system.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "role": { "type": "string", "enum": ["USER", "VENDOR", "ADMIN"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Billboard": {
+      "title": "Billboard",
+      "description": "Represents an advertising billboard.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["Unipole", "Gantry", "Wall", "Digital LED"] },
+        "size": { "type": "string" },
+        "sides": { "type": "number" },
+        "lighting": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["Available", "On Hold", "Rented"] },
+        "regionId": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "pricePerMonth": { "type": "number" },
+        "trafficEstimate": { "type": "number" },
+        "visibilityScore": { "type": "number" },
+        "isDigital": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "vendorId": { "type": "string" }
+      },
+      "required": ["title", "type", "size", "status", "city", "address", "latitude", "longitude", "pricePerMonth", "imageUrl"]
+    },
+    "Vendor": {
+      "title": "Vendor",
+      "description": "Represents a service vendor (printing, design, etc.).",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "serviceType": { "type": "string", "enum": ["PRINTING", "DESIGN", "INSTALLATION", "PERMIT"] },
+        "region": { "type": "string" },
+        "phone": { "type": "string" },
+        "rating": { "type": "number" },
+        "verified": { "type": "boolean" },
+        "imageUrl": { "type": "string", "format": "uri" }
+      },
+      "required": ["name", "serviceType", "region", "phone"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Represents a booking of a billboard by a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "billboardId": { "type": "string" },
+        "startDate": { "type": "string", "format": "date" },
+        "endDate": { "type": "string", "format": "date" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED", "ACTIVE", "COMPLETED"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "billboardId", "startDate", "endDate", "amount", "status", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Stores public user profile data."
+    },
+    "/billboards/{billboardId}": {
+      "schema": { "$ref": "#/entities/Billboard" },
+      "description": "Stores all billboard listings."
+    },
+    "/vendors/{vendorId}": {
+      "schema": { "$ref": "#/entities/Vendor" },
+      "description": "Stores all vendor information."
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "#/entities/Booking" },
+      "description": "Stores all booking records."
+    }
+  }
+}

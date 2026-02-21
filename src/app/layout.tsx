@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Alegreya, Belleza } from "next/font/google";
 import { AppLoader } from "@/components/layout/AppLoader";
+import { FirebaseClientProvider } from "@/firebase/client-provider";
 
 const belleza = Belleza({
   subsets: ["latin"],
@@ -44,15 +45,17 @@ export default function RootLayout({
           alegreya.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AppLoader>{children}</AppLoader>
-          <Toaster />
-        </ThemeProvider>
+        <FirebaseClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AppLoader>{children}</AppLoader>
+            <Toaster />
+          </ThemeProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );
