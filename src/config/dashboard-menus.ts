@@ -48,7 +48,7 @@ export const adminMenu: MenuGroup[] = [
             { href: "#", label: "Billboards", tooltip: "Billboards", icon: Megaphone },
             { href: "#", label: "Vendors", tooltip: "Vendors", icon: Building },
             { href: "#", label: "Users", tooltip: "Users", icon: Users },
-            { href: "#", label: "Bookings", tooltip: "Bookings", icon: Briefcase },
+            { href: "/dashboard/admin/bookings", label: "Bookings", tooltip: "Bookings", icon: Briefcase },
             { href: "#", label: "Financials", tooltip: "Financials", icon: CreditCard },
         ]
     },
