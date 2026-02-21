@@ -6,6 +6,7 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { UserStatCards } from "@/components/dashboard/user/UserStatCards";
 import { ActiveCampaigns } from "@/components/dashboard/user/ActiveCampaigns";
 import { RecentBookingsTable } from "@/components/dashboard/shared/RecentBookingsTable";
+import { SavedBillboards } from "@/components/dashboard/user/SavedBillboards";
 import { useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -53,6 +54,8 @@ export default function UserDashboardPage() {
         <ActiveCampaigns className="col-span-12 lg:col-span-7" />
         <RecentBookingsTable className="col-span-12 lg:col-span-5" />
       </div>
+
+      <SavedBillboards />
 
     </div>
   );

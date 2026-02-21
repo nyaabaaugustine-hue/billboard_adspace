@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  getIdToken,
 } from 'firebase/auth';
 import {
   doc,
@@ -80,7 +81,7 @@ export async function signInWithGoogle(): Promise<User> {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     // Force token refresh to ensure it's available for Firestore rules
-    await user.getIdToken(true);
+    await getIdToken(user, true);
     await manageUserProfile(user);
     return user;
   } catch (error: any) {
@@ -97,7 +98,7 @@ export async function signUpWithEmailAndPassword(name: string, email: string, pa
         const result = await createUserWithEmailAndPassword(auth, email, password);
         user = result.user;
         // Force token refresh to ensure it's available for Firestore rules
-        await user.getIdToken(true);
+        await getIdToken(user, true);
         await updateProfile(user, { displayName: name });
         await manageUserProfile(user, { displayName: name });
         return user;

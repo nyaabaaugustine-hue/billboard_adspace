@@ -6,6 +6,7 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { VendorStatCards } from "@/components/dashboard/vendor/VendorStatCards";
 import { VendorBillboardsTable } from "@/components/dashboard/vendor/VendorBillboardsTable";
 import { RevenueChart } from "@/components/dashboard/shared/RevenueChart";
+import { RecentBookingsTable } from "@/components/dashboard/shared/RecentBookingsTable";
 import { useDoc, useFirestore, useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -70,8 +71,10 @@ export default function VendorDashboardPage() {
 
       <div className="grid grid-cols-12 gap-6">
         <RevenueChart className="col-span-12 lg:col-span-7" />
-        <VendorBillboardsTable className="col-span-12 lg:col-span-5" />
+        <RecentBookingsTable className="col-span-12 lg:col-span-5" />
       </div>
+
+      <VendorBillboardsTable />
     </div>
   );
 }
