@@ -27,7 +27,7 @@ export function Footer() {
       links: [
         { label: 'About Us', href: '/about' },
         { label: 'Blog', href: '#' },
-        { label: 'Contact Us', href: '#' },
+        { label: 'Contact Us', href: '/contact' },
       ],
     },
     {

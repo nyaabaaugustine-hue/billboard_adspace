@@ -24,6 +24,13 @@ const team = [
         avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669466/20230526_112001_v382je.jpg',
         avatarFallback: 'AN',
     },
+    {
+        name: 'Aisha Mohammed',
+        role: 'Chief Marketing Officer',
+        bio: 'Driving brand growth and connecting advertisers with their perfect audience through strategic marketing.',
+        avatarUrl: 'https://randomuser.me/api/portraits/women/4.jpg',
+        avatarFallback: 'AM',
+    },
 ];
 
 const values = [
@@ -108,7 +115,7 @@ export default function AboutUsPage() {
                                 We are a team of innovators, marketers, and tech enthusiasts dedicated to your success.
                             </p>
                         </div>
-                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center">
+                        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
                             {team.map((member) => (
                                 <div key={member.name} className="text-center flex flex-col items-center">
                                     <Avatar className="h-32 w-32 mb-4 border-4 border-primary/20">
