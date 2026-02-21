@@ -12,6 +12,7 @@ import { Send, Loader2, User } from "lucide-react";
 import { asibiAssistant } from "@/ai/flows/asibi-assistant-flow";
 import { Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/firebase";
 
 interface Message {
     id: string;
@@ -44,6 +45,7 @@ export function AsibiAssistant() {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const pathname = usePathname();
+    const { user } = useUser();
     const asibiAvatarUrl = "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771168493/eds_bjytks.png";
 
     const getRole = (): Role => {
@@ -64,7 +66,11 @@ export function AsibiAssistant() {
 
         try {
             const userRole = getRole();
-            const response = await asibiAssistant({ query: input, userRole });
+            const response = await asibiAssistant({ 
+                query: input, 
+                userRole,
+                userId: user?.uid 
+            });
             const asibiMessage: Message = { id: (Date.now() + 1).toString(), text: response, sender: 'asibi' };
             setMessages(prev => [...prev, asibiMessage]);
         } catch (error) {

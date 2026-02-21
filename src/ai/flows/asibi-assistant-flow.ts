@@ -8,12 +8,13 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { firestore } from '@/firebase/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Role } from '@/lib/types';
 
 const AsibiInputSchema = z.object({
   query: z.string().describe("The user's question about billboards, vendors, campaigns, or the platform."),
   userRole: z.enum(['ADMIN', 'VENDOR', 'USER']).describe('The role of the user asking the question.'),
+  userId: z.string().optional().describe("The user's unique ID. This is required for non-admin roles to fetch user-specific data like bookings."),
 });
 export type AsibiInput = z.infer<typeof AsibiInputSchema>;
 
@@ -77,15 +78,28 @@ const asibiAssistantFlow = ai.defineFlow(
     const vendorsCol = collection(firestore, 'vendors');
     const bookingsCol = collection(firestore, 'bookings');
 
+    let bookingsPromise;
+    if (input.userRole === 'ADMIN') {
+        // Admins can see all bookings
+        bookingsPromise = getDocs(bookingsCol);
+    } else if (input.userId) {
+        // Users/Vendors can only see their own bookings
+        const userBookingsQuery = query(bookingsCol, where('userId', '==', input.userId));
+        bookingsPromise = getDocs(userBookingsQuery);
+    } else {
+        // No user ID, so no bookings can be fetched.
+        bookingsPromise = Promise.resolve(null);
+    }
+
     const [billboardsSnapshot, vendorsSnapshot, bookingsSnapshot] = await Promise.all([
         getDocs(billboardsCol),
         getDocs(vendorsCol),
-        getDocs(bookingsCol)
+        bookingsPromise
     ]);
     
     const billboards = billboardsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
     const vendors = vendorsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-    const bookings = bookingsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    const bookings = bookingsSnapshot ? bookingsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()})) : [];
 
     const { output } = await prompt({
         ...input,
