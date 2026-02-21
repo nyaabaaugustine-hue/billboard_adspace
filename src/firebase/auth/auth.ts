@@ -40,7 +40,7 @@ export async function signInWithGoogle(): Promise<User | null> {
         createdAt: serverTimestamp(),
       };
       
-      setDoc(userRef, newUserProfile)
+      await setDoc(userRef, newUserProfile)
         .catch((serverError) => {
             const permissionError = new FirestorePermissionError({
                 path: userRef.path,

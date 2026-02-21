@@ -44,8 +44,11 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     setIsSigningIn(true);
-    await signInWithGoogle();
-    // The useEffect will handle the redirect
+    const user = await signInWithGoogle();
+    if (!user) {
+      setIsSigningIn(false);
+    }
+    // On success, the useEffect hook will handle redirection.
   };
 
   if (loading || (!loading && user)) {
