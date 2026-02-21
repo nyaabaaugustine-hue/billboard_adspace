@@ -159,17 +159,25 @@ export default function AboutUsPage() {
                 </section>
 
                 {/* Final CTA */}
-                <section className="py-16 sm:py-24 bg-primary/10">
-                     <div className="container mx-auto px-4 text-center">
+                <section className="relative py-16 sm:py-24">
+                     <Image
+                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771613077/adfd_aiwbkv.jpg"
+                        alt="Billboard on a highway"
+                        fill
+                        className="object-cover"
+                        data-ai-hint="highway billboard"
+                    />
+                    <div className="absolute inset-0 bg-black/70" />
+                     <div className="relative z-10 container mx-auto px-4 text-center text-white">
                           <h2 className="text-3xl sm:text-4xl font-bold">Join Our Journey</h2>
-                         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                         <p className="mt-4 text-lg text-neutral-200 max-w-2xl mx-auto">
                             Whether you're an advertiser, a vendor, or an investor, we're building the future of outdoor media together.
                          </p>
                          <div className="mt-8 flex flex-wrap justify-center gap-4">
                              <Button asChild size="lg">
                                  <Link href="/billboards">Find Billboards</Link>
                              </Button>
-                              <Button asChild variant="outline" size="lg">
+                              <Button asChild variant="outline" size="lg" className="bg-transparent border-white text-white hover:bg-white hover:text-foreground">
                                  <Link href="/for-vendors">Become a Vendor</Link>
                              </Button>
                              <Button asChild size="lg" variant="secondary">
