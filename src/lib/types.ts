@@ -91,3 +91,20 @@ export interface Testimonial {
   rating: number;
   comment: string;
 }
+
+export type EventType =
+  | 'USER_SIGNED_UP'
+  | 'BOOKING_REQUESTED'
+  | 'BOOKING_STATUS_CHANGED';
+
+export interface Event {
+  id: string;
+  type: EventType;
+  userId: string;
+  entityId: string;
+  entityType: string;
+  timestamp: any; // Firestore Timestamp
+  details: {
+    [key: string]: any;
+  };
+}

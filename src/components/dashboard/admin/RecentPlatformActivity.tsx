@@ -1,17 +1,34 @@
+'use client';
+
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useCollection, useFirestore } from "@/firebase";
+import type { Event } from "@/lib/types";
+import { collection, query, orderBy, limit } from "firebase/firestore";
+import { useMemo } from "react";
+import { formatDistanceToNow } from 'date-fns';
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
-const activities = [
-    { text: 'New booking created for "Spintex Road Digital"', time: '2 minutes ago' },
-    { text: 'New vendor registered: Apex Prints', time: '15 minutes ago' },
-    { text: 'New user registered: Ama Serwaa', time: '1 hour ago' },
-    { text: 'Billboard awaiting approval: "Adum Gantry"', time: '3 hours ago' },
-    { text: 'Booking completed for "Accra Mall Unipole"', time: '5 hours ago' },
-    { text: 'New review for "Creative Spark Designs"', time: '1 day ago' },
-    { text: 'New user registered: Kofi Mensah', time: '2 days ago' },
-]
+const EventDescription = ({ event }: { event: Event }) => {
+    switch (event.type) {
+        case 'USER_SIGNED_UP':
+            return <>New user registered: <span className="font-semibold text-foreground">{event.details.displayName}</span></>;
+        case 'BOOKING_REQUESTED':
+            return <><span className="font-semibold text-foreground">{event.details.customerName}</span> requested to book <span className="font-semibold text-foreground">{event.details.billboardTitle}</span>.</>;
+        case 'BOOKING_STATUS_CHANGED':
+            return <>Booking for <span className="font-semibold text-foreground">...{event.entityId.slice(-4)}</span> changed to <Badge variant="secondary" className="text-xs">{event.details.newStatus}</Badge></>;
+        default:
+            return <>{`Event type: ${event.type}`}</>;
+    }
+}
+
 
 export function RecentPlatformActivity({ className }: { className?: string }) {
+    const firestore = useFirestore();
+    const eventsQuery = useMemo(() => query(collection(firestore, 'events'), orderBy('timestamp', 'desc'), limit(10)), [firestore]);
+    const { data: events, loading } = useCollection<Event>(eventsQuery);
+
     return (
         <Card className={className}>
             <CardHeader>
@@ -20,14 +37,29 @@ export function RecentPlatformActivity({ className }: { className?: string }) {
             <CardContent>
                 <ScrollArea className="h-72">
                     <div className="space-y-4">
-                        {activities.map((activity, index) => (
-                            <div key={index} className="flex items-center gap-4">
-                                <div className="flex-1">
-                                    <p className="text-sm font-medium">{activity.text}</p>
-                                    <p className="text-xs text-muted-foreground">{activity.time}</p>
+                        {loading ? (
+                            [...Array(7)].map((_, i) => (
+                                <div key={i} className="flex items-center gap-4">
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-4 w-full" />
+                                        <Skeleton className="h-3 w-1/4" />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        ) : (events && events.length > 0) ? (
+                            events.map((event) => (
+                                <div key={event.id} className="flex items-center gap-4">
+                                    <div className="flex-1">
+                                        <p className="text-sm font-medium"><EventDescription event={event} /></p>
+                                        <p className="text-xs text-muted-foreground">
+                                            {event.timestamp ? formatDistanceToNow(event.timestamp.toDate(), { addSuffix: true }) : 'just now'}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-sm text-muted-foreground text-center pt-10">No recent activity.</p>
+                        )}
                     </div>
                 </ScrollArea>
             </CardContent>

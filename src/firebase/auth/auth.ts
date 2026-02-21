@@ -15,6 +15,8 @@ import {
   setDoc,
   getDoc,
   serverTimestamp,
+  collection,
+  addDoc,
 } from 'firebase/firestore';
 import { auth, firestore } from '../firebase';
 
@@ -76,6 +78,21 @@ async function manageUserProfile(user: User, additionalData: { displayName?: str
 
         try {
             await setDoc(userRef, newUserProfile);
+            
+            // Add USER_SIGNED_UP event
+            const eventsCol = collection(firestore, 'events');
+            await addDoc(eventsCol, {
+                type: 'USER_SIGNED_UP',
+                userId: user.uid,
+                entityId: user.uid,
+                entityType: 'user',
+                timestamp: serverTimestamp(),
+                details: {
+                    displayName: displayName,
+                    email: user.email,
+                }
+            });
+
         } catch (dbError: any) {
             console.error("Firestore Error creating user profile:", dbError);
             const authError = new Error(

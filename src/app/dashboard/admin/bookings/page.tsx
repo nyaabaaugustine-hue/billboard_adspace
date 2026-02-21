@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useCollection, useFirestore } from '@/firebase';
-import { collection, doc, updateDoc, type DocumentData } from 'firebase/firestore';
+import { useCollection, useFirestore, useUser } from '@/firebase';
+import { collection, doc, updateDoc, type DocumentData, addDoc, serverTimestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import {
     Card,
@@ -65,6 +65,7 @@ const getStatusBadge = (status: string) => {
 
 export default function AdminBookingsPage() {
     const firestore = useFirestore();
+    const { user } = useUser();
     const bookingsCol = useMemo(() => collection(firestore, 'bookings'), [firestore]);
     const { data: bookings, loading } = useCollection<Booking>(bookingsCol);
     const { toast } = useToast();
@@ -75,6 +76,21 @@ export default function AdminBookingsPage() {
         try {
             const bookingRef = doc(firestore, 'bookings', bookingId);
             await updateDoc(bookingRef, { status });
+
+            const eventsCol = collection(firestore, 'events');
+            await addDoc(eventsCol, {
+                type: 'BOOKING_STATUS_CHANGED',
+                userId: user?.uid || 'ADMIN_ACTION',
+                entityId: bookingId,
+                entityType: 'booking',
+                timestamp: serverTimestamp(),
+                details: {
+                    newStatus: status,
+                    bookingId: bookingId,
+                    adminName: user?.displayName || 'Admin',
+                }
+            });
+
             toast({
                 title: 'Booking Updated',
                 description: `The booking has been successfully ${status.toLowerCase()}.`,

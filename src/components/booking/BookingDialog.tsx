@@ -107,7 +107,7 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
         const bookingsCol = collection(firestore, 'bookings');
         const endDate = addMonths(data.startDate, 1);
 
-        await addDoc(bookingsCol, {
+        const newBookingRef = await addDoc(bookingsCol, {
             userId: user.uid,
             billboardId: billboard.id,
             billboardTitle: billboard.title,
@@ -121,6 +121,21 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
                 email: data.email,
                 phone: data.phone,
                 company: data.company || '',
+            }
+        });
+
+        // Add BOOKING_REQUESTED event
+        const eventsCol = collection(firestore, 'events');
+        await addDoc(eventsCol, {
+            type: 'BOOKING_REQUESTED',
+            userId: user.uid,
+            entityId: newBookingRef.id,
+            entityType: 'booking',
+            timestamp: serverTimestamp(),
+            details: {
+                billboardTitle: billboard.title,
+                billboardId: billboard.id,
+                customerName: data.name
             }
         });
         

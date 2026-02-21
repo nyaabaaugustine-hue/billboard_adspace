@@ -58,7 +58,7 @@ export const adminMenu: MenuGroup[] = [
             { href: "#", label: "Settings", tooltip: "Settings", icon: Settings },
             { href: "#", label: "Notifications", tooltip: "Notifications", icon: Bell },
             { href: "#", label: "Support", tooltip: "Support", icon: LifeBuoy },
-            { href: "#", label: "API Status", tooltip: "API Status", icon: Activity },
+            { href: "/dashboard/admin/activity", label: "Activity Feed", tooltip: "Activity Feed", icon: Activity },
         ]
     }
 ];
