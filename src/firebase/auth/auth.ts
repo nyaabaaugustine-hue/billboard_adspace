@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
@@ -11,18 +10,16 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import {
-  getFirestore,
   doc,
   setDoc,
   getDoc,
   serverTimestamp,
 } from 'firebase/firestore';
-import { initializeFirebase } from '@/firebase';
+import { auth, firestore } from '../firebase';
 import { errorEmitter } from '../error-emitter';
 import { FirestorePermissionError } from '../errors';
 
 
-const { auth, firestore } = initializeFirebase();
 const provider = new GoogleAuthProvider();
 
 export function getFirebaseAuthErrorMessage(error: any): string {
