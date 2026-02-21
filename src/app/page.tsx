@@ -1,22 +1,29 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { regions } from "@/lib/data";
 import { Hero } from "@/components/home/Hero";
-import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { BillboardGrid } from "@/components/home/BillboardGrid";
-import { RecentBillboards } from "@/components/home/RecentBillboards";
-import { PartnerVendors } from "@/components/home/PartnerVendors";
 import { type SearchFilters } from '@/components/home/SmartSearchBar';
-import { Testimonials } from '@/components/home/Testimonials';
-import { AsibiFab } from '@/components/ai/AsibiFab';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import type { Billboard } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AdvertiseWithUs } from '@/components/home/AdvertiseWithUs';
+
+const AdvertiseWithUs = dynamic(() => import('@/components/home/AdvertiseWithUs').then(mod => mod.AdvertiseWithUs), {
+  loading: () => <Skeleton className="h-64 w-full" />,
+});
+const WhyChooseUs = dynamic(() => import('@/components/home/WhyChooseUs').then(mod => mod.WhyChooseUs), {
+  loading: () => <Skeleton className="h-[600px] w-full" />,
+});
+const RecentBillboards = dynamic(() => import('@/components/home/RecentBillboards').then(mod => mod.RecentBillboards));
+const PartnerVendors = dynamic(() => import('@/components/home/PartnerVendors').then(mod => mod.PartnerVendors));
+const Testimonials = dynamic(() => import('@/components/home/Testimonials').then(mod => mod.Testimonials));
+const AsibiFab = dynamic(() => import('@/components/ai/AsibiFab').then(mod => mod.AsibiFab), { ssr: false });
+
 
 export default function Home() {
   const firestore = useFirestore();

@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: "Adspace - Ghana's Billboard & Advertising Ecosystem",
   description:
     "Rent billboards, book advertising services, and grow your business with Adspace.",
+  icons: {
+    icon: "https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771617987/cv_euqiu3.png",
+  },
 };
 
 export default function RootLayout({
@@ -32,13 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          rel="icon"
-          href="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771617987/cv_euqiu3.png"
-          sizes="any"
-        />
-      </head>
+      <head />
       <body
         className={cn(
           "min-h-screen bg-background font-body antialiased",

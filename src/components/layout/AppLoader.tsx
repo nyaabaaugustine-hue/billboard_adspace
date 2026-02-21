@@ -8,8 +8,20 @@ export function AppLoader({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Show content as soon as the client has hydrated.
-    setIsLoading(false);
+    const handleLoad = () => {
+      setIsLoading(false);
+    };
+
+    // Use requestAnimationFrame to ensure the event listener is added after the initial render
+    requestAnimationFrame(() => {
+      if (document.readyState === 'complete') {
+        handleLoad();
+      } else {
+        window.addEventListener('load', handleLoad);
+      }
+    });
+
+    return () => window.removeEventListener('load', handleLoad);
   }, []);
 
   return (
