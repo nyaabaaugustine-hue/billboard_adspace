@@ -2,12 +2,12 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const activities = [
-    { text: 'New job posted: "Senior Backend Dev"', time: '2 minutes ago' },
-    { text: 'New company registered: DevWorks Ltd', time: '15 minutes ago' },
-    { text: 'New employer subscription: Pro Plan', time: '1 hour ago' },
-    { text: 'Job awaiting moderation: "UI/UX Intern"', time: '3 hours ago' },
-    { text: 'New user registered: Ama Serwaa', time: '5 hours ago' },
-    { text: 'Job expired: "Marketing Manager"', time: '1 day ago' },
+    { text: 'New booking created for "Spintex Road Digital"', time: '2 minutes ago' },
+    { text: 'New vendor registered: Apex Prints', time: '15 minutes ago' },
+    { text: 'New user registered: Ama Serwaa', time: '1 hour ago' },
+    { text: 'Billboard awaiting approval: "Adum Gantry"', time: '3 hours ago' },
+    { text: 'Booking completed for "Accra Mall Unipole"', time: '5 hours ago' },
+    { text: 'New review for "Creative Spark Designs"', time: '1 day ago' },
     { text: 'New user registered: Kofi Mensah', time: '2 days ago' },
 ]
 

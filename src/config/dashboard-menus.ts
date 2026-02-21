@@ -14,8 +14,6 @@ import {
   Wrench,
   Shield,
   Building,
-  FileText,
-  BookOpen,
   Bell,
   LifeBuoy,
   Activity,
@@ -46,12 +44,11 @@ export const adminMenu: MenuGroup[] = [
     {
         title: "Management",
         items: [
-            { href: "#", label: "Moderation", tooltip: "Moderation", icon: Shield },
+            { href: "#", label: "Approvals", tooltip: "Approvals", icon: Shield },
+            { href: "#", label: "Billboards", tooltip: "Billboards", icon: Megaphone },
+            { href: "#", label: "Vendors", tooltip: "Vendors", icon: Building },
             { href: "#", label: "Users", tooltip: "Users", icon: Users },
-            { href: "#", label: "Jobs", tooltip: "Jobs", icon: Briefcase },
-            { href: "#", label: "Companies", tooltip: "Companies", icon: Building },
-            { href: "#", label: "Website Content", tooltip: "Website Content", icon: FileText },
-            { href: "#", label: "Blog", tooltip: "Blog", icon: BookOpen },
+            { href: "#", label: "Bookings", tooltip: "Bookings", icon: Briefcase },
             { href: "#", label: "Financials", tooltip: "Financials", icon: CreditCard },
         ]
     },

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DollarSign, Briefcase, Users, Shield } from "lucide-react";
+import { DollarSign, Users, Shield, Megaphone } from "lucide-react";
 import { useInView } from 'framer-motion';
 import { useEffect, useRef } from "react";
 import { animate } from 'framer-motion';
@@ -27,14 +27,14 @@ const stats = [
     icon: Users,
   },
   {
-    title: "Active Jobs",
+    title: "Listed Billboards",
     value: 842,
     prefix: "",
     change: "-2.1% from last month",
-    icon: Briefcase,
+    icon: Megaphone,
   },
   {
-    title: "Pending Moderation",
+    title: "Pending Approvals",
     value: 8,
     prefix: "",
     change: "+3 new today",

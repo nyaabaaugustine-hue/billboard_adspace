@@ -4,8 +4,8 @@ import { ChartContainer } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const data = [
-  { name: 'Employers', value: 400 },
-  { name: 'Job Seekers', value: 2434 },
+  { name: 'Vendors', value: 400 },
+  { name: 'Users', value: 2434 },
   { name: 'Admins', value: 5 },
 ];
 const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-5))'];

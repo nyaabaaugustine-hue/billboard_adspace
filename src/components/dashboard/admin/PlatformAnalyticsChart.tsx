@@ -17,12 +17,12 @@ import {
 import { cn } from '@/lib/utils';
 
 const chartData = [
-    { month: 'Jul', revenue: 1860, users: 80, jobs: 40 },
-    { month: 'Aug', revenue: 3050, users: 200, jobs: 60 },
-    { month: 'Sep', revenue: 2370, users: 120, jobs: 50 },
-    { month: 'Oct', revenue: 1730, users: 190, jobs: 80 },
-    { month: 'Nov', revenue: 2090, users: 220, jobs: 70 },
-    { month: 'Dec', revenue: 2140, users: 250, jobs: 90 },
+    { month: 'Jul', revenue: 1860, users: 80, bookings: 40 },
+    { month: 'Aug', revenue: 3050, users: 200, bookings: 60 },
+    { month: 'Sep', revenue: 2370, users: 120, bookings: 50 },
+    { month: 'Oct', revenue: 1730, users: 190, bookings: 80 },
+    { month: 'Nov', revenue: 2090, users: 220, bookings: 70 },
+    { month: 'Dec', revenue: 2140, users: 250, bookings: 90 },
 ];
 
 const chartConfig = {
@@ -34,8 +34,8 @@ const chartConfig = {
     label: 'Users',
     color: 'hsl(var(--chart-2))',
   },
-  jobs: {
-    label: 'Jobs',
+  bookings: {
+    label: 'Bookings',
     color: 'hsl(var(--chart-4))',
   }
 };
@@ -45,7 +45,7 @@ export function PlatformAnalyticsChart({ className }: { className?: string }) {
     <Card className={cn(className)}>
       <CardHeader>
         <CardTitle>Platform Analytics</CardTitle>
-        <CardDescription>Revenue, user sign-ups, and jobs posted.</CardDescription>
+        <CardDescription>Revenue, user sign-ups, and bookings.</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[250px] w-full">
@@ -59,7 +59,7 @@ export function PlatformAnalyticsChart({ className }: { className?: string }) {
               <Legend />
               <Bar yAxisId="left" dataKey="revenue" fill="hsl(var(--chart-1))" name="Revenue" radius={[4, 4, 0, 0]} />
               <Bar yAxisId="right" dataKey="users" fill="hsl(var(--chart-2))" name="Users" radius={[4, 4, 0, 0]} />
-              <Bar yAxisId="right" dataKey="jobs" fill="hsl(var(--chart-4))" name="Jobs" radius={[4, 4, 0, 0]} />
+              <Bar yAxisId="right" dataKey="bookings" fill="hsl(var(--chart-4))" name="Bookings" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
