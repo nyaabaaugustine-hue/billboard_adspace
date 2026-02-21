@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { regions } from "@/lib/data";
+import { regions, billboards as mockBillboards } from "@/lib/data";
 import { Hero } from "@/components/home/Hero";
 import { BillboardGrid } from "@/components/home/BillboardGrid";
 import { type SearchFilters } from '@/components/home/SmartSearchBar';
@@ -38,9 +38,11 @@ export default function Home() {
   const { data: recentBillboards, loading: recentLoading } = useCollection<Billboard>(recentBillboardsQuery);
 
   const handleSearch = (filters: SearchFilters) => {
-    if (!allBillboards) return;
+    const sourceData = (allBillboards && allBillboards.length > 0) ? allBillboards : mockBillboards;
+    if (!sourceData) return;
+
     const { searchTerm, date, type } = filters;
-    let filtered = [...allBillboards];
+    let filtered = [...sourceData];
     let isSearchActive = false;
 
     // Filter by type
@@ -112,7 +114,7 @@ export default function Home() {
     }, 100);
   };
 
-  const billboardsToDisplay = displayBillboards ?? allBillboards ?? [];
+  const billboardsToDisplay = displayBillboards ?? ((allBillboards && allBillboards.length > 0) ? allBillboards : mockBillboards);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -142,7 +144,7 @@ export default function Home() {
                 </div>
               </div>
           ) : (
-            <BillboardGrid billboards={billboardsToDisplay} title={gridTitle} />
+            <BillboardGrid billboards={billboardsToDisplay || []} title={gridTitle} />
           )}
         </div>
         <RecentBillboards billboards={recentBillboards} loading={recentLoading} />

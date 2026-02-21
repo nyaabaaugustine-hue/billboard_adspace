@@ -6,11 +6,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { Skeleton } from '../ui/skeleton';
+import { billboards as mockBillboards } from '@/lib/data';
 
 export function ScrollingBillboards() {
     const firestore = useFirestore();
     const billboardsQuery = useMemo(() => query(collection(firestore, 'billboards'), limit(10)), [firestore]);
-    const { data: billboards, loading } = useCollection<Billboard>(billboardsQuery);
+    const { data: billboardsFromHook, loading } = useCollection<Billboard>(billboardsQuery);
+
+    const billboards = useMemo(() => {
+        if (!loading && billboardsFromHook && billboardsFromHook.length === 0) {
+          return mockBillboards.slice(0, 10);
+        }
+        return billboardsFromHook;
+      }, [billboardsFromHook, loading]);
 
     if (loading) {
         return (

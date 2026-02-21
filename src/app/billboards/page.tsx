@@ -12,6 +12,7 @@ import type { MapBillboard, Billboard } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection } from 'firebase/firestore';
+import { billboards as mockBillboards } from '@/lib/data';
 
 const InteractiveMap = dynamic(() => import('@/components/map/InteractiveMap'), {
   ssr: false,
@@ -22,7 +23,14 @@ export default function BillboardsPage() {
   const [view, setView] = useState('grid');
   const firestore = useFirestore();
   const billboardsCol = useMemo(() => collection(firestore, 'billboards'), [firestore]);
-  const { data: billboards, loading } = useCollection<Billboard>(billboardsCol);
+  const { data: billboardsFromHook, loading } = useCollection<Billboard>(billboardsCol);
+
+  const billboards = useMemo(() => {
+    if (!loading && billboardsFromHook && billboardsFromHook.length === 0) {
+      return mockBillboards;
+    }
+    return billboardsFromHook;
+  }, [billboardsFromHook, loading]);
 
   const mapBillboardsData: MapBillboard[] = (billboards || []).map((b) => ({
     id: b.id,
