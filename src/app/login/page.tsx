@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +17,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { OwareLogo } from "@/components/icons/OwareLogo";
+import { signInWithGoogle } from "@/firebase/auth/auth";
+import { useUser } from "@/firebase";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const GoogleIcon = () => (
     <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
@@ -25,7 +32,30 @@ const GoogleIcon = () => (
 
 export default function LoginPage() {
   const bgImage = PlaceHolderImages.find((img) => img.id === "hero-1");
+  const { user, loading } = useUser();
+  const router = useRouter();
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard/user');
+    }
+  }, [user, loading, router]);
+
+  const handleGoogleSignIn = async () => {
+    setIsSigningIn(true);
+    await signInWithGoogle();
+    // The useEffect will handle the redirect
+  };
+
+  if (loading || (!loading && user)) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
+  
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -53,7 +83,10 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent className="grid gap-4">
                <div className="grid grid-cols-1 gap-4">
-                  <Button variant="outline"><GoogleIcon /> Login with Google</Button>
+                  <Button variant="outline" onClick={handleGoogleSignIn} disabled={isSigningIn}>
+                    {isSigningIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <GoogleIcon />}
+                     {isSigningIn ? 'Signing in...' : 'Login with Google'}
+                  </Button>
                </div>
                <div className="relative">
                   <div className="absolute inset-0 flex items-center">

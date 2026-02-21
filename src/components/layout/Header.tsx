@@ -17,6 +17,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Menu, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
+import { useUser } from "@/firebase";
+import { UserNav } from "./UserNav";
+import { Skeleton } from "../ui/skeleton";
+import { signOutUser } from "@/firebase/auth/auth";
+
 
 const navLinks = [
   { href: "/billboards", label: "Browse Billboards" },
@@ -31,6 +36,43 @@ const dashboardLinks = [
 ]
 
 export function Header() {
+  const { user, loading } = useUser();
+
+  const AuthButtons = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center gap-2">
+           <Skeleton className="h-10 w-24" />
+           <Skeleton className="h-10 w-24" />
+           <Skeleton className="h-11 w-28" />
+        </div>
+      )
+    }
+    if (user) {
+      return <UserNav />;
+    }
+    return (
+      <>
+        <Button variant="outline" asChild>
+          <Link href="/for-vendors" className="font-semibold text-base">
+            List a Billboard
+          </Link>
+        </Button>
+        <Button variant="ghost" asChild>
+              <Link
+                href="/login"
+                className="font-semibold text-base"
+              >
+                Login
+              </Link>
+            </Button>
+          <Button size="lg" className="font-bold text-base rounded-md" asChild>
+            <Link href="/signup">Sign Up</Link>
+          </Button>
+      </>
+    );
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg">
       <nav className="container flex h-20 items-center justify-between gap-4">
@@ -64,23 +106,7 @@ export function Header() {
                 ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
-            <Button variant="outline" asChild>
-              <Link href="/for-vendors" className="font-semibold text-base">
-                List a Billboard
-              </Link>
-            </Button>
-          <Button variant="ghost" asChild>
-              <Link
-                href="/login"
-                className="font-semibold text-base"
-              >
-                Login
-              </Link>
-            </Button>
-          <Button size="lg" className="font-bold text-base rounded-md" asChild>
-            <Link href="/signup">Sign Up</Link>
-          </Button>
+          <AuthButtons />
           <ThemeToggle />
         </div>
 
@@ -137,12 +163,25 @@ export function Header() {
                           List a billboard
                       </Link>
                   </Button>
-                  <Button asChild className="mt-4 w-full text-base h-12">
-                    <Link href="/login">Login</Link>
-                  </Button>
-                  <Button asChild variant="secondary" className="mt-2 w-full text-base h-12">
-                    <Link href="/signup">Sign Up</Link>
-                  </Button>
+                  {loading ? (
+                    <div className="space-y-2 mt-4">
+                      <Skeleton className="h-12 w-full" />
+                      <Skeleton className="h-12 w-full" />
+                    </div>
+                  ) : user ? (
+                     <Button asChild className="mt-4 w-full text-base h-12" onClick={() => signOutUser()}>
+                        <Link href="#">Logout</Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Button asChild className="mt-4 w-full text-base h-12">
+                        <Link href="/login">Login</Link>
+                      </Button>
+                      <Button asChild variant="secondary" className="mt-2 w-full text-base h-12">
+                        <Link href="/signup">Sign Up</Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
