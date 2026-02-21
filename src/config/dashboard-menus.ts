@@ -91,6 +91,6 @@ export const userMenu: MenuGroup[] = [
 ];
 
 
-export const adminProfile = { href: "#", label: "Admin User", description: "Administrator", tooltip: "Profile" };
-export const vendorProfile = { href: "#", label: "Settings", tooltip: "Settings", icon: Settings };
-export const userProfile = { href: "#", label: "Profile", tooltip: "Profile & Settings", icon: User };
+export const adminProfile = { href: "/dashboard/profile", label: "Admin User", description: "Administrator", tooltip: "Profile" };
+export const vendorProfile = { href: "/dashboard/profile", label: "Settings", tooltip: "Settings", icon: Settings };
+export const userProfile = { href: "/dashboard/profile", label: "Profile", tooltip: "Profile & Settings", icon: User };
