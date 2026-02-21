@@ -1,23 +1,33 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Megaphone, X } from 'lucide-react';
+import { X, Sparkles, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
-
-const ads = [
-  { text: 'Premium Printing Services by Accra Print Hub', link: '#' },
-  { text: 'Verified Installation Team for the Tema region', link: '#' },
-  { text: 'Digital Billboards featured on Airport Road', link: '#' },
-  { text: 'Creative design services by Creative Spark', link: '#' },
-];
+import { useCollection, useFirestore } from '@/firebase';
+import { collection, query, limit } from 'firebase/firestore';
+import type { Billboard } from '@/lib/types';
+import { Skeleton } from '../ui/skeleton';
 
 export function AdSlider() {
   const [isVisible, setIsVisible] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [currentAdIndex, setCurrentAdIndex] = useState(0);
+
+  const [ads, setAds] = useState<Billboard[]>([]);
+  const firestore = useFirestore();
+  const billboardsQuery = query(collection(firestore, 'billboards'), limit(10));
+  const { data: fetchedBillboards, loading } = useCollection<Billboard>(billboardsQuery);
+
+  useEffect(() => {
+    if (fetchedBillboards && fetchedBillboards.length > 0) {
+      const shuffled = [...fetchedBillboards].sort(() => 0.5 - Math.random());
+      setAds(shuffled.slice(0, 5));
+    }
+  }, [fetchedBillboards]);
 
   useEffect(() => {
     if (sessionStorage.getItem('adSliderDismissed') === 'true') {
@@ -26,7 +36,7 @@ export function AdSlider() {
   }, []);
 
   useEffect(() => {
-    if (isDismissed) {
+    if (isDismissed || ads.length === 0) {
       return;
     }
 
@@ -45,13 +55,13 @@ export function AdSlider() {
       clearTimeout(timers.hideTimer);
       clearTimeout(timers.nextTimer);
     };
-  }, [currentAdIndex, isDismissed]);
+  }, [currentAdIndex, isDismissed, ads.length]);
 
   useEffect(() => {
     if (isVisible) {
       setIsRendered(true);
     } else {
-      const unmountTimer = setTimeout(() => setIsRendered(false), 700); // Match transition duration
+      const unmountTimer = setTimeout(() => setIsRendered(false), 700);
       return () => clearTimeout(unmountTimer);
     }
   }, [isVisible]);
@@ -62,7 +72,9 @@ export function AdSlider() {
     sessionStorage.setItem('adSliderDismissed', 'true');
   };
 
-  if (isDismissed || !isRendered) {
+  const currentAd = ads[currentAdIndex];
+
+  if (isDismissed || !isRendered || loading || !currentAd) {
     return null;
   }
 
@@ -73,23 +85,46 @@ export function AdSlider() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >
-        <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20">
-            <div className="flex gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shrink-0">
-                    <Megaphone className="h-5 w-5" />
+        <Link href={`/billboards/${currentAd.id}`} className="block group">
+            <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20 hover:border-primary/50 transition-all">
+                <div className="flex gap-4 items-center">
+                    <div className="relative h-20 w-20 rounded-lg overflow-hidden bg-muted shrink-0">
+                        <Image
+                            src={currentAd.imageUrl}
+                            alt={currentAd.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform"
+                            data-ai-hint="billboard image"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div className="absolute bottom-1 left-1 text-xs font-bold text-white">
+                            GH₵{currentAd.pricePerMonth.toLocaleString()}
+                        </div>
+                    </div>
+                    <div className="flex-grow">
+                        <div className="flex items-center gap-2">
+                             <Sparkles className="h-4 w-4 text-primary" />
+                             <p className="text-xs font-bold uppercase tracking-wider text-primary">Featured Billboard</p>
+                        </div>
+                        <p className="font-semibold text-sm text-foreground group-hover:underline leading-tight mt-1">
+                            {currentAd.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                            <MapPin className="h-3 w-3" />
+                            {currentAd.city}
+                        </p>
+                    </div>
                 </div>
-                <div className="flex-grow">
-                    <p className="text-xs font-bold uppercase tracking-wider text-primary">Sponsored</p>
-                    <Link href={ads[currentAdIndex].link} className="font-semibold text-sm text-foreground hover:underline">
-                        {ads[currentAdIndex].text}
-                    </Link>
-                </div>
+                <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0 z-10" onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDismiss();
+                }}>
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">Dismiss</span>
+                </Button>
             </div>
-            <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0" onClick={handleDismiss}>
-                <X className="h-4 w-4" />
-                <span className="sr-only">Dismiss</span>
-            </Button>
-        </div>
+        </Link>
     </div>
   );
 }
