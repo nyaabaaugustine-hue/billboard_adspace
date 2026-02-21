@@ -6,7 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Alegreya, Belleza } from "next/font/google";
 import { AppLoader } from "@/components/layout/AppLoader";
 import { FirebaseClientProvider } from "@/firebase/client-provider";
-import { GlobalEngagement } from "@/components/GlobalEngagement";
+import dynamic from "next/dynamic";
+
+const GlobalEngagement = dynamic(() => import('@/components/GlobalEngagement').then(mod => mod.GlobalEngagement), { ssr: false });
 
 const belleza = Belleza({
   subsets: ["latin"],

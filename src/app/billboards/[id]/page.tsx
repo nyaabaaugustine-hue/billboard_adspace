@@ -8,14 +8,46 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Share2, Maximize, BarChart, CheckCircle, Layers, Sun, Star } from "lucide-react";
-import { SimilarBillboards } from "@/components/ai/SimilarBillboards";
-import { BillboardDescription } from "@/components/ai/BillboardDescription";
 import { BookingDialog } from "@/components/booking/BookingDialog";
 import { useEffect, useState, useMemo } from "react";
 import { useDoc, useFirestore } from "@/firebase";
 import { doc } from "firebase/firestore";
 import type { Billboard, Vendor } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import dynamic from "next/dynamic";
+
+const SimilarBillboards = dynamic(() => import('@/components/ai/SimilarBillboards').then(mod => mod.SimilarBillboards), {
+  loading: () => (
+    <div className="mt-16">
+      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+        Similar Billboards
+      </h2>
+      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="space-y-4">
+            <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-1/3" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
+});
+
+const BillboardDescription = dynamic(() => import('@/components/ai/BillboardDescription').then(mod => mod.BillboardDescription), {
+  loading: () => (
+    <div className="space-y-2 max-w-prose">
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-3/4" />
+    </div>
+  ),
+});
+
 
 export default function BillboardDetailPage({
   params,
