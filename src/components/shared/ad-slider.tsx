@@ -102,7 +102,7 @@ export function AdSlider() {
       )}
     >
       <Link href={`/billboards/${currentAd.id}`} className="block group">
-        <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20 hover:border-primary/50 transition-all">
+        <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-primary/40 hover:border-primary/80 transition-all">
           <div className="flex gap-4 items-center">
             <div className="relative h-20 w-20 rounded-lg overflow-hidden bg-muted shrink-0">
               <Image
