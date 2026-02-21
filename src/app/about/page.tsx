@@ -21,7 +21,7 @@ const team = [
         name: 'Augustine Nyaaba',
         role: 'Chief Technology Officer',
         bio: 'The architect of our robust platform, ensuring a seamless and secure experience for all users.',
-        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669466/20230526_112001_v382je.jpg',
+        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669474/Nyaabaa_qgnewy.jpg',
         avatarFallback: 'AN',
     },
     {
