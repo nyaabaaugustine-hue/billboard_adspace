@@ -14,7 +14,7 @@ const team = [
         name: 'Van X Allotey',
         role: 'Founder & CEO',
         bio: 'The visionary behind Adspace, passionate about transforming outdoor advertising in Ghana with technology.',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
+        avatarUrl: 'https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771669782/yu_cu6o2s.jpg',
         avatarFallback: 'VA',
     },
     {
