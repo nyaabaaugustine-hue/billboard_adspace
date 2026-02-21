@@ -2,15 +2,42 @@
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { useMemo } from 'react';
+import type { UserProfile } from '@/lib/types';
+import { Skeleton } from "@/components/ui/skeleton";
 
-const data = [
-  { name: 'Vendors', value: 400 },
-  { name: 'Users', value: 2434 },
-  { name: 'Admins', value: 5 },
-];
-const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-5))'];
+const COLORS = ['hsl(var(--chart-2))', 'hsl(var(--chart-1))', 'hsl(var(--chart-5))'];
 
-export function UserRoleDistribution({ className }: { className?: string }) {
+interface UserRoleDistributionProps {
+    className?: string;
+    users: UserProfile[];
+    loading: boolean;
+}
+
+export function UserRoleDistribution({ className, users, loading }: UserRoleDistributionProps) {
+    const data = useMemo(() => {
+        const roles = {
+            'Users': users.filter(u => u.role === 'USER').length,
+            'Vendors': users.filter(u => u.role === 'VENDOR').length,
+            'Admins': users.filter(u => u.role === 'ADMIN').length,
+        };
+        return Object.entries(roles).map(([name, value]) => ({ name, value }));
+    }, [users]);
+
+    if (loading) {
+        return (
+            <Card className={className}>
+                <CardHeader>
+                    <Skeleton className="h-7 w-48" />
+                    <Skeleton className="h-4 w-56" />
+                </CardHeader>
+                <CardContent className="flex justify-center items-center">
+                    <Skeleton className="h-56 w-56 rounded-full" />
+                </CardContent>
+            </Card>
+        )
+    }
+
   return (
     <Card className={className}>
       <CardHeader>
@@ -35,7 +62,7 @@ export function UserRoleDistribution({ className }: { className?: string }) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip formatter={(value) => typeof value === 'number' ? value.toLocaleString() : value} />
                 <Legend />
                 </PieChart>
             </ResponsiveContainer>

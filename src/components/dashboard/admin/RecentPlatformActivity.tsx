@@ -2,15 +2,12 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useCollection, useFirestore } from "@/firebase";
-import type { Event } from "@/lib/types";
-import { collection, query, orderBy, limit } from "firebase/firestore";
-import { useMemo } from "react";
+import type { Event as PlatformEvent } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
-const EventDescription = ({ event }: { event: Event }) => {
+const EventDescription = ({ event }: { event: PlatformEvent }) => {
     switch (event.type) {
         case 'USER_SIGNED_UP':
             return <>New user registered: <span className="font-semibold text-foreground">{event.details.displayName}</span></>;
@@ -23,11 +20,13 @@ const EventDescription = ({ event }: { event: Event }) => {
     }
 }
 
+interface RecentPlatformActivityProps {
+    className?: string;
+    events: PlatformEvent[];
+    loading: boolean;
+}
 
-export function RecentPlatformActivity({ className }: { className?: string }) {
-    const firestore = useFirestore();
-    const eventsQuery = useMemo(() => query(collection(firestore, 'events'), orderBy('timestamp', 'desc'), limit(10)), [firestore]);
-    const { data: events, loading } = useCollection<Event>(eventsQuery);
+export function RecentPlatformActivity({ className, events, loading }: RecentPlatformActivityProps) {
 
     return (
         <Card className={className}>

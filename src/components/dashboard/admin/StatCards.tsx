@@ -6,42 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DollarSign, Users, Shield, Megaphone } from "lucide-react";
+import { DollarSign, Users, Shield, Megaphone, type LucideIcon } from "lucide-react";
 import { useInView } from 'framer-motion';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { animate } from 'framer-motion';
-
-const stats = [
-  {
-    title: "Total Revenue",
-    value: 12450,
-    prefix: "GH₵",
-    change: "+15.2% from last month",
-    icon: DollarSign,
-  },
-  {
-    title: "Active Users",
-    value: 2834,
-    prefix: "",
-    change: "+5.8% from last month",
-    icon: Users,
-  },
-  {
-    title: "Listed Billboards",
-    value: 842,
-    prefix: "",
-    change: "-2.1% from last month",
-    icon: Megaphone,
-  },
-  {
-    title: "Pending Approvals",
-    value: 8,
-    prefix: "",
-    change: "+3 new today",
-    icon: Shield,
-  },
-];
-
+import { Skeleton } from "@/components/ui/skeleton";
+import type { UserProfile, Billboard, FirestoreBooking } from "@/lib/types";
 
 function Counter({ from, to, prefix }: { from: number; to: number, prefix: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -64,23 +34,93 @@ function Counter({ from, to, prefix }: { from: number; to: number, prefix: strin
   return <p ref={ref} className="text-2xl font-bold">{prefix}{from.toLocaleString()}</p>;
 }
 
+const StatCard = ({ title, value, prefix, change, icon: Icon, loading }: { title: string, value: number, prefix: string, change: string, icon: LucideIcon, loading: boolean }) => {
+    if (loading) {
+        return (
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                    <Icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <Skeleton className="h-7 w-24 mb-1" />
+                    <Skeleton className="h-3 w-full" />
+                </CardContent>
+            </Card>
+        )
+    }
 
-export function StatCards() {
+    return (
+        <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                <Icon className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">
+                    <Counter from={0} to={value} prefix={prefix} />
+                </div>
+                <p className="text-xs text-muted-foreground">{change}</p>
+            </CardContent>
+        </Card>
+    );
+};
+
+
+interface StatCardsProps {
+    users: UserProfile[];
+    billboards: Billboard[];
+    bookings: FirestoreBooking[];
+    loading: boolean;
+}
+
+export function StatCards({ users, billboards, bookings, loading }: StatCardsProps) {
+
+    const stats = useMemo(() => {
+        const totalRevenue = bookings
+            .filter(b => b.status === 'COMPLETED')
+            .reduce((sum, b) => sum + b.amount, 0);
+
+        const activeUsers = users.length;
+        const listedBillboards = billboards.length;
+        const pendingBookings = bookings.filter(b => b.status === 'PENDING').length;
+        
+        return [
+          {
+            title: "Total Revenue",
+            value: totalRevenue,
+            prefix: "GH₵",
+            change: "From all completed bookings",
+            icon: DollarSign,
+          },
+          {
+            title: "Active Users",
+            value: activeUsers,
+            prefix: "",
+            change: "Total registered users",
+            icon: Users,
+          },
+          {
+            title: "Listed Billboards",
+            value: listedBillboards,
+            prefix: "",
+            change: "Total billboards on the platform",
+            icon: Megaphone,
+          },
+          {
+            title: "Pending Bookings",
+            value: pendingBookings,
+            prefix: "",
+            change: "Require admin approval",
+            icon: Shield,
+          },
+        ];
+    }, [users, billboards, bookings]);
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <Card key={stat.title}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-            <stat.icon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-                <Counter from={0} to={stat.value} prefix={stat.prefix} />
-            </div>
-            <p className="text-xs text-muted-foreground">{stat.change}</p>
-          </CardContent>
-        </Card>
+        <StatCard key={stat.title} {...stat} loading={loading} />
       ))}
     </div>
   );

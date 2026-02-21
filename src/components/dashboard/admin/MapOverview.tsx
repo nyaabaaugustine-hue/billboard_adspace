@@ -1,24 +1,44 @@
 'use client';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import dynamic from 'next/dynamic';
+import type { MapBillboard, Billboard } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export function MapOverview({ className }: { className?: string }) {
+const InteractiveMap = dynamic(() => import('@/components/map/InteractiveMap'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-full w-full" />,
+});
+
+interface MapOverviewProps {
+    className?: string;
+    billboards: Billboard[];
+    loading: boolean;
+}
+
+export function MapOverview({ className, billboards, loading }: MapOverviewProps) {
+    const mapBillboardsData: MapBillboard[] = (billboards || []).map((b) => ({
+        id: b.id,
+        title: b.title,
+        latitude: b.latitude,
+        longitude: b.longitude,
+        pricePerMonth: b.pricePerMonth,
+        city: b.city,
+      }));
+
     return (
-        <Card className={cn(className)}>
+        <Card className={cn("flex flex-col", className)}>
             <CardHeader>
                 <CardTitle>Billboards Heatmap</CardTitle>
+                <CardDescription>An overview of all billboard locations.</CardDescription>
             </CardHeader>
-            <CardContent>
-                <div className="relative aspect-video w-full rounded-md bg-muted overflow-hidden">
-                    <Image 
-                        src="https://res.cloudinary.com/dwsl2ktt2/image/upload/v1771789704/ghana-map_frcrxc.png"
-                        alt="Map of Ghana"
-                        fill
-                        className="object-contain p-4"
-                        data-ai-hint="map ghana"
-                    />
-                     <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+            <CardContent className="flex-grow">
+                <div className="relative aspect-video w-full rounded-md bg-muted overflow-hidden border">
+                    {loading ? (
+                        <Skeleton className="h-full w-full" />
+                    ) : (
+                        <InteractiveMap billboards={mapBillboardsData} />
+                    )}
                 </div>
             </CardContent>
         </Card>

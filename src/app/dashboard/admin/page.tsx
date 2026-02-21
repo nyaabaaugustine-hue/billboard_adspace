@@ -11,23 +11,40 @@ import { UserLocationBreakdown } from "@/components/dashboard/admin/UserLocation
 import { Alerts } from "@/components/dashboard/admin/Alerts";
 import { TopPerformers } from "@/components/dashboard/admin/TopPerformers";
 import { MapOverview } from "@/components/dashboard/admin/MapOverview";
-import { useDoc, useFirestore, useUser } from "@/firebase";
+import { useCollection, useDoc, useFirestore, useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
-import { doc } from "firebase/firestore";
-import type { UserProfile } from "@/lib/types";
+import { collection, doc, query } from "firebase/firestore";
+import type { UserProfile, Billboard, Vendor, FirestoreBooking, Event as PlatformEvent } from "@/lib/types";
 
 export default function AdminDashboardPage() {
   const { user, loading: userLoading } = useUser();
   const router = useRouter();
   const firestore = useFirestore();
 
+  // Security check for admin role
   const userProfileRef = useMemo(() => {
     if (!user) return null;
     return doc(firestore, 'users', user.uid);
   }, [firestore, user]);
-
   const { data: userProfile, loading: profileLoading } = useDoc<UserProfile>(userProfileRef);
+
+  // Data fetching for dashboard
+  const usersQuery = useMemo(() => collection(firestore, 'users'), [firestore]);
+  const { data: users, loading: usersLoading } = useCollection<UserProfile>(usersQuery);
+
+  const billboardsQuery = useMemo(() => collection(firestore, 'billboards'), [firestore]);
+  const { data: billboards, loading: billboardsLoading } = useCollection<Billboard>(billboardsQuery);
+
+  const vendorsQuery = useMemo(() => collection(firestore, 'vendors'), [firestore]);
+  const { data: vendors, loading: vendorsLoading } = useCollection<Vendor>(vendorsQuery);
+
+  const bookingsQuery = useMemo(() => collection(firestore, 'bookings'), [firestore]);
+  const { data: bookings, loading: bookingsLoading } = useCollection<FirestoreBooking>(bookingsQuery);
+  
+  const eventsQuery = useMemo(() => query(collection(firestore, 'events')), [firestore]);
+  const { data: events, loading: eventsLoading } = useCollection<PlatformEvent>(eventsQuery);
+
 
   useEffect(() => {
     if (!userLoading && !user) {
@@ -41,9 +58,10 @@ export default function AdminDashboardPage() {
     }
   }, [userProfile, profileLoading, router]);
 
-  const isLoading = userLoading || profileLoading;
+  const authIsLoading = userLoading || profileLoading;
+  const dataIsLoading = usersLoading || billboardsLoading || vendorsLoading || bookingsLoading || eventsLoading;
 
-  if (isLoading || !userProfile || userProfile.role !== 'ADMIN') {
+  if (authIsLoading || !userProfile || userProfile.role !== 'ADMIN') {
     return (
         <div className="flex h-screen w-full items-center justify-center bg-background">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
@@ -74,24 +92,56 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <StatCards />
+      <StatCards 
+        users={users || []}
+        billboards={billboards || []}
+        bookings={bookings || []}
+        loading={dataIsLoading}
+      />
 
       <SystemHealth />
 
       <div className="grid grid-cols-12 gap-6">
-        <PlatformAnalyticsChart className="col-span-12 lg:col-span-7" />
-        <RecentPlatformActivity className="col-span-12 lg:col-span-5" />
+        <PlatformAnalyticsChart 
+            className="col-span-12 lg:col-span-7"
+            bookings={bookings || []}
+            users={users || []}
+            loading={dataIsLoading}
+        />
+        <RecentPlatformActivity 
+            className="col-span-12 lg:col-span-5" 
+            events={events || []}
+            loading={dataIsLoading}
+        />
       </div>
 
       <div className="grid grid-cols-12 gap-6">
         <Alerts className="col-span-12 md:col-span-6 lg:col-span-4" />
-        <TopPerformers className="col-span-12 md:col-span-6 lg:col-span-4" />
-        <MapOverview className="col-span-12 lg:col-span-4" />
+        <TopPerformers 
+            className="col-span-12 md:col-span-6 lg:col-span-4"
+            bookings={bookings || []}
+            billboards={billboards || []}
+            vendors={vendors || []}
+            loading={dataIsLoading}
+        />
+        <MapOverview 
+            className="col-span-12 lg:col-span-4"
+            billboards={billboards || []}
+            loading={dataIsLoading}
+        />
       </div>
       
       <div className="grid grid-cols-12 gap-6">
-          <UserRoleDistribution className="col-span-12 lg:col-span-5" />
-          <UserLocationBreakdown className="col-span-12 lg:col-span-7" />
+          <UserRoleDistribution 
+            className="col-span-12 lg:col-span-5"
+            users={users || []}
+            loading={dataIsLoading}
+           />
+          <UserLocationBreakdown 
+            className="col-span-12 lg:col-span-7"
+            billboards={billboards || []}
+            loading={dataIsLoading}
+          />
       </div>
     </div>
   );
