@@ -67,11 +67,12 @@ export default function LoginPage() {
         await signInWithGoogle();
         // On success, the useEffect hook will handle redirection.
     } catch(error: any) {
-        if (error.code !== 'auth/popup-closed-by-user') {
+        const errorMessage = getFirebaseAuthErrorMessage(error);
+        if (errorMessage) {
             toast({
                 variant: 'destructive',
                 title: 'Sign In Failed',
-                description: getFirebaseAuthErrorMessage(error),
+                description: errorMessage,
             });
         }
         setIsGoogleLoading(false);
@@ -84,11 +85,14 @@ export default function LoginPage() {
       await signInUserWithEmailAndPassword(values.email, values.password);
       // On success, the useEffect hook will handle redirection.
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Sign In Failed',
-        description: getFirebaseAuthErrorMessage(error),
-      });
+      const errorMessage = getFirebaseAuthErrorMessage(error);
+       if (errorMessage) {
+            toast({
+                variant: 'destructive',
+                title: 'Sign In Failed',
+                description: errorMessage,
+            });
+        }
       setIsEmailLoading(false);
     }
   }

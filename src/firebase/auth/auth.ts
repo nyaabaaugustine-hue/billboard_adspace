@@ -22,32 +22,40 @@ import { auth, firestore } from '../firebase';
 const provider = new GoogleAuthProvider();
 
 export function getFirebaseAuthErrorMessage(error: any): string {
-    if (error.message.includes("failed to save your profile")) {
-        return error.message;
-    }
-    
-    switch (error.code) {
+    const errorCode = error.code || 'unknown';
+
+    switch (errorCode) {
         case 'auth/email-already-in-use':
             return 'This email address is already in use by another account.';
         case 'auth/invalid-email':
             return 'The email address is not valid.';
         case 'auth/operation-not-allowed':
-            return 'Email/password accounts are not enabled.';
+            return 'Email/password accounts are not enabled in your Firebase project.';
         case 'auth/weak-password':
-            return 'The password is too weak.';
+            return 'The password is too weak. It must be at least 6 characters long.';
         case 'auth/user-not-found':
         case 'auth/wrong-password':
         case 'auth/user-disabled':
             return 'Invalid email or password. Please try again.';
         case 'auth/too-many-requests':
-            return 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.';
+            return 'Access to this account has been temporarily disabled due to many failed login attempts. You can reset your password or try again later.';
         case 'auth/network-request-failed':
-            return 'A network error occurred. Please check your internet connection and ensure your app\'s domain is authorized in your Firebase project settings.';
+            return 'A network error occurred. Please check your internet connection.';
+        case 'auth/popup-blocked':
+             return 'The sign-in pop-up was blocked by your browser. Please allow pop-ups for this site and try again.';
+        case 'auth/cancelled-popup-request':
+        case 'auth/popup-closed-by-user':
+             return ''; // User cancelled, so no error message is needed.
+        case 'firestore/permission-denied':
         case 'permission-denied':
-             return "Failed to save your profile due to a permissions issue. Please contact support.";
+             return "Failed to save your profile due to a permissions issue. Please ensure your Firestore security rules allow writes to the 'users' collection for authenticated users.";
         default:
             console.error("Unhandled auth error:", error);
-            return 'An unexpected error occurred. Please try again.';
+            // Provide the raw error message if it's one of our custom ones
+            if (error.message.startsWith('Failed to save user profile')) {
+                return error.message;
+            }
+            return 'An unexpected error occurred. Please check the console for details and try again.';
     }
 }
 
@@ -62,15 +70,21 @@ async function manageUserProfile(user: User, additionalData: { displayName?: str
             email: user.email,
             displayName: displayName,
             photoURL: user.photoURL,
-            role: 'USER', 
+            role: 'USER' as const,
             createdAt: serverTimestamp(),
         };
 
         try {
             await setDoc(userRef, newUserProfile);
         } catch (dbError: any) {
-             console.error("Firestore Error on profile creation:", dbError);
-             throw new Error(`Your user account was created, but we failed to save your profile to the database. This is likely a Firestore permissions issue. Original error: ${dbError.message}`);
+            console.error("Firestore Error creating user profile:", dbError);
+            const authError = new Error(
+                `Failed to save user profile. This is often a database permissions issue. ` +
+                `Please check your Firestore rules. Original error: (${dbError.code}) ${dbError.message}`
+            );
+            // Re-throwing with a property that my handler can recognize
+            (authError as any).code = dbError.code || 'firestore/permission-denied';
+            throw authError;
         }
     }
 }
