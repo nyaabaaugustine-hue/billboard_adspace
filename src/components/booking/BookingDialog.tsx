@@ -79,13 +79,15 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
   });
 
   useEffect(() => {
-    // Pre-fill form when user object is available or dialog is opened
+    // Pre-fill form when user object is available and the dialog is opened
     if (open && user) {
+      const currentName = form.getValues('name');
+      const currentEmail = form.getValues('email');
       form.reset({
-        name: user.displayName || '',
-        email: user.email || '',
-        phone: form.getValues('phone'), // Keep phone if already entered
-        company: form.getValues('company'), // Keep company if already entered
+        name: currentName || user.displayName || '',
+        email: currentEmail || user.email || '',
+        phone: form.getValues('phone'),
+        company: form.getValues('company'),
         startDate: form.getValues('startDate'),
         endDate: form.getValues('endDate'),
       });
