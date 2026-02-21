@@ -38,38 +38,51 @@ export function AdSlider() {
     }
   }, []);
 
-  useEffect(() => {
-    if (isDismissed || ads.length === 0) {
-      return;
-    }
-
-    const adCycle = () => {
-      const showTimer = setTimeout(() => setIsVisible(true), 2000);
-      const hideTimer = setTimeout(() => setIsVisible(false), 14000);
-      const nextTimer = setTimeout(() => {
-        setCurrentAdIndex((prevIndex) => (prevIndex + 1) % ads.length);
-      }, 15000);
-      return { showTimer, hideTimer, nextTimer };
-    };
-
-    const timers = adCycle();
-    return () => {
-      clearTimeout(timers.showTimer);
-      clearTimeout(timers.hideTimer);
-      clearTimeout(timers.nextTimer);
-    };
-  }, [currentAdIndex, isDismissed, ads.length]);
-
+  // This hook manages the component's presence in the DOM for animations
   useEffect(() => {
     if (isVisible) {
       setIsRendered(true);
     } else {
+      // Wait for slide-out animation to finish before removing from DOM
       const unmountTimer = setTimeout(() => setIsRendered(false), 700);
       return () => clearTimeout(unmountTimer);
     }
   }, [isVisible]);
 
-  const handleDismiss = () => {
+  // This hook manages the ad cycling logic
+  useEffect(() => {
+    if (isDismissed || ads.length === 0) return;
+
+    // Start with the first ad after a delay
+    const initialTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+
+    // This interval controls the entire cycle
+    const cycleInterval = setInterval(() => {
+      setIsVisible(false); // Start hiding the ad
+
+      // After hide animation, update content and show again
+      const nextAdTimer = setTimeout(() => {
+        setCurrentAdIndex(prevIndex => (prevIndex + 1) % ads.length);
+        setIsVisible(true);
+      }, 2000); // Wait 2s (animation time + pause) before showing next
+
+      // Cleanup function for the inner timer
+      return () => clearTimeout(nextAdTimer);
+    }, 14000); // An ad is shown for 12s, then we start the 2s hide/switch process. 12000 + 2000 = 14000
+
+    // Cleanup function for the main timers
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(cycleInterval);
+    };
+  }, [isDismissed, ads]);
+
+
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsVisible(false);
     setIsDismissed(true);
     sessionStorage.setItem('adSliderDismissed', 'true');
@@ -77,63 +90,59 @@ export function AdSlider() {
 
   const currentAd = ads[currentAdIndex];
 
-  if (isDismissed || !isRendered || loading || !currentAd) {
+  if (isDismissed || !isRendered || !currentAd) {
     return null;
   }
 
   return (
     <div
       className={cn(
-          'fixed bottom-4 left-4 z-50 w-full max-w-sm transition-all duration-700 ease-in-out',
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+        'fixed bottom-4 left-4 z-50 w-full max-w-sm transition-all duration-700 ease-in-out',
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       )}
     >
-        <Link href={`/billboards/${currentAd.id}`} className="block group">
-            <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20 hover:border-primary/50 transition-all">
-                <div className="flex gap-4 items-center">
-                    <div className="relative h-20 w-20 rounded-lg overflow-hidden bg-muted shrink-0">
-                        <Image
-                            src={currentAd.imageUrl}
-                            alt={currentAd.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform"
-                            data-ai-hint="billboard image"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                        <div className="absolute bottom-1 left-1 text-xs font-bold text-white">
-                            GH₵{currentAd.pricePerMonth.toLocaleString()}
-                        </div>
-                    </div>
-                    <div className="flex-grow min-w-0">
-                        <div className="flex items-center gap-2">
-                             <Sparkles className="h-4 w-4 text-primary" />
-                             <p className="text-xs font-bold uppercase tracking-wider text-primary">Featured Billboard</p>
-                        </div>
-                        <p className="font-semibold text-sm text-foreground group-hover:underline leading-tight mt-1 truncate">
-                            {currentAd.title}
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-muted-foreground mt-1 gap-2">
-                          <div className="flex items-center gap-1 min-w-0">
-                              <MapPin className="h-3 w-3 shrink-0" />
-                              <span className="truncate">{currentAd.city}</span>
-                          </div>
-                          <div className="flex items-center gap-1 min-w-0">
-                              <Building className="h-3 w-3 shrink-0" />
-                              <span className="truncate">{currentAd.type}</span>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0 z-10" onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleDismiss();
-                }}>
-                    <X className="h-4 w-4" />
-                    <span className="sr-only">Dismiss</span>
-                </Button>
+      <Link href={`/billboards/${currentAd.id}`} className="block group">
+        <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20 hover:border-primary/50 transition-all">
+          <div className="flex gap-4 items-center">
+            <div className="relative h-20 w-20 rounded-lg overflow-hidden bg-muted shrink-0">
+              <Image
+                src={currentAd.imageUrl}
+                alt={currentAd.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform"
+                data-ai-hint="billboard image"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <div className="absolute bottom-1 left-1 text-xs font-bold text-white">
+                GH₵{currentAd.pricePerMonth.toLocaleString()}
+              </div>
             </div>
-        </Link>
+            <div className="flex-grow min-w-0">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Featured Billboard</p>
+              </div>
+              <p className="font-semibold text-sm text-foreground group-hover:underline leading-tight mt-1 truncate">
+                {currentAd.title}
+              </p>
+              <div className="flex items-center justify-between text-xs text-muted-foreground mt-1 gap-2">
+                <div className="flex items-center gap-1 min-w-0">
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{currentAd.city}</span>
+                </div>
+                <div className="flex items-center gap-1 min-w-0">
+                  <Building className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{currentAd.type}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7 shrink-0 z-10" onClick={handleDismiss}>
+            <X className="h-4 w-4" />
+            <span className="sr-only">Dismiss</span>
+          </Button>
+        </div>
+      </Link>
     </div>
   );
 }
