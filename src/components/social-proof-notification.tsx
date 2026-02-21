@@ -44,7 +44,7 @@ export function SocialProofNotification() {
             setCurrentNotification(randomNotification);
             setIsVisible(true);
         }, 1000);
-    }, 50000);
+    }, 25000);
 
     return () => {
       clearTimeout(initialTimeout);
@@ -78,8 +78,8 @@ export function SocialProofNotification() {
   return (
     <div
       className={cn(
-        'fixed bottom-4 right-4 z-50 w-full max-w-sm transition-all duration-500 ease-in-out',
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+        'fixed bottom-4 left-4 z-50 w-full max-w-xs transition-all duration-500 ease-in-out',
+        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[calc(100%+2rem)]'
       )}
     >
       <div className="relative overflow-hidden rounded-xl bg-card/60 p-4 shadow-2xl backdrop-blur-xl border border-border/20">
