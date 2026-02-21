@@ -1,4 +1,5 @@
 
+
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import Image from 'next/image';
@@ -8,6 +9,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Handshake, Lightbulb, Rocket, Target } from 'lucide-react';
 import { AsibiFab } from '@/components/ai/AsibiFab';
+import { PartnerVendors } from '@/components/home/PartnerVendors';
 
 const team = [
     {
@@ -131,6 +133,8 @@ export default function AboutUsPage() {
                     </div>
                 </section>
                 
+                <PartnerVendors />
+
                 {/* Core Values Section */}
                  <section className="py-16 sm:py-24 bg-secondary/50">
                     <div className="container mx-auto px-4">
