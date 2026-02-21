@@ -146,7 +146,7 @@ export function AsibiAssistant() {
                         <Send className="h-5 w-5" />
                     </Button>
                 </form>
-                <Button asChild className="w-full mt-2" variant="outline">
+                <Button asChild className="w-full mt-2 bg-[#25D366] text-black font-bold hover:bg-[#20b358]">
                     <Link href="https://wa.me/233541988383" target="_blank" rel="noopener noreferrer">
                         <WhatsAppIcon className="h-5 w-5 mr-2" />
                         Chat with us on WhatsApp
