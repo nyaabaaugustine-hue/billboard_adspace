@@ -3,7 +3,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Event as PlatformEvent } from "@/lib/types";
-import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
@@ -51,7 +51,7 @@ export function RecentPlatformActivity({ className, events, loading }: RecentPla
                                     <div className="flex-1">
                                         <p className="text-sm font-medium"><EventDescription event={event} /></p>
                                         <p className="text-xs text-muted-foreground">
-                                            {event.timestamp ? formatDistanceToNow(event.timestamp.toDate(), { addSuffix: true }) : 'just now'}
+                                            {event.timestamp ? format(event.timestamp.toDate(), 'MMM d, hh:mm a') : 'just now'}
                                         </p>
                                     </div>
                                 </div>

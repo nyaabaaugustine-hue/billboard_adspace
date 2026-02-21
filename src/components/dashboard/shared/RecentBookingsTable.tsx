@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import type { FirestoreBooking } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
   
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -92,7 +92,7 @@ import { formatDistanceToNow } from 'date-fns';
                       </TableCell>
                       <TableCell className="text-right">GH₵{booking.amount.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                       <TableCell className="text-right hidden sm:table-cell">
-                        {booking.createdAt ? formatDistanceToNow(booking.createdAt.toDate(), { addSuffix: true }) : 'N/A'}
+                        {booking.createdAt ? format(booking.createdAt.toDate(), 'MMM d, yyyy') : 'N/A'}
                       </TableCell>
                     </TableRow>
                   ))
