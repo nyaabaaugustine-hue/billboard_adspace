@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import { AdspaceLogo } from "../icons/OwareLogo";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
@@ -24,7 +25,7 @@ export function Footer() {
     {
       title: 'Company',
       links: [
-        { label: 'About Us', href: '#' },
+        { label: 'About Us', href: '/about' },
         { label: 'Blog', href: '#' },
         { label: 'Contact Us', href: '#' },
       ],
