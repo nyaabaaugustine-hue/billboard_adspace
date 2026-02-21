@@ -14,6 +14,7 @@ import { useCollection, useFirestore } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import type { Vendor } from '@/lib/types';
 import { Skeleton } from '../ui/skeleton';
+import { vendors as mockVendors } from '@/lib/data';
 
 export function PartnerVendors() {
   const plugin = React.useRef(
@@ -22,7 +23,15 @@ export function PartnerVendors() {
 
   const firestore = useFirestore();
   const vendorsCol = useMemo(() => collection(firestore, 'vendors'), [firestore]);
-  const { data: vendors, loading } = useCollection<Vendor>(vendorsCol);
+  const { data: vendorsFromHook, loading } = useCollection<Vendor>(vendorsCol);
+
+  const vendors = useMemo(() => {
+    if (!loading && vendorsFromHook && vendorsFromHook.length === 0) {
+      return mockVendors;
+    }
+    return vendorsFromHook;
+  }, [vendorsFromHook, loading]);
+
 
   return (
     <div className="bg-secondary/50 py-20 sm:py-24">
@@ -34,7 +43,7 @@ export function PartnerVendors() {
           We collaborate with the best printing, design, and installation companies in Ghana to ensure your campaigns are flawless.
         </p>
         <div className="mt-12">
-          {loading ? (
+          {loading && !vendors ? (
             <div className="flex gap-4 overflow-hidden">
                 {[...Array(5)].map((_,i) => (
                     <div key={i} className="flex flex-col items-center justify-center p-4 aspect-[3/2] bg-card rounded-md border basis-1/2 md:basis-1/3 lg:basis-1/5 shrink-0">
