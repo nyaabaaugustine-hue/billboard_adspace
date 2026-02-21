@@ -123,9 +123,9 @@ export default function SignupPage() {
             data-ai-hint={bgImage.imageHint}
           />
         )}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
         <div className="relative z-10 flex h-full items-center justify-center p-4">
-            <Card className="w-full max-w-md">
+            <Card className="w-full max-w-md bg-card/80 backdrop-blur-lg border-white/20">
               <CardHeader className="text-center">
                  <div className="mx-auto mb-4">
                     <OwareLogo />
@@ -147,7 +147,7 @@ export default function SignupPage() {
                         <span className="w-full border-t" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+                        <span className="bg-card/80 px-2 text-muted-foreground">Or continue with email</span>
                     </div>
                 </div>
                 <Form {...form}>

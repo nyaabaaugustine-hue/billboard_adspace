@@ -112,6 +112,7 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero onSearch={handleSearch} />
+        <AdvertiseWithUs />
         <WhyChooseUs />
         <div id="billboard-results" className="container mx-auto scroll-mt-20 px-4 py-16">
           { billboardsLoading ? (
@@ -140,7 +141,6 @@ export default function Home() {
         <RecentBillboards billboards={recentBillboards} loading={recentLoading} />
         <PartnerVendors />
         <Testimonials />
-        <AdvertiseWithUs />
         <AsibiFab />
       </main>
       <Footer />

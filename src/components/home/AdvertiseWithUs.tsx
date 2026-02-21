@@ -1,33 +1,44 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { OwareLogo } from '@/components/icons/OwareLogo';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function AdvertiseWithUs() {
+  const bgImage = PlaceHolderImages.find(p => p.id === 'why-choose-us-1');
+
   return (
-    <section className="py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center justify-between gap-8 rounded-2xl bg-gradient-to-r from-primary/90 to-primary p-8 text-center shadow-lg sm:flex-row sm:text-left">
-          <div className="flex items-center gap-6">
-            <div className="hidden shrink-0 sm:block">
-                <OwareLogo width={80} />
+    <section className="relative py-20 sm:py-24">
+      {bgImage && (
+        <Image 
+          src={bgImage.imageUrl}
+          alt={bgImage.description}
+          fill
+          className="object-cover"
+          data-ai-hint={bgImage.imageHint}
+        />
+      )}
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="relative container mx-auto px-4 text-center">
+        <div className="max-w-3xl mx-auto">
+            <div className="inline-block mb-6">
+                 <OwareLogo width={100} />
             </div>
-            <div>
-              <h2 className="font-headline text-3xl font-bold text-primary-foreground">
+            <h2 className="font-headline text-4xl sm:text-5xl font-bold text-white">
                 Advertise With Us
-              </h2>
-              <p className="mt-1 text-lg text-primary-foreground/90">
+            </h2>
+            <p className="mt-4 text-lg sm:text-xl text-neutral-200 max-w-2xl mx-auto">
                 We reach millions of potential customers across Ghana daily.
-              </p>
+            </p>
+            <div className="mt-8">
+                <Button
+                    asChild
+                    size="lg"
+                    className="font-bold"
+                >
+                    <Link href="/for-advertisers">Learn More</Link>
+                </Button>
             </div>
-          </div>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="bg-transparent border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary font-bold flex-shrink-0"
-          >
-            <Link href="/for-advertisers">Learn More</Link>
-          </Button>
         </div>
       </div>
     </section>
