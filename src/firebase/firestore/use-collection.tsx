@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { onSnapshot, type Query, type DocumentData } from 'firebase/firestore';
-import { errorEmitter } from '../error-emitter';
-import { FirestorePermissionError } from '../errors';
 
 export function useCollection<T extends DocumentData>(query: Query<T> | null) {
   const [data, setData] = useState<T[]>([]);
@@ -24,13 +22,10 @@ export function useCollection<T extends DocumentData>(query: Query<T> | null) {
         setLoading(false);
         setError(null);
       },
-      async (err) => {
-        console.error(err);
-        const permissionError = new FirestorePermissionError({
-          path: (query as any)._query.path.segments.join('/'),
-          operation: 'list',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+      (err) => {
+        console.error("Firestore Error:", err);
+        const errorMessage = `Error fetching collection. Check Firestore security rules for path: ${(query as any)._query.path.segments.join('/')}`;
+        const permissionError = new Error(errorMessage);
         setError(permissionError);
         setLoading(false);
       }
