@@ -24,6 +24,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -44,7 +45,7 @@ import { ToastAction } from '@/components/ui/toast';
 const bookingFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email.' }),
-  phone: z.string().min(10, { message: 'Please enter a valid phone number.' }),
+  phone: z.string().min(10, { message: 'Please enter a valid phone number with country code.' }),
   company: z.string().optional(),
   startDate: z.date({
     required_error: 'A start date is required.',
@@ -196,8 +197,11 @@ export function BookingDialog({ billboard }: { billboard: Billboard }) {
                   <FormItem className="col-span-2 sm:col-span-1">
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="024 123 4567" {...field} />
+                      <Input placeholder="+233 24 123 4567" {...field} />
                     </FormControl>
+                    <FormDescription>
+                      Use international format.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
