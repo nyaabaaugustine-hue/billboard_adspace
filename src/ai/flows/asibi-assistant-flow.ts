@@ -6,8 +6,9 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-import { billboards, vendors, bookings } from '@/lib/data';
+import { z } from 'zod';
+import { firestore } from '@/firebase/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import { Role } from '@/lib/types';
 
 const AsibiInputSchema = z.object({
@@ -23,9 +24,17 @@ export async function asibiAssistant(input: AsibiInput): Promise<AsibiOutput> {
   return asibiAssistantFlow(input);
 }
 
+// Define an extended schema for the prompt's input
+const AsibiPromptInputSchema = AsibiInputSchema.extend({
+    billboards: z.array(z.any()).describe('List of all billboard documents from the database.'),
+    vendors: z.array(z.any()).describe('List of all vendor documents from the database.'),
+    bookings: z.array(z.any()).describe('List of all booking documents from the database.'),
+});
+
+
 const prompt = ai.definePrompt({
   name: 'asibiAssistantPrompt',
-  input: { schema: AsibiInputSchema },
+  input: { schema: AsibiPromptInputSchema }, // Use the extended schema
   output: { schema: AsibiOutputSchema },
   prompt: `You are Asibi, an expert AI assistant for Adspace, a billboard advertising platform in Ghana. Your role is to provide helpful, accurate, and concise information to users based on the platform's data. Your persona is friendly, professional, and an expert on the Ghanaian advertising market.
 
@@ -50,7 +59,7 @@ Bookings Data:
 {{{json bookings}}}
 \`\`\`
 
-Based ONLY on the data provided, answer the user's question. Be conversational. If the data doesn't contain the answer, say that you don't have enough information to answer, but you can help with other questions. Do not make up information.
+Based ONLY on the data provided, answer the user's question. Be conversational. If the data doesn't contain the answer, say that you don't have enough information to answer, but you can help with other questions. Do not make up information. Do not answer any questions about security, passwords, or user credentials.
 
 User's question: "{{{query}}}"
 `,
@@ -63,13 +72,25 @@ const asibiAssistantFlow = ai.defineFlow(
     outputSchema: AsibiOutputSchema,
   },
   async (input) => {
+    // Fetch data from Firestore
+    const billboardsCol = collection(firestore, 'billboards');
+    const vendorsCol = collection(firestore, 'vendors');
+    const bookingsCol = collection(firestore, 'bookings');
+
+    const [billboardsSnapshot, vendorsSnapshot, bookingsSnapshot] = await Promise.all([
+        getDocs(billboardsCol),
+        getDocs(vendorsCol),
+        getDocs(bookingsCol)
+    ]);
+    
+    const billboards = billboardsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    const vendors = vendorsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    const bookings = bookingsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
     const { output } = await prompt({
         ...input,
-        // @ts-ignore
         billboards,
-        // @ts-ignore
         vendors,
-        // @ts-ignore
         bookings
     });
     return output!;
